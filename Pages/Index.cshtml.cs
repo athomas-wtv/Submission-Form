@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -25,14 +26,24 @@ namespace IST_Submission_Form.Pages
         public string Timeline { get; set; }
         public DateTime Date { get; set; }
 
-
         public void OnGet()
         {
 
         }
-        public void OnPost()
+        public Submission Submission { get; set; }
+        public async Task<IActionResult> OnPostAsync()
         {
-            
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            Submission.Date = DateTime.Now;
+            Log.Schools = School;
+            Log.Student = Student;
+            _context.Log.Add(Log);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
