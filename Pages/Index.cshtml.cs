@@ -10,6 +10,12 @@ namespace IST_Submission_Form.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly IST_Submission_Form.Models.SubmissionContext _context;
+        public IndexModel(IST_Submission_Form.Models.SubmissionContext context){
+
+            _context = context;
+
+        }
         [BindProperty]
         public string FirstName { get; set; }
         [BindProperty]
@@ -24,7 +30,6 @@ namespace IST_Submission_Form.Pages
         public string Goal { get; set; }
         [BindProperty]
         public string Timeline { get; set; }
-        public DateTime Date { get; set; }
 
         public void OnGet()
         {
@@ -38,9 +43,7 @@ namespace IST_Submission_Form.Pages
                 return Page();
             }
             Submission.Date = DateTime.Now;
-            Log.Schools = School;
-            Log.Student = Student;
-            _context.Log.Add(Log);
+            _context.Submissions.Add(Submission);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
