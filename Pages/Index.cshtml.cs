@@ -43,6 +43,7 @@ namespace IST_Submission_Form.Pages
                 return Page();
 
             Submission.Date = DateTime.Now;
+            Submission.Status = 14;
             _context.Submissions.Add(Submission);
             await _context.SaveChangesAsync();
 

@@ -35,6 +35,7 @@ namespace IST_Submission_Form
 
             services.AddDbContext<SubmissionContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:SubmissionContext"]); });
             services.AddDbContext<CommentContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:CommentContext"]); });
+            services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

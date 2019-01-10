@@ -20,6 +20,7 @@ namespace IST_Submission_Form.Models
         public string ProjectDescription { get; set; }
         public string Goal { get; set; }
         public string Timeline { get; set; }
+        public int Status { get; set; }
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
