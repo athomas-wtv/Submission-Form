@@ -1,0 +1,80 @@
+@page
+@model IST.Teamlead
+@{
+    ViewData["Title"] = "Teamleader Dashboard";
+}
+<h2>@ViewData["Title"]</h2>
+
+<table class="table col-md-12">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./IST/Teamlead">
+                    @Html.DisplayNameFor(model => model.Submission.ID)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index">
+                    @Html.DisplayNameFor(model => model.Log[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index">
+                    @Html.DisplayNameFor(model => model.Log[0].Relation)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index">
+                    @Html.DisplayNameFor(model => model.Log[0].Schools)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index">
+                    @Html.DisplayNameFor(model => model.Log[0].Student)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index">
+                    @Html.DisplayNameFor(model => model.Log[0].Type)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Log)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Relation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schools)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td style="width:200px">
+                    <a asp-page="./Edit" asp-route-id="@item.ID"><i class="far fa-edit"></i></a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
