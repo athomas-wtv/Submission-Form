@@ -35,18 +35,19 @@ namespace IST_Submission_Form.Pages
         {
 
         }
+        [BindProperty]
         public Submission Submission { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
+
             Submission.Date = DateTime.Now;
             _context.Submissions.Add(Submission);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
     }
 }
