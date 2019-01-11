@@ -1,5 +1,5 @@
 @page
-@model IST.Teamlead
+@model TeamleadModel
 @{
     ViewData["Title"] = "Teamleader Dashboard";
 }
@@ -9,70 +9,40 @@
     <thead>
         <tr>
             <th>
-                <a asp-page="./IST/Teamlead">
-                    @Html.DisplayNameFor(model => model.Submission.ID)
-                </a>
+                @Html.DisplayNameFor(model => model.Submissions[0].Date)
             </th>
             <th>
-                <a asp-page="./Index">
-                    @Html.DisplayNameFor(model => model.Log[0].Name)
-                </a>
+                @Html.DisplayNameFor(model => model.Submissions[0].Title)
             </th>
             <th>
-                <a asp-page="./Index">
-                    @Html.DisplayNameFor(model => model.Log[0].Relation)
-                </a>
+                @Html.DisplayNameFor(model => model.Submissions[0].LastName)
             </th>
             <th>
-                <a asp-page="./Index">
-                    @Html.DisplayNameFor(model => model.Log[0].Schools)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index">
-                    @Html.DisplayNameFor(model => model.Log[0].Student)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index">
-                    @Html.DisplayNameFor(model => model.Log[0].Type)
-                </a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Log[0].Comment)
+                @Html.DisplayNameFor(model => model.Submissions[0].Status)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Log)
+        @foreach (var Submission in Model.Submissions)
         {
             <tr>
                 <th>
-                    @Html.DisplayFor(modelItem => item.Date)
+                    @Html.DisplayFor(modelItem => Submission.Date)
                 </th>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => Submission.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Relation)
+                    @Html.DisplayFor(modelItem => Submission.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Schools)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Student)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
+                    @Html.DisplayFor(modelItem => Submission.Status)
                 </td>
                 <td style="width:200px">
-                    <a asp-page="./Edit" asp-route-id="@item.ID"><i class="far fa-edit"></i></a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID"><i class="fas fa-trash-alt"></i></a>
+                    <a asp-page="./Edit" asp-route-id="@Submission.ID"><i class="far fa-edit"></i></a> |
+                    <a asp-page="./Details" asp-route-id="@Submission.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@Submission.ID"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
         }
