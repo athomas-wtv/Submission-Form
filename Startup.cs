@@ -37,17 +37,6 @@ namespace IST_Submission_Form
             // Adding Databases to use in App
             services.AddDbContext<SubmissionContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:SubmissionContext"]); });
             services.AddDbContext<CommentContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:CommentContext"]); });
-            services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
-
-            // Adding Authentication Services
-            services.AddAuthentication(CookieAutheticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/auth/login";
-                    options.AccessDeniedPath = "auth/accessdenied";
-                });
-            services.Configure<LdapConfig>(Configuration.GetSection("ldap"));
-            services.AddScoped<IAuthenticationService, LdapAuthenticationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -67,7 +56,6 @@ namespace IST_Submission_Form
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc();
         }
