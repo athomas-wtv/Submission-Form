@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Novell.Directory.Ldap;
 
 namespace IST_Submission_Form.Models
@@ -21,16 +22,16 @@ namespace IST_Submission_Form.Models
             connection.Connect(configuration["ldap:url"], 389);
         }
 
-        public LdapEntry Login(string email, string password)
+        public bool Login(string email, string password)
         {
             try
             {
-                if (!connection.Bound) connection.Bind(email, password);
-                return this.Search(email).FirstOrDefault();
+                connection.Bind(email, password);
+                return true;
             }
             catch (System.Exception)
             {
-                throw new System.Exception("Login Failed.");
+                return false;
             }
         }
 
@@ -38,12 +39,12 @@ namespace IST_Submission_Form.Models
         {
             try
             {
-                if (!connection.Bound) connection.Connect(configuration["AD:Host"], 389);
-                connection.Bind(configuration["AD:SystemUser"], configuration["AD:SystemPassword"]);
+                if (!connection.Bound) connection.Connect(configuration["ldap:url"], 389);
+                connection.Bind(configuration["ldpa:url"], configuration["ldpa:bindCredentials"]);
             }
             catch (System.Exception)
             {
-                throw new System.Exception("Error Connectiont to AD.");
+                throw new System.Exception("Error Connecting to AD.");
             }
 
             List<LdapEntry> users = new List<LdapEntry>();

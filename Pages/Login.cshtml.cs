@@ -21,9 +21,18 @@ namespace IST_Submission_Form.Pages
             _authService = authService;
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            _authService.Login(email, password);
+            bool access = _authService.Login(email, password);
+            if(access)
+            {
+                return RedirectToPage("./Index");
+
+            }
+            else
+            {
+                return RedirectToPage();
+            }
         }
     }
 }
