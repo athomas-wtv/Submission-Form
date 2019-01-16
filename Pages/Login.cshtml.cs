@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration;
 
 namespace IST_Submission_Form.Pages
 {
@@ -21,16 +21,36 @@ namespace IST_Submission_Form.Pages
             _authService = authService;
         }
 
-        public IActionResult OnPost()
+        public void OnGet()
+        {
+            
+
+        }
+
+        public bool? Result { get; set; } = null;
+        public async Task<ActionResult> OnPostAsync()
         {
             bool access = _authService.Login(email, password);
             if(access)
             {
-                return RedirectToPage("./Index");
+                Result = true;
 
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, email)
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                var authProperties = new AuthenticationProperties { IsPersistent = true };
+
+                await HttpContext.SignInAsync(principal, authProperties);
+
+                return RedirectToPage("/Index");
             }
             else
             {
+                Result = false;
                 return RedirectToPage();
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
 using IST_Submission_Form.Pages;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,7 @@ namespace IST_Submission_Form
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o => o.LoginPath = new PathString("/login"));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -37,6 +39,7 @@ namespace IST_Submission_Form
             // Adding Databases to use in App
             services.AddDbContext<SubmissionContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:SubmissionContext"]); });
             services.AddDbContext<CommentContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:CommentContext"]); });
+            services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
 
             services.AddSingleton<ILdapService, LdapService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -57,6 +60,8 @@ namespace IST_Submission_Form
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc();
         }

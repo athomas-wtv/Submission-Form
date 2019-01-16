@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,12 @@ namespace IST_Submission_Form.Pages
     public class IndexModel : PageModel
     {
         private readonly IST_Submission_Form.Models.SubmissionContext _context;
-        public IndexModel(IST_Submission_Form.Models.SubmissionContext context){
+        private readonly StaffDirectoryContext _staffcontext;
+
+        public IndexModel(IST_Submission_Form.Models.SubmissionContext context, StaffDirectoryContext staffcontext){
 
             _context = context;
+            _staffcontext = staffcontext;
 
         }
         [BindProperty]
@@ -33,6 +37,12 @@ namespace IST_Submission_Form.Pages
 
         public void OnGet()
         {
+            var email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var staff = _staffcontext.Staff.Where((s) => s.Email == email).First();
+
+            FirstName = staff.FName;
+            LastName = staff.LName;
+            Email = staff.Email;
 
         }
         [BindProperty]

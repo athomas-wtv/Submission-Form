@@ -36,3 +36,25 @@ body {
         display: none;
     }
 }
+
+/* 
+    This section is to style the auto populated auto
+    popluated portion of the form (first name, last
+    name, and email).
+*/
+
+.auto-populated-label{
+    color: gray;
+    text-align: center;
+    font-size: 10px;
+
+}
+.auto-populated-information{
+    border: none;
+    border-bottom: 2px solid #F3F3F3;
+    text-align: center;
+}
+
+.email{
+    width: 300px;
+}

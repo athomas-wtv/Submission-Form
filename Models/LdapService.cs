@@ -40,14 +40,14 @@ namespace IST_Submission_Form.Models
             try
             {
                 if (!connection.Bound) connection.Connect(configuration["ldap:url"], 389);
-                connection.Bind(configuration["ldpa:url"], configuration["ldpa:bindCredentials"]);
+                connection.Bind(configuration["ldap:url"], configuration["ldap:bindCredentials"]);
             }
             catch (System.Exception)
             {
                 throw new System.Exception("Error Connecting to AD.");
             }
 
-            List<LdapEntry> users = new List<LdapEntry>();
+            List<LdapEntry> user = new List<LdapEntry>();
 
             var result = connection.Search(
                     "DC=fayette,DC=ketsds,DC=net",
@@ -69,12 +69,12 @@ namespace IST_Submission_Form.Models
                     continue;
                 }
                 nextEntry.getAttributeSet();
-                users.Add(nextEntry);
+                user.Add(nextEntry);
             }
 
             connection.Disconnect();
 
-            return users;
+            return user;
         }
 
         public List<string> Groups(string email)
