@@ -21,7 +21,8 @@ namespace IST_Submission_Form.Models
         [Column(TypeName = "text")]
         public string ProjectDescription { get; set; }
         public string Goal { get; set; }
-        public string Timeline { get; set; }
+        [Column("Timeline")]
+        public string DesiredCompletionDate { get; set; }
         public int Status { get; set; }
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }

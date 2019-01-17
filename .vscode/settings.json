@@ -1,0 +1,7 @@
+{
+    "search.exclude": {
+        "**/bin": true,
+        "**/Migrations": true,
+        "**/obj": true
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public string Goal { get; set; }
         [BindProperty]
-        public string Timeline { get; set; }
+        public string DesiredCompletionDate { get; set; }
         [BindProperty]
         public string Location { get; set; }
 
