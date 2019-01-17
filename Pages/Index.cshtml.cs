@@ -26,6 +26,7 @@ namespace IST_Submission_Form.Pages
         public string LastName { get; set; }
         [BindProperty]
         public string Email { get; set; }
+        public string LoginID { get; set; }
         [BindProperty]
         public string Title { get; set; }
         [BindProperty]
@@ -34,6 +35,8 @@ namespace IST_Submission_Form.Pages
         public string Goal { get; set; }
         [BindProperty]
         public string Timeline { get; set; }
+        [BindProperty]
+        public string Location { get; set; }
 
         public void OnGet()
         {
@@ -43,6 +46,7 @@ namespace IST_Submission_Form.Pages
             FirstName = staff.FName;
             LastName = staff.LName;
             Email = staff.Email;
+            LoginID = staff.LoginID;
 
         }
         [BindProperty]

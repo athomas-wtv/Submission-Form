@@ -8,21 +8,28 @@
   <div class="form-row">
     <div class="form-group col-md-3">
       <label for="firstName" class="auto-populated-label">First Name</label><br>
-      <input type="text" asp-for="FirstName" class="auto-populated-information" name="FirstName" id="firstName" disabled>
+      <input type="text" asp-for="FirstName" class="auto-populated-information" name="FirstName" id="firstName" readonly>
     </div>
     <div class="form-group col-md-3">
       <label for="lastName" class="auto-populated-label">Last Name</label><br>
-      <input type="text" asp-for="LastName" class="auto-populated-information" name="LastName" id="lastName" disabled>
+      <input type="text" asp-for="LastName" class="auto-populated-information" name="LastName" id="lastName" readonly>
     </div>
     <div class="form-group col-md-3">
       <label for="email" class="auto-populated-label">Email</label><br>
-      <input type="email" asp-for="Email" class="auto-populated-information email" name="Email" id="email" disabled>
+      <input type="email" asp-for="Email" class="auto-populated-information email" name="Email" id="email" readonly>
+    </div>
+    <div class="form-group col-md-3">
+      <input type="text" asp-for="LoginID" name="LoginID" id="loginID" hidden>
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-12">
+    <div class="form-group col-md-6">
         <label for="title">Project Title</label>
         <input type="text" class="form-control" name="Title" id="title" placeholder="Project Title">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="location">My Location</label>
+        <input type="text" class="form-control" name="Location" id="location" placeholder="Location">
     </div>
   </div>
   <div class="form-row">

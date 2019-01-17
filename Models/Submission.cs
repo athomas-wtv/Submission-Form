@@ -15,7 +15,9 @@ namespace IST_Submission_Form.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public string LoginID { get; set; }
         public string Title { get; set; }
+        public string Location { get; set; }
         [Column(TypeName = "text")]
         public string ProjectDescription { get; set; }
         public string Goal { get; set; }
