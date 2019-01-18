@@ -1,0 +1,69 @@
+@page
+@model ProjectDetails
+@{
+    ViewData["Title"] = "Project Details";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Date)
+        </dd>
+        <dt>
+            Project Title
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Title)
+        </dd>
+        <dt>
+            Requester
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.FirstName) 
+             @Html.DisplayFor(model => model.Submission.LastName)
+        </dd>
+        <dt>
+            Requester Location
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.ProjectDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.ProjectDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.Goal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Goal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.DesiredCompletionDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.DesiredCompletionDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Submission.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Comments)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Teamlead">Back to List</a>
+</div>

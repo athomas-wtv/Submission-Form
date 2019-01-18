@@ -12,8 +12,6 @@ namespace IST_Submission_Form.Pages
     public class TeamleadModel : PageModel
     {
         public IList<Submission> Submissions { get; set; }
-        // public Submission Submissions { get; set; }
-
         private readonly SubmissionContext _context;
 
         public TeamleadModel(SubmissionContext context)
