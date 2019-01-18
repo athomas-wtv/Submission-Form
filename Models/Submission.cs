@@ -24,6 +24,8 @@ namespace IST_Submission_Form.Models
         [Column("Timeline")]
         public string DesiredCompletionDate { get; set; }
         public int Status { get; set; }
+        public string Files { get; set; }
+
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
