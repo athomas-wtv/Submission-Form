@@ -1,0 +1,25 @@
+{
+  "name": "IST_Submission_Form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "ldap": "^0.7.1",
+    "node-sass": "^4.11.0",
+    "sass": "1.15.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch wwwroot/scss -o wwwroot/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://athomas-wtv@bitbucket.org/fayetteist/ist-submission-form.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/fayetteist/ist-submission-form#readme"
+}

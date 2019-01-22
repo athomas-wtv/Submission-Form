@@ -1,0 +1,11 @@
+
+
+body{
+    color:green;
+}
+
+$theme-colors: (
+    "primary" : green
+);
+    
+@import "./node_modules/bootstrap/scss/_variables.scss";

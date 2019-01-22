@@ -17,7 +17,7 @@
                     <h5 class="card-title">
                     @Html.DisplayFor(modelItem => Submission.Title)
                     </h5>
-                    <p class="card-text text-truncate" style="overflow: scroll; height:100px">
+                    <p class="card-text" style="overflow: scroll; height:100px">
                         @Html.DisplayFor(modelItem => Submission.ProjectDescription)
                     </p>
                     <a asp-page="./ProjectDetails" asp-route-id="@Submission.ID" class="btn btn-success">Details</a>
