@@ -1,0 +1,33 @@
+@page
+@model EditStatusCode
+@{
+    ViewData["Title"] = "Update Status Code";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Project Title
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Submission.Title)
+        </dd>
+        <dt>
+            Status Code
+        </dt>
+        <dd>
+            <form method="post">
+                <select class="custom-select mb-4 col-6" name="NewStatusCode">
+                    @foreach(var Code in Model.StatusCodes)
+                    {
+                        <option value="@Code.ID" name="NewStatusCode">@Html.DisplayFor(model => Code.ID) - @Html.DisplayFor(model => Code.StatusDescription)</option>
+                    }
+                </select>
+                <br>
+                <button type="submit" class="btn btn-info">Save</button>
+                <a class="btn btn-danger" asp-page="./Teamlead">Cancel</a>
+            </form>
+        </dd>
+    </dl>
+</div>
