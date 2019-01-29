@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Novell.Directory.Ldap;
+using System.Linq;
 
 namespace IST_Submission_Form.Pages
 {
@@ -31,13 +33,16 @@ namespace IST_Submission_Form.Pages
         public async Task<ActionResult> OnPostAsync()
         {
             bool access = _authService.Login(email, password);
+            IList<LdapEntry> users = _authService.Search(email);
+            
             if(access)
             {
                 Result = true;
 
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, email)
+                    new Claim(ClaimTypes.NameIdentifier, email),
+                    new Claim("username", users.First().getAttribute("sAMAccountName").StringValue)
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

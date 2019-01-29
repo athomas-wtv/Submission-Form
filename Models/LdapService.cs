@@ -40,7 +40,7 @@ namespace IST_Submission_Form.Models
             try
             {
                 if (!connection.Bound) connection.Connect(configuration["ldap:url"], 389);
-                connection.Bind(configuration["ldap:url"], configuration["ldap:bindCredentials"]);
+                connection.Bind(configuration["ldap:SystemUser"], configuration["ldap:SystemPassword"]);
             }
             catch (System.Exception)
             {
