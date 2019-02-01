@@ -23,6 +23,7 @@
                     <a asp-page="./ProjectDetails" asp-route-id="@Submission.ID" class="btn btn-success">Details</a>
                 </div>
                 <div class="card-footer text-muted">
+                    <b>Assigned to: </b>@Html.DisplayFor(modelItem => Submission.AssignedTo)<br>
                     <b>Status: </b><a asp-page="./EditStatusCode" asp-route-id="@Submission.ID">@Html.DisplayFor(modelItem => Submission.Status)</a> | <a href="#">Delete</a>
                 </div>
             </div>

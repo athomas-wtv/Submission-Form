@@ -24,6 +24,7 @@ namespace IST_Submission_Form.Models
 
         public bool Login(string email, string password)
         {
+            
             try
             {
                 connection.Bind(email, password);
