@@ -53,7 +53,8 @@
             <h6>Assigned To</h6>
             <hr>
             @Html.DisplayFor(model => model.Submission.AssignedTo)
-            <a asp-page="./EditAssignee" asp-route-id="@Model.Submission.ID">Update</a>
+            <a asp-page="./Edit" asp-route-id="@Model.Submission.ID">Update</a>
+            <!-- <a asp-page="./EditAssignee" asp-route-id="@Model.Submission.ID">Update</a> -->
         </div>
     </div>
 </div>
