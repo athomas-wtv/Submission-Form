@@ -43,7 +43,6 @@ namespace IST_Submission_Form.Pages
             await _SubmissionContext.SaveChangesAsync();
             return RedirectToPage("ProjectDetails", new { id = id });
 
-
         }
     }
 }
