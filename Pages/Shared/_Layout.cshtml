@@ -48,6 +48,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/IST/Edit">Edit</a>
                     </li>
+                    @if(User.Identity.IsAuthenticated){
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Logout">Logout</a>
+                        </li>
+                    }
                 </ul>
             </nav>
             <p>&copy; 2019 - IST Submission Form</p>

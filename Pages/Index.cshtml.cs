@@ -6,12 +6,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IST_Submission_Form.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IST_Submission_Form.Models.SubmissionContext _context;
@@ -42,7 +44,6 @@ namespace IST_Submission_Form.Pages
         public string Location { get; set; }
         [BindProperty]
         public string Files { get; set; }
-
 
         public void OnGet()
         {

@@ -16,7 +16,7 @@ namespace IST_Submission_Form.Pages
                 return RedirectToPage();
             }
 
-            return Redirect("/Index");
+            return Redirect("/Login");
         }
     }
 }
