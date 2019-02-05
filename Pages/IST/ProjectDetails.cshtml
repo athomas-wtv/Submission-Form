@@ -1,4 +1,4 @@
-@page "{id}"
+@page
 @model ProjectDetails
 @{
     ViewData["Title"] = "Project Details";
@@ -60,16 +60,16 @@
 
 <div class="container mt-3">
     <div class="row">
-        <div class="col-12">
+        <!-- <div class="col-12">
             <h6>Comments</h6><hr>
             @foreach(var Comment in Model.Comments)
             {
                 <p>@Html.DisplayFor(modelItem => Comment.CreatedBy)</p>
                 <p>@Html.DisplayFor(model => model.Submission.Comments)</p>
             }
-        </div>
+        </div> -->
         <form method="post" class="col-12">
-            <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+            <input type="text" class="form-control" name="Body" asp-for="@Model.Comment.Body" placeholder="Add Comment" />
             <input type="submit" class="btn btn-primary btn-sm my-2 float-right" />
         </form>
     </div>

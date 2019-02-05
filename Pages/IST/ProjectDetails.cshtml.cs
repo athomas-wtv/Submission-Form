@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Novell.Directory.Ldap;
 
 namespace IST_Submission_Form.Pages
 {
     public class ProjectDetails : PageModel
     {
+        [BindProperty]
         public Submission Submission { get; set; }
         [BindProperty]
+        public string Body { get; set; }
+        [BindProperty]
         public Comment Comment { get; set; }
+        [BindProperty]
         public List<Comment> Comments { get; set; }
         private readonly SubmissionContext _SubmissionContext;
-        private readonly CommentContext _CommentContext;
 
-        public ProjectDetails(SubmissionContext SubmissionContext, CommentContext CommentContext)
+
+        public ProjectDetails(SubmissionContext SubmissionContext)
         {
             _SubmissionContext = SubmissionContext;
-            _CommentContext = CommentContext;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,7 +35,7 @@ namespace IST_Submission_Form.Pages
             }
 
             Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
-            Comments = await _CommentContext.Comments.ToListAsync();
+            Comments = await _SubmissionContext.Comments.ToListAsync();
 
             if (Submission == null)
             {
@@ -45,12 +50,15 @@ namespace IST_Submission_Form.Pages
                 return Page();
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
+            Comment.ID = default(int);
+            Comment.SubmissionID = Submission.ID;
+            Comment.CreatedBy = "Andre";
             Comment.CreatedAt = DateTime.Now;
-            _CommentContext.Comments.Add(Comment);
+            _SubmissionContext.Comments.Add(Comment);
 
-            await _CommentContext.SaveChangesAsync();
+            await _SubmissionContext.SaveChangesAsync();
 
-            return RedirectToPage("ProjectDetails", new {ID = id});
+            return RedirectToPage("ProjectDetails", new { ID = id });
         }
     }
 }

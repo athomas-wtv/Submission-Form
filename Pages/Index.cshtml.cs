@@ -13,13 +13,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IST_Submission_Form.Pages
 {
-    [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly IST_Submission_Form.Models.SubmissionContext _context;
+        private readonly Models.SubmissionContext _context;
         private readonly StaffDirectoryContext _staffcontext;
 
-        public IndexModel(IST_Submission_Form.Models.SubmissionContext context, StaffDirectoryContext staffcontext){
+        public IndexModel(SubmissionContext context, StaffDirectoryContext staffcontext){
 
             _context = context;
             _staffcontext = staffcontext;
