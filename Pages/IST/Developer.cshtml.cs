@@ -15,7 +15,7 @@ namespace IST_Submission_Form.Pages
     {
         public IList<Submission> Submissions { get; set; }
         private readonly SubmissionContext _context;
-        public string LoginID;
+        public string Username;
         public DeveloperModel(SubmissionContext context)
         {
             _context = context;
@@ -23,9 +23,9 @@ namespace IST_Submission_Form.Pages
 
         public async Task OnGetAsync()
         {
-            string LoginID = User.FindFirst("username").Value;
+            string Username = User.FindFirst("username").Value;
             Submissions = await _context.Submissions
-                                .Where(s => s.AssignedToID == LoginID).ToListAsync();
+                                .Where(s => s.AssignedToName == Username).ToListAsync();
         }
 
     }
