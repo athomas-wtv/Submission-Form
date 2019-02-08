@@ -10,6 +10,7 @@ namespace IST_Submission_Form.Models
         public int ID { get; set; }
         public int SubmissionID { get; set; }
         public Submission Submission { get; set; }
+        public string From { get; set; }
         [Column(TypeName = "text")]
         public string Body { get; set; }
         public string CreatedBy { get; set; }

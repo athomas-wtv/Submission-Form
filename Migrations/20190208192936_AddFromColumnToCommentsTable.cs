@@ -2,21 +2,21 @@
 
 namespace IST_Submission_Form.Migrations
 {
-    public partial class AddedFileUploadColumn : Migration
+    public partial class AddFromColumnToCommentsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Files",
-                table: "Submissions",
+                name: "From",
+                table: "Comments",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Files",
-                table: "Submissions");
+                name: "From",
+                table: "Comments");
         }
     }
 }

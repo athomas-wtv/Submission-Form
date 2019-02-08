@@ -32,13 +32,15 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("CreatedBy");
 
+                    b.Property<string>("From");
+
                     b.Property<int>("SubmissionID");
 
                     b.HasKey("ID");
 
                     b.HasIndex("SubmissionID");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("IST_Submission_Form.Models.Submission", b =>

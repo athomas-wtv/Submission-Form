@@ -32,16 +32,6 @@ namespace IST_Submission_Form.Pages
         public string Email { get; set; }
         public string LoginID { get; set; }
         [BindProperty]
-        public string Title { get; set; }
-        [BindProperty]
-        public string ProjectDescription { get; set; }
-        [BindProperty]
-        public string Goal { get; set; }
-        [BindProperty]
-        public string DesiredCompletionDate { get; set; }
-        [BindProperty]
-        public string Location { get; set; }
-        [BindProperty]
         public string Files { get; set; }
 
         public void OnGet()
@@ -66,6 +56,7 @@ namespace IST_Submission_Form.Pages
              // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Submission.Date = DateTime.Now;
             Submission.Status = 14;
+            Submission.AssignedTo = "PKOUTOUL";
             _context.Submissions.Add(Submission);
 
             // Business logic to store uploaded file

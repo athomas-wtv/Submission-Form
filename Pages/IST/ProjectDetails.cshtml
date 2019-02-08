@@ -60,17 +60,22 @@
 
 <div class="container mt-3">
     <div class="row">
-        <!-- <div class="col-12">
+        <div class="col-12">
             <h6>Comments</h6><hr>
-            @foreach(var Comment in Model.Comments)
-            {
-                <p>@Html.DisplayFor(modelItem => Comment.CreatedBy)</p>
-                <p>@Html.DisplayFor(model => model.Submission.Comments)</p>
-            }
-        </div> -->
+            <div class="scroll-comments w3-border mb-3 py-2">
+                @foreach(var Comment in Model.Comments)
+                {
+                    <div class="message to">
+                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedBy)</b></p>
+                        <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
+                        <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
+                    </div>
+                }
+            </div>
+        </div>
         <form method="post" class="col-12">
-            <input type="text" class="form-control" name="Body" asp-for="@Model.Comment.Body" placeholder="Add Comment" />
-            <input type="submit" class="btn btn-primary btn-sm my-2 float-right" />
+            <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+            <button type="submit" class="btn btn-primary btn-sm my-2 float-right">Send</button>
         </form>
     </div>
 </div>

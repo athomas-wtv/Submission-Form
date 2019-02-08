@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Novell.Directory.Ldap;
+using System.Linq;
 
 namespace IST_Submission_Form.Pages
 {
@@ -15,17 +16,16 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public Submission Submission { get; set; }
         [BindProperty]
-        public string Body { get; set; }
-        [BindProperty]
         public Comment Comment { get; set; }
         [BindProperty]
         public List<Comment> Comments { get; set; }
         private readonly SubmissionContext _SubmissionContext;
+        private readonly StaffDirectoryContext _StaffDirectory;
 
-
-        public ProjectDetails(SubmissionContext SubmissionContext)
+        public ProjectDetails(SubmissionContext SubmissionContext, StaffDirectoryContext StaffDirectory)
         {
             _SubmissionContext = SubmissionContext;
+            _StaffDirectory = StaffDirectory;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -44,17 +44,19 @@ namespace IST_Submission_Form.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
                 return Page();
+            
+            var name = _StaffDirectory.Staff.Where(s => s.LoginID == User.FindFirst("username").Value).First();
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
-            Comment.ID = default(int);
             Comment.SubmissionID = Submission.ID;
-            Comment.CreatedBy = "Andre";
+            Comment.CreatedBy = name.FName + " " + name.LName;
             Comment.CreatedAt = DateTime.Now;
             _SubmissionContext.Comments.Add(Comment);
+            Comment.ID = default(int);
 
             await _SubmissionContext.SaveChangesAsync();
 

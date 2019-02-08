@@ -42,7 +42,7 @@ namespace IST_Submission_Form.Pages
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, email),
-                    new Claim("username", users.First().getAttribute("sAMAccountName").StringValue)
+                    new Claim("username", users.First().getAttribute("sAMAccountName").StringValue),
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

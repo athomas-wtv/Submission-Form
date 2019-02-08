@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IST_Submission_Form.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,10 +18,15 @@ namespace IST_Submission_Form.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    LoginID = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
                     ProjectDescription = table.Column<string>(type: "text", nullable: true),
                     Goal = table.Column<string>(nullable: true),
-                    Timeline = table.Column<string>(nullable: true)
+                    Timeline = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    Files = table.Column<string>(nullable: true),
+                    AssignedTo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,7 +34,7 @@ namespace IST_Submission_Form.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -41,9 +46,9 @@ namespace IST_Submission_Form.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.ID);
+                    table.PrimaryKey("PK_Comments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Comment_Submissions_SubmissionID",
+                        name: "FK_Comments_Submissions_SubmissionID",
                         column: x => x.SubmissionID,
                         principalTable: "Submissions",
                         principalColumn: "ID",
@@ -51,15 +56,15 @@ namespace IST_Submission_Form.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_SubmissionID",
-                table: "Comment",
+                name: "IX_Comments_SubmissionID",
+                table: "Comments",
                 column: "SubmissionID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Submissions");

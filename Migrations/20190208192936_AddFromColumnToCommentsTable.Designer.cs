@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IST_Submission_Form.Migrations
 {
     [DbContext(typeof(SubmissionContext))]
-    [Migration("20190117160514_ChangedNameOfTimelineVariable")]
-    partial class ChangedNameOfTimelineVariable
+    [Migration("20190208192936_AddFromColumnToCommentsTable")]
+    partial class AddFromColumnToCommentsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,13 +34,15 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("CreatedBy");
 
+                    b.Property<string>("From");
+
                     b.Property<int>("SubmissionID");
 
                     b.HasKey("ID");
 
                     b.HasIndex("SubmissionID");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("IST_Submission_Form.Models.Submission", b =>
@@ -49,12 +51,16 @@ namespace IST_Submission_Form.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AssignedTo");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("DesiredCompletionDate")
                         .HasColumnName("Timeline");
 
                     b.Property<string>("Email");
+
+                    b.Property<string>("Files");
 
                     b.Property<string>("FirstName");
 
