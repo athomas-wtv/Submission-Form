@@ -13,7 +13,8 @@ namespace IST_Submission_Form.Models
         public string From { get; set; }
         [Column(TypeName = "text")]
         public string Body { get; set; }
-        public string CreatedBy { get; set; }
+        public string CreatedByID { get; set; }
+        public string CreatedByName { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
         public DateTime CreatedAt { get; set; }
 

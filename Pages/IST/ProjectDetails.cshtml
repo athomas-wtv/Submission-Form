@@ -52,7 +52,7 @@
         <div class="col-3">
             <h6>Assigned To</h6>
             <hr>
-            @Html.DisplayFor(model => model.Submission.AssignedTo)
+            @Html.DisplayFor(model => model.Submission.AssignedToName)
             <a asp-page="./Edit" asp-route-id="@Model.Submission.ID">Update</a>
         </div>
     </div>
@@ -60,23 +60,42 @@
 
 <div class="container mt-3">
     <div class="row">
-        <div class="col-12">
-            <h6>Comments</h6><hr>
-            <div class="scroll-comments w3-border mb-3 py-2">
-                @foreach(var Comment in Model.Comments)
+        <div class="col-6">
+            <h6>Requester Comments</h6><hr>
+            <div class="scroll-comments w3-border mb-3 py-2 rounded">
+                @foreach(var Comment in Model.RequesterComments)
                 {
-                    <div class="message to">
-                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedBy)</b></p>
+                    <div class="message to bg-info">
+                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b></p>
                         <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
                         <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
                     </div>
                 }
             </div>
+            <form method="post">
+                <input type="hidden" class="form-control" name="ID" value="@Model.Submission.ID" />
+                <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+                <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
+            </form>
         </div>
-        <form method="post" class="col-12">
-            <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
-            <button type="submit" class="btn btn-primary btn-sm my-2 float-right">Send</button>
-        </form>
+        <div class="col-6">
+            <h6>Developer Comments</h6><hr>
+            <div class="scroll-comments w3-border mb-3 py-2 rounded">
+                @foreach(var Comment in Model.DeveloperComments)
+                {
+                    <div class="message to bg-dark">
+                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b></p>
+                        <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
+                        <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
+                    </div>
+                }
+            </div>
+            <form method="post">
+                <input type="hidden" class="form-control" name="ID" value="@Model.Submission.ID" />
+                <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+                <input type="submit" class="btn btn-dark btn-sm my-2 float-right" />
+            </form>
+        </div>
     </div>
 </div>
 

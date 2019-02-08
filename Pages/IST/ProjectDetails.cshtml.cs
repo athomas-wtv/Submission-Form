@@ -16,9 +16,8 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public Submission Submission { get; set; }
         [BindProperty]
-        public Comment Comment { get; set; }
-        [BindProperty]
-        public List<Comment> Comments { get; set; }
+        public List<Comment> RequesterComments { get; set; }
+        public List<Comment> DeveloperComments { get; set; }
         private readonly SubmissionContext _SubmissionContext;
         private readonly StaffDirectoryContext _StaffDirectory;
 
@@ -35,7 +34,8 @@ namespace IST_Submission_Form.Pages
             }
 
             Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
-            Comments = await _SubmissionContext.Comments.ToListAsync();
+            RequesterComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID == Submission.RequesterID).ToListAsync();
+            DeveloperComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID != Submission.RequesterID).ToListAsync();
 
             if (Submission == null)
             {
@@ -44,23 +44,24 @@ namespace IST_Submission_Form.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int ID, string Body)
         {
             if (!ModelState.IsValid)
                 return Page();
             
-            var name = _StaffDirectory.Staff.Where(s => s.LoginID == User.FindFirst("username").Value).First();
-
+            var name = _StaffDirectory.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            Comment Comment = new Comment();
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Comment.SubmissionID = Submission.ID;
-            Comment.CreatedBy = name.FName + " " + name.LName;
+            Comment.CreatedByName = name.FName + " " + name.LName;
+            Comment.Body = Body;
+            Comment.CreatedByID = name.EmployeeID;
             Comment.CreatedAt = DateTime.Now;
             _SubmissionContext.Comments.Add(Comment);
-            Comment.ID = default(int);
 
             await _SubmissionContext.SaveChangesAsync();
 
-            return RedirectToPage("ProjectDetails", new { ID = id });
+            return RedirectToPage("ProjectDetails", new { ID = ID });
         }
     }
 }

@@ -14,7 +14,7 @@ namespace IST_Submission_Form.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string LoginID { get; set; }
+        public string RequesterID { get; set; }
         public string Title { get; set; }
         public string Location { get; set; }
         [Column(TypeName = "text")]
@@ -24,7 +24,8 @@ namespace IST_Submission_Form.Models
         public string DesiredCompletionDate { get; set; }
         public int Status { get; set; }
         public string Files { get; set; }
-        public string AssignedTo { get; set; }
+        public string AssignedToID { get; set; }
+        public string AssignedToName { get; set; }
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

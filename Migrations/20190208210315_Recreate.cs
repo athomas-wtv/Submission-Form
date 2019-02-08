@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IST_Submission_Form.Migrations
 {
-    public partial class Init : Migration
+    public partial class Recreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace IST_Submission_Form.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    LoginID = table.Column<string>(nullable: true),
+                    RequesterID = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
                     ProjectDescription = table.Column<string>(type: "text", nullable: true),
@@ -26,7 +26,8 @@ namespace IST_Submission_Form.Migrations
                     Timeline = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Files = table.Column<string>(nullable: true),
-                    AssignedTo = table.Column<string>(nullable: true)
+                    AssignedToID = table.Column<string>(nullable: true),
+                    AssignedToName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +41,10 @@ namespace IST_Submission_Form.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SubmissionID = table.Column<int>(nullable: false),
+                    From = table.Column<string>(nullable: true),
                     Body = table.Column<string>(type: "text", nullable: true),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedByID = table.Column<string>(nullable: true),
+                    CreatedByName = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

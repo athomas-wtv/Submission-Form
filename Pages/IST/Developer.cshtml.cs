@@ -25,7 +25,7 @@ namespace IST_Submission_Form.Pages
         {
             string LoginID = User.FindFirst("username").Value;
             Submissions = await _context.Submissions
-                                .Where(s => s.AssignedTo == LoginID).ToListAsync();
+                                .Where(s => s.AssignedToID == LoginID).ToListAsync();
         }
 
     }

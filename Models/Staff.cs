@@ -11,6 +11,7 @@ namespace IST_Submission_Form.Models
         public string LName { get; set; }
         public string Email { get; set; }
         public string LoginID { get; set; }
+        public string EmployeeID { get; set; }
 
 
     }

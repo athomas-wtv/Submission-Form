@@ -56,7 +56,9 @@ namespace IST_Submission_Form.Pages
              // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Submission.Date = DateTime.Now;
             Submission.Status = 14;
-            Submission.AssignedTo = "PKOUTOUL";
+            Submission.RequesterID = User.FindFirst("username").Value;
+            Submission.AssignedToID = "200568";
+            Submission.AssignedToName = "PKOUTOUL";
             _context.Submissions.Add(Submission);
 
             // Business logic to store uploaded file

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IST_Submission_Form.Migrations
 {
     [DbContext(typeof(SubmissionContext))]
-    [Migration("20190208142146_Init")]
-    partial class Init
+    [Migration("20190208210315_Recreate")]
+    partial class Recreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,11 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedByID");
+
+                    b.Property<string>("CreatedByName");
+
+                    b.Property<string>("From");
 
                     b.Property<int>("SubmissionID");
 
@@ -49,7 +53,9 @@ namespace IST_Submission_Form.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AssignedTo");
+                    b.Property<string>("AssignedToID");
+
+                    b.Property<string>("AssignedToName");
 
                     b.Property<DateTime>("Date");
 
@@ -68,10 +74,10 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<string>("LoginID");
-
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("text");
+
+                    b.Property<string>("RequesterID");
 
                     b.Property<int>("Status");
 

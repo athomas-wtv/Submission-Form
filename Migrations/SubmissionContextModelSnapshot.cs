@@ -30,7 +30,9 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedByID");
+
+                    b.Property<string>("CreatedByName");
 
                     b.Property<string>("From");
 
@@ -49,7 +51,9 @@ namespace IST_Submission_Form.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AssignedTo");
+                    b.Property<string>("AssignedToID");
+
+                    b.Property<string>("AssignedToName");
 
                     b.Property<DateTime>("Date");
 
@@ -68,10 +72,10 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<string>("LoginID");
-
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("text");
+
+                    b.Property<string>("RequesterID");
 
                     b.Property<int>("Status");
 

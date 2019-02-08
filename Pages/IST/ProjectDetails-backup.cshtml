@@ -52,7 +52,7 @@
         <div class="col-3">
             <h6>Assigned To</h6>
             <hr>
-            @Html.DisplayFor(model => model.Submission.AssignedTo)
+            @Html.DisplayFor(model => model.Submission.AssignedToName)
             <a asp-page="./EditAssignee" asp-route-id="@Model.Submission.ID">Update</a>
         </div>
     </div>

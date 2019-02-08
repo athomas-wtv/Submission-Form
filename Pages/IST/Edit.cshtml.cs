@@ -38,7 +38,7 @@ namespace IST_Submission_Form.Pages
             Submission = _SubmissionContext.Submissions
                             .Where(s => s.ID == id).First();
 
-            Submission.AssignedTo = Assignee;
+            Submission.AssignedToName = Assignee;
             Submission.Status = NewStatusCode;
             await _SubmissionContext.SaveChangesAsync();
             return RedirectToPage("ProjectDetails", new { id = id });
