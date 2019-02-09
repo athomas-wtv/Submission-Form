@@ -16,18 +16,18 @@ namespace IST_Submission_Form.Pages
         public int NewStatusCode { get; set; }
         public IList<StatusCodes> StatusCodes { get; set; }
         public Submission Submission;
-        private readonly StatusCodesContext _StatusCodeContext;
+        private readonly StatusCodesContext _StatusCodesContext;
         private readonly SubmissionContext _SubmissionContext;
 
-        public Edit(StatusCodesContext StatusCodeContext, SubmissionContext SubmissionContext)
+        public Edit(StatusCodesContext StatusCodesContext, SubmissionContext SubmissionContext)
         {
-            _StatusCodeContext = StatusCodeContext;
+            _StatusCodesContext = StatusCodesContext;
             _SubmissionContext = SubmissionContext;
         }
         
         public async Task OnGetAsync(int id)
         {
-            StatusCodes = await _StatusCodeContext.StatusCode
+            StatusCodes = await _StatusCodesContext.StatusCode
                             .Where(c => c.SortProposals > 0).ToListAsync();
             Submission = _SubmissionContext.Submissions
                             .Where(s => s.ID == id).First();

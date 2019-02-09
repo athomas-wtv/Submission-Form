@@ -1,0 +1,37 @@
+@page
+@model RequesterModel
+@{
+    ViewData["Title"] = "Your Requested Projects";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    @foreach (var Submission in Model.Submissions)
+    {
+        <div class="col-12">
+            <div class="card my-3 shadow">
+                <div class="card-header">
+                    <h3 class="mb-0">@Html.DisplayFor(modelItem => Submission.Title)</h3>
+                    <br />
+                    <i>Submitted: @Html.DisplayFor(modelItem => Submission.Date)</i>
+                </div>
+                    <div class="card-body">
+                        
+                        <p class="card-text" style="overflow: scroll; height:100px">
+                            @Html.DisplayFor(modelItem => Submission.ProjectDescription)
+                        </p>
+                        <a asp-page="./ProjectDetails" asp-route-id="@Submission.ID" class="btn btn-success">Details</a>
+                    </div>
+                <div class="container card-footer text-muted">
+                    <div class="row">
+                        <div class="col">
+                            <b>Status: </b>@Html.DisplayFor(modelItem => Submission.Status)
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <a class="text-danger" asp-page="./CancelRequest" asp-route-id="@Submission.ID"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
