@@ -36,28 +36,34 @@
         @RenderBody()
         <hr />
         <footer>
-            <nav class="navbar navbar-expand navbar-dark bg-dark">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/IST/Teamlead">Teamlead</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/IST/Developer">Developer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/IST/Edit">Edit</a>
-                    </li>
-                    @if(User.Identity.IsAuthenticated)
-                    {
+            @if(User.FindFirst("username").Value == "andre.thomas")
+            {
+                <nav class="navbar navbar-expand navbar-dark bg-dark">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/Logout">Logout</a>
+                            <a class="nav-link" href="/Index">Home</a>
                         </li>
-                    }
-                </ul>
-            </nav>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/IST/Teamlead">Teamlead</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/IST/Developer">Developer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/IST/Edit">Edit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Requester">Requester</a>
+                        </li>
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">Logout</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                }
             <p>&copy; 2019 - IST Submission Form</p>
         </footer>
     </div>

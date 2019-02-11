@@ -4,6 +4,9 @@
     ViewData["Title"] = "Your Requested Projects";
 }
 <h2>@ViewData["Title"]</h2>
+<div class="d-flex justify-content-end">
+    <a asp-page="Index" class="btn btn-info">Submit a Request <i class="fa fa-plus"></i></a>
+</div>
 <div class="row">
     @foreach (var Submission in Model.Submissions)
     {

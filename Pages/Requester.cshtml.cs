@@ -22,7 +22,9 @@ namespace IST_Submission_Form.Pages
         
         public async Task OnGetAsync()
         {
-            Submissions = await _context.Submissions.Where(s => s.RequesterID == User.FindFirst("username").Value).ToListAsync();
+            Submissions = await _context.Submissions.Where(s => s.RequesterID == User.FindFirst("username").Value)
+                                                    .OrderByDescending(d => d.Date)
+                                                    .ToListAsync();
             StatusCodes = await _StatusCodesContext.StatusCode
                             .Where(c => c.SortProposals > 0)
                             .ToListAsync();

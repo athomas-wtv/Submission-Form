@@ -79,7 +79,7 @@ namespace IST_Submission_Form.Pages
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Requester");
         }
 
     }

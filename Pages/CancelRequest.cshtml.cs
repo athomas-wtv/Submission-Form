@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace IST_Submission_Form.Pages
     public class CancelRequestModel : PageModel
     {
         public Submission Submission { get; set; }
+        public IList<Submission> Submissions { get; set; }
         private readonly SubmissionContext _context;
 
         public CancelRequestModel(SubmissionContext context)
@@ -17,11 +19,15 @@ namespace IST_Submission_Form.Pages
             _context = context;
         }
         
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            _context.Submissions.Remove(Submission);
-            return Page();
+            if(!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+            Submission = await _context.Submissions.FirstOrDefaultAsync(s => s.ID == id);
 
+            return Page();
             // try
             // {
             //     Submissions = await _context.Submissions.ToListAsync();
