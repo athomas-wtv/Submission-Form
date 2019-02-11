@@ -55,5 +55,6 @@
 </div>
 
 <div>
-    <a asp-page="/Requester/Requester">Back to List</a>
+    <a asp-page="/Requester/Requester">Back to List</a> | 
+    <a asp-page="/Requester/CancelRequest" asp-route-id="@Model.Submission.ID" class="btn text-danger"><i class="fas fa-trash-alt"></i></a>
 </div>

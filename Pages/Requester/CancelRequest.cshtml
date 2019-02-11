@@ -9,19 +9,17 @@
         <div class="row">
             <div>
                 <h4>Project Title</h4><hr>
-                @Html.DisplayFor(model => model.Submission.Title)
+                <p>@Html.DisplayFor(model => model.Submission.Title)</p>
             </div>
         </div>
-    </div>
-    <div class="container mb-2">
         <div class="row">
-            <div>
+            <div class="col">
                 <h4>@Html.DisplayNameFor(model => model.Submission.ProjectDescription)</h4><hr>
                 <p>@Html.DisplayFor(model => model.Submission.ProjectDescription)</p>
             </div>
-            <div>
+            <div class="col">
                 <h4>@Html.DisplayNameFor(model => model.Submission.Goal)</h4><hr>
-                @Html.DisplayFor(model => model.Submission.Goal)
+                <p>@Html.DisplayFor(model => model.Submission.Goal)</p>
             </div>
         </div>
     </div>
