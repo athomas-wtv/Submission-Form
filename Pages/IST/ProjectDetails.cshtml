@@ -9,19 +9,19 @@
 <div class="container mb-2">
     <div class="row">
         <div class="col-3">
-            <h6>Date & Time</h6><hr>
+            <h4>Date & Time</h4><hr>
             <p>@Html.DisplayFor(model => model.Submission.Date)</p>
         </div>
         <div class="col-3">
-            <h6>Project Title</h6><hr>
+            <h4>Project Title</h4><hr>
             @Html.DisplayFor(model => model.Submission.Title)
         </div>
         <div class="col-3">
-            <h6>Requester</h6><hr>
+            <h4>Requester</h4><hr>
             @Html.DisplayFor(model => model.Submission.FirstName) @Html.DisplayFor(model => model.Submission.LastName)
         </div>
         <div class="col-3">
-            <h6>Location</h6><hr>
+            <h4>Location</h4><hr>
             @Html.DisplayFor(model => model.Submission.Location)
         </div>
     </div>
@@ -29,11 +29,11 @@
 <div class="container mb-2">
     <div class="row">
         <div class="col-6">
-            <h6>@Html.DisplayNameFor(model => model.Submission.ProjectDescription)</h6><hr>
+            <h4>@Html.DisplayNameFor(model => model.Submission.ProjectDescription)</h4><hr>
             <p>@Html.DisplayFor(model => model.Submission.ProjectDescription)</p>
         </div>
         <div class="col-6">
-            <h6>@Html.DisplayNameFor(model => model.Submission.Goal)</h6><hr>
+            <h4>@Html.DisplayNameFor(model => model.Submission.Goal)</h4><hr>
             @Html.DisplayFor(model => model.Submission.Goal)
         </div>
     </div>
@@ -42,15 +42,15 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <h6>Desired Completion Date</h6><hr>
+            <h4>Desired Completion Date</h4><hr>
             <p>@Html.DisplayFor(model => model.Submission.DesiredCompletionDate)</p>
         </div>
         <div class="col-3">
-            <h6>Status</h6><hr>
+            <h4>Status</h4><hr>
             @Html.DisplayFor(model => model.Submission.Status)
         </div>
         <div class="col-3">
-            <h6>Assigned To</h6>
+            <h4>Assigned To</h4>
             <hr>
             @Html.DisplayFor(model => model.Submission.AssignedToName)
             <a asp-page="./Edit" asp-route-id="@Model.Submission.ID">Update</a>
@@ -61,7 +61,7 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-6">
-            <h6>Requester Comments</h6><hr>
+            <h4>Requester Comments</h4><hr>
             <div class="scroll-comments w3-border mb-3 py-2 rounded">
                 @foreach(var Comment in Model.RequesterComments)
                 {
@@ -79,7 +79,7 @@
             </form>
         </div>
         <div class="col-6">
-            <h6>Developer Comments</h6><hr>
+            <h4>Developer Comments</h4><hr>
             <div class="scroll-comments w3-border mb-3 py-2 rounded">
                 @foreach(var Comment in Model.DeveloperComments)
                 {

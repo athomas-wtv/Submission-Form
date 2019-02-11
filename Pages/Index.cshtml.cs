@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
 {
@@ -52,11 +53,12 @@ namespace IST_Submission_Form.Pages
         {
             if (!ModelState.IsValid)
                 return Page();
-
+            var name = _staffcontext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            // var name = _staffcontext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
              // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Submission.Date = DateTime.Now;
             Submission.Status = 14;
-            Submission.RequesterID = User.FindFirst("username").Value;
+            Submission.RequesterID = name.EmployeeID;
             Submission.AssignedToID = "200568";
             Submission.AssignedToName = "PKOUTOUL";
             _context.Submissions.Add(Submission);
@@ -79,7 +81,7 @@ namespace IST_Submission_Form.Pages
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Requester");
+            return RedirectToPage("/Requester/Requester");
         }
 
     }

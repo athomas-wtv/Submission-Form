@@ -5,7 +5,7 @@ using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace IST_Submission_Form.Pages
+namespace IST_Submission_Form.Pages.Requester
 {
     public class RequesterModel : PageModel
     {
@@ -13,16 +13,20 @@ namespace IST_Submission_Form.Pages
         public IList<StatusCodes> StatusCodes { get; set; }
         private readonly SubmissionContext _context;
         private readonly StatusCodesContext _StatusCodesContext;
+        private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public RequesterModel(SubmissionContext context, StatusCodesContext StatusCodesContext)
+        public RequesterModel(SubmissionContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
         {
             _context = context;
             _StatusCodesContext = StatusCodesContext;
+            _StaffDirectoryContext = StaffDirectoryContext;
         }
         
         public async Task OnGetAsync()
         {
-            Submissions = await _context.Submissions.Where(s => s.RequesterID == User.FindFirst("username").Value)
+            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+
+            Submissions = await _context.Submissions.Where(s => s.RequesterID == name.EmployeeID)
                                                     .OrderByDescending(d => d.Date)
                                                     .ToListAsync();
             StatusCodes = await _StatusCodesContext.StatusCode

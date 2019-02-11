@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace IST_Submission_Form.Pages
+namespace IST_Submission_Form.Pages.Requester
 {
     public class CancelRequestModel : PageModel
     {

@@ -5,7 +5,7 @@
 }
 <h2>@ViewData["Title"]</h2>
 <div class="d-flex justify-content-end">
-    <a asp-page="Index" class="btn btn-info">Submit a Request <i class="fa fa-plus"></i></a>
+    <a asp-page="../Index" class="btn btn-info">Submit a Request <i class="fa fa-plus"></i></a>
 </div>
 <div class="row">
     @foreach (var Submission in Model.Submissions)
@@ -18,11 +18,10 @@
                     <i>Submitted: @Html.DisplayFor(modelItem => Submission.Date)</i>
                 </div>
                     <div class="card-body">
-                        
                         <p class="card-text" style="overflow: scroll; height:100px">
                             @Html.DisplayFor(modelItem => Submission.ProjectDescription)
                         </p>
-                        <a asp-page="./ProjectDetails" asp-route-id="@Submission.ID" class="btn btn-success">Details</a>
+                        <a asp-page="/Requester/RProjectDetails" asp-route-id="@Submission.ID" class="btn btn-success">Details</a>
                     </div>
                 <div class="container card-footer text-muted">
                     <div class="row">

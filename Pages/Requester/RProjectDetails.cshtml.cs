@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace IST_Submission_Form.Pages
 {
-    public class ProjectDetails : PageModel
+    public class RProjectDetails : PageModel
     {
         [BindProperty]
         public Submission Submission { get; set; }
@@ -19,12 +19,12 @@ namespace IST_Submission_Form.Pages
         public List<Comment> RequesterComments { get; set; }
         public List<Comment> DeveloperComments { get; set; }
         private readonly SubmissionContext _SubmissionContext;
-        private readonly StaffDirectoryContext _StaffDirectoryContext;
+        private readonly StaffDirectoryContext _StaffDirectory;
 
-        public ProjectDetails(SubmissionContext SubmissionContext, StaffDirectoryContext StaffDirectoryContext)
+        public RProjectDetails(SubmissionContext SubmissionContext, StaffDirectoryContext StaffDirectory)
         {
             _SubmissionContext = SubmissionContext;
-            _StaffDirectoryContext = StaffDirectoryContext;
+            _StaffDirectory = StaffDirectory;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,7 +35,6 @@ namespace IST_Submission_Form.Pages
 
             Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
             RequesterComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID == Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
-            DeveloperComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID != Submission.RequesterID).ToListAsync();
 
             if (Submission == null)
             {
@@ -49,8 +48,9 @@ namespace IST_Submission_Form.Pages
             if (!ModelState.IsValid)
                 return Page();
             
-            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            var name = _StaffDirectory.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
             Comment Comment = new Comment();
+
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Comment.SubmissionID = Submission.ID;
             Comment.CreatedByName = name.FName + " " + name.LName;
@@ -61,7 +61,7 @@ namespace IST_Submission_Form.Pages
 
             await _SubmissionContext.SaveChangesAsync();
 
-            return RedirectToPage("ProjectDetails", new { ID = ID });
+            return RedirectToPage("RProjectDetails", new { ID = ID });
         }
     }
 }
