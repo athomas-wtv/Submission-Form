@@ -1,4 +1,4 @@
-@page
+@page "{id}"
 @model ProjectDetails
 @{
     ViewData["Title"] = "Project Details";
@@ -53,7 +53,7 @@
             <h4>Assigned To</h4>
             <hr>
             @Html.DisplayFor(model => model.Submission.AssignedToName)
-            <a asp-page="./Edit" asp-route-id="@Model.Submission.ID">Update</a>
+            <a asp-page="./Edit" class="text-info" asp-route-id="@Model.Submission.ID">Update</a>
         </div>
     </div>
 </div>

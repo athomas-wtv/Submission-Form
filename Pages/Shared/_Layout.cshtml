@@ -36,7 +36,7 @@
         @RenderBody()
         <hr />
         <footer>
-            @if(User.FindFirst("username").Value == "andre.thomas")
+            @if(User.Identity.IsAuthenticated && User.FindFirst("username").Value == "andre.thomas")
             {
                 <nav class="navbar navbar-expand navbar-dark bg-dark">
                     <ul class="navbar-nav mx-auto">

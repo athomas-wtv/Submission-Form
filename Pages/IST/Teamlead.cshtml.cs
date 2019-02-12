@@ -22,7 +22,7 @@ namespace IST_Submission_Form.Pages
         
         public async Task OnGetAsync()
         {
-            Submissions = await _context.Submissions.ToListAsync();
+            Submissions = await _context.Submissions.OrderByDescending(d => d.Date).ToListAsync();
 
             // try
             // {

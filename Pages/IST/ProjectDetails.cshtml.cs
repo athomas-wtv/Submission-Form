@@ -63,5 +63,6 @@ namespace IST_Submission_Form.Pages
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
+
     }
 }

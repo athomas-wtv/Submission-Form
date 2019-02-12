@@ -44,5 +44,11 @@ namespace IST_Submission_Form.Pages
             return RedirectToPage("ProjectDetails", new { id = id });
 
         }
+
+        
+        public IActionResult Cancel(int ID)
+        {
+            return RedirectToPage("ProjectDetails", new { ID = ID });
+        }
     }
 }
