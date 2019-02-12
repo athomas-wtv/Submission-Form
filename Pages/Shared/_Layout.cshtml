@@ -23,11 +23,14 @@
 <body>
     <!-- Image and text -->
     <nav class="navbar mb-4 navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="~/images/ist-logo.png" width="68" height="50" class="d-inline-block align-top" alt="IST Logo">
-        Information Solutions Team Request Form
-    </a>
-    
+        <a class="navbar-brand" asp-page="/Index">
+            <img src="~/images/ist-logo.png" width="68" height="50" class="d-inline-block" alt="IST Logo">
+            Information Solutions Team Request Form
+        </a>
+        @if(User.Identity.IsAuthenticated)
+        {
+            <a class="nav-link d-flex justify-content-end text-secondary" href="/Logout">Logout</a>
+        }
     </nav>
 
     <partial name="_CookieConsentPartial" />

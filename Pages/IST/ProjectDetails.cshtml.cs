@@ -35,7 +35,7 @@ namespace IST_Submission_Form.Pages
 
             Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
             RequesterComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID == Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
-            DeveloperComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID != Submission.RequesterID).ToListAsync();
+            DeveloperComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID != Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
 
             if (Submission == null)
             {
