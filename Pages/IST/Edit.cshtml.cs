@@ -45,7 +45,7 @@ namespace IST_Submission_Form.Pages
 
         }
 
-        
+        [Route ("/IST/ProjectDetails/{id}")]
         public IActionResult Cancel(int ID)
         {
             return RedirectToPage("ProjectDetails", new { ID = ID });
