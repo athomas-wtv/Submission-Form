@@ -66,9 +66,14 @@
                 @foreach(var Comment in Model.RequesterComments)
                 {
                     <div class="message to bg-info">
-                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b></p>
-                        <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
-                        <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
+                        <p>
+                        <b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b>
+                        <br>
+                        @Html.DisplayFor(modelItem => Comment.Body)
+                        <br>
+                        <span style="font-size: 0.5em; font-style: italic;">
+                            Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)
+                        </span>
                     </div>
                 }
             </div>
@@ -84,9 +89,15 @@
                 @foreach(var Comment in Model.DeveloperComments)
                 {
                     <div class="message to bg-dark">
-                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b></p>
-                        <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
-                        <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
+                        <p>
+                        <b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b>
+                        <br>
+                        @Html.DisplayFor(modelItem => Comment.Body)
+                        <br>
+                        <span style="font-size: 0.5em; font-style: italic;">
+                            Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)
+                        </span>
+                        </p>
                     </div>
                 }
             </div>
