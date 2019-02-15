@@ -13,34 +13,34 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public string Assignee { get; set; }
         [BindProperty]
-        public int NewStatusCode { get; set; }
+        public byte NewStatusCode { get; set; }
         public IList<StatusCodes> StatusCodes { get; set; }
-        public Submission Submission;
+        public Proposal Proposal;
         private readonly StatusCodesContext _StatusCodesContext;
-        private readonly SubmissionContext _SubmissionContext;
+        private readonly ProposalContext _ProposalContext;
 
-        public Edit(StatusCodesContext StatusCodesContext, SubmissionContext SubmissionContext)
+        public Edit(StatusCodesContext StatusCodesContext, ProposalContext ProposalContext)
         {
             _StatusCodesContext = StatusCodesContext;
-            _SubmissionContext = SubmissionContext;
+            _ProposalContext = ProposalContext;
         }
         
         public async Task OnGetAsync(int id)
         {
             StatusCodes = await _StatusCodesContext.StatusCode
                             .Where(c => c.SortProposals > 0).ToListAsync();
-            Submission = _SubmissionContext.Submissions
+            Proposal = _ProposalContext.Proposals
                             .Where(s => s.ID == id).First();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Submission = _SubmissionContext.Submissions
+            Proposal = _ProposalContext.Proposals
                             .Where(s => s.ID == id).First();
 
-            Submission.AssignedToName = Assignee;
-            Submission.Status = NewStatusCode;
-            await _SubmissionContext.SaveChangesAsync();
+            Proposal.AssignedToName = Assignee;
+            Proposal.Status = NewStatusCode;
+            await _ProposalContext.SaveChangesAsync();
             return RedirectToPage("ProjectDetails", new { id = id });
 
         }

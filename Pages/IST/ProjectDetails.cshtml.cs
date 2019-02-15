@@ -14,16 +14,16 @@ namespace IST_Submission_Form.Pages
     public class ProjectDetails : PageModel
     {
         [BindProperty]
-        public Submission Submission { get; set; }
+        public Proposal Proposal { get; set; }
         [BindProperty]
         public List<Comment> RequesterComments { get; set; }
         public List<Comment> DeveloperComments { get; set; }
-        private readonly SubmissionContext _SubmissionContext;
+        private readonly ProposalContext _ProposalContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public ProjectDetails(SubmissionContext SubmissionContext, StaffDirectoryContext StaffDirectoryContext)
+        public ProjectDetails(ProposalContext ProposalContext, StaffDirectoryContext StaffDirectoryContext)
         {
-            _SubmissionContext = SubmissionContext;
+            _ProposalContext = ProposalContext;
             _StaffDirectoryContext = StaffDirectoryContext;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -33,11 +33,11 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
             }
 
-            Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
-            RequesterComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID == Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
-            DeveloperComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID != Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
+            Proposal = await _ProposalContext.Proposals.FirstOrDefaultAsync(m => m.ID == id);
+            RequesterComments = await _ProposalContext.Comments.Where(c => c.CreatedByID == Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
+            DeveloperComments = await _ProposalContext.Comments.Where(c => c.CreatedByID != Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
 
-            if (Submission == null)
+            if (Proposal == null)
             {
                 return NotFound();
             }
@@ -52,14 +52,14 @@ namespace IST_Submission_Form.Pages
             var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
             Comment Comment = new Comment();
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
-            Comment.SubmissionID = Submission.ID;
+            Comment.ProposalID = Proposal.ID;
             Comment.CreatedByName = name.FName + " " + name.LName;
             Comment.Body = Body;
             Comment.CreatedByID = name.EmployeeID;
             Comment.CreatedAt = DateTime.Now;
-            _SubmissionContext.Comments.Add(Comment);
+            _ProposalContext.Comments.Add(Comment);
 
-            await _SubmissionContext.SaveChangesAsync();
+            await _ProposalContext.SaveChangesAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }

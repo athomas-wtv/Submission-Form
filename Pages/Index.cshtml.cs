@@ -16,19 +16,17 @@ namespace IST_Submission_Form.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly Models.SubmissionContext _context;
+        private readonly Models.ProposalContext _proposalcontext;
         private readonly StaffDirectoryContext _staffcontext;
 
-        public IndexModel(SubmissionContext context, StaffDirectoryContext staffcontext){
+        public IndexModel(ProposalContext proposalcontext, StaffDirectoryContext staffcontext){
 
-            _context = context;
+            _proposalcontext = proposalcontext;
             _staffcontext = staffcontext;
 
         }
         [BindProperty]
-        public string FirstName { get; set; }
-        [BindProperty]
-        public string LastName { get; set; }
+        public string SubmitterName { get; set; }
         [BindProperty]
         public string Email { get; set; }
         public string LoginID { get; set; }
@@ -40,28 +38,29 @@ namespace IST_Submission_Form.Pages
             var email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var staff = _staffcontext.Staff.Where((s) => s.Email == email).First();
 
-            FirstName = staff.FName;
-            LastName = staff.LName;
+            SubmitterName = staff.LName + ", " + staff.FName;
             Email = staff.Email;
             LoginID = staff.LoginID;
 
         }
         [BindProperty]
-        public Submission Submission { get; set; }
+        public Proposal Proposal { get; set; }
         
         public async Task<IActionResult> OnPostAsync(IFormFile Files)
         {
             if (!ModelState.IsValid)
                 return Page();
             var name = _staffcontext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
-            // var name = _staffcontext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
-             // Adding values to fields automatically. These fields are not on the form for users to see and update.
-            Submission.Date = DateTime.Now;
-            Submission.Status = 14;
-            Submission.RequesterID = name.EmployeeID;
-            Submission.AssignedToID = "200568";
-            Submission.AssignedToName = "PKOUTOUL";
-            _context.Submissions.Add(Submission);
+            var email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var staff = _staffcontext.Staff.Where((s) => s.Email == email).First();
+
+            // Adding values to fields automatically. These fields are not on the form for users to see and update.
+            Proposal.SubmitDate = DateTime.Now;
+            Proposal.Status = 14;
+            Proposal.RequesterID = name.EmployeeID;
+            Proposal.AssignedToID = "200568";
+            Proposal.AssignedToName = "PKOUTOUL";
+            _proposalcontext.Proposals.Add(Proposal);
 
             // Business logic to store uploaded file
             if (Files == null || Files.Length == 0)
@@ -72,14 +71,14 @@ namespace IST_Submission_Form.Pages
                         Files.FileName);
             
             // Store file path of uploaded document into database column.
-            Submission.Files = path;
+            Proposal.Files = path;
 
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await Files.CopyToAsync(stream);
             }
 
-            await _context.SaveChangesAsync();
+            await _proposalcontext.SaveChangesAsync();
 
             return RedirectToPage("/Requester/Requester");
         }

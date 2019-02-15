@@ -13,21 +13,21 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Submission.Title)
+            @Html.DisplayNameFor(model => model.Proposal.Title)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Submission.Title)
+            @Html.DisplayFor(model => model.Proposal.Title)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Submission.ProjectDescription)
+            @Html.DisplayNameFor(model => model.Proposal.ProjectDescription)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Submission.ProjectDescription)
+            @Html.DisplayFor(model => model.Proposal.ProjectDescription)
         </dd>
     </dl>
 
     <form method="post">
-        <input type="hidden" asp-for="Submission.ID" />
+        <input type="hidden" asp-for="Proposal.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Teamlead">Back to List</a>
     </form>

@@ -12,21 +12,21 @@ namespace IST_Submission_Form.Pages
 {
     public class TeamleadModel : PageModel
     {
-        public IList<Submission> Submissions { get; set; }
-        private readonly SubmissionContext _context;
+        public IList<Proposal> Proposals { get; set; }
+        private readonly ProposalContext _context;
 
-        public TeamleadModel(SubmissionContext context)
+        public TeamleadModel(ProposalContext context)
         {
             _context = context;
         }
         
         public async Task OnGetAsync()
         {
-            Submissions = await _context.Submissions.OrderByDescending(d => d.Date).ToListAsync();
+            Proposals = await _context.Proposals.OrderByDescending(d => d.SubmitDate).ToListAsync();
 
             // try
             // {
-            //     Submissions = await _context.Submissions.ToListAsync();
+            //     Proposals = await _context.Proposals.ToListAsync();
 
             // }
             // catch(SqlException)

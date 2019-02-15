@@ -11,31 +11,31 @@ namespace IST_Submission_Form.Pages
     public class EditStatusCode : PageModel
     {
         public IList<StatusCodes> StatusCodes { get; set; }
-        public Submission Submission;
+        public Proposal Proposal;
         [BindProperty]
-        public int NewStatusCode { get; set; }
+        public byte NewStatusCode { get; set; }
         private readonly StatusCodesContext _StatusCodeContext;
-        private readonly SubmissionContext _SubmissionContext;
+        private readonly ProposalContext _ProposalContext;
 
-        public EditStatusCode(StatusCodesContext StatusCodeContext, SubmissionContext SubmissionContext)
+        public EditStatusCode(StatusCodesContext StatusCodeContext, ProposalContext ProposalContext)
         {
             _StatusCodeContext = StatusCodeContext;
-            _SubmissionContext = SubmissionContext;
+            _ProposalContext = ProposalContext;
         }
         public async Task OnGetAsync(int id)
         {
             StatusCodes = await _StatusCodeContext.StatusCode
                             .Where(c => c.SortProposals > 0).ToListAsync();
-            Submission = _SubmissionContext.Submissions
+            Proposal = _ProposalContext.Proposals
                             .Where(s => s.ID == id).First();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Submission = _SubmissionContext.Submissions
+            Proposal = _ProposalContext.Proposals
                             .Where(s => s.ID == id).First();
-            Submission.Status = NewStatusCode;
-            await _SubmissionContext.SaveChangesAsync();
+            Proposal.Status = NewStatusCode;
+            await _ProposalContext.SaveChangesAsync();
 
             return RedirectToPage("Teamlead");
 

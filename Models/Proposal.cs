@@ -5,27 +5,28 @@ using System.Collections.Generic;
 
 namespace IST_Submission_Form.Models
 {
-    public class Submission
+    [Table("Proposals")]
+    public class Proposal
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:g}")]
-        public DateTime Date { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public DateTime SubmitDate { get; set; }
+        public string SubmittedBy { get; set; }
+        public string SubmitterEmail { get; set; }
         public string RequesterID { get; set; }
         public string Title { get; set; }
-        public string Location { get; set; }
-        [Column(TypeName = "text")]
+        public string SubmitterLocation { get; set; }
+        [Column("Description", TypeName = "text")]
         public string ProjectDescription { get; set; }
         public string Goal { get; set; }
-        [Column("Timeline")]
+        [Column("DesiredCompletion")]
         public string DesiredCompletionDate { get; set; }
-        public int Status { get; set; }
+        public byte Status { get; set; }
         public string Files { get; set; }
         public string AssignedToID { get; set; }
         public string AssignedToName { get; set; }
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Comment> ISTComments { get; set; } = new List<Comment>();
+        public ICollection<Comment> SubmitterComments { get; set; } = new List<Comment>();
     }
 }

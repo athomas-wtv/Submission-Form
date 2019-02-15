@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IST_Submission_Form.Migrations
 {
-    [DbContext(typeof(SubmissionContext))]
+    [DbContext(typeof(ProposalContext))]
     [Migration("20190208210315_Recreate")]
     partial class Recreate
     {
@@ -38,11 +38,11 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("From");
 
-                    b.Property<int>("SubmissionID");
+                    b.Property<int>("ProposalID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SubmissionID");
+                    b.HasIndex("ProposalID");
 
                     b.ToTable("Comments");
                 });

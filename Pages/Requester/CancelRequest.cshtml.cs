@@ -10,11 +10,11 @@ namespace IST_Submission_Form.Pages.Requester
 {
     public class CancelRequestModel : PageModel
     {
-        public Submission Submission { get; set; }
-        public IList<Submission> Submissions { get; set; }
-        private readonly SubmissionContext _context;
+        public Proposal Proposal { get; set; }
+        public IList<Proposal> Proposals { get; set; }
+        private readonly ProposalContext _context;
 
-        public CancelRequestModel(SubmissionContext context)
+        public CancelRequestModel(ProposalContext context)
         {
             _context = context;
         }
@@ -25,12 +25,12 @@ namespace IST_Submission_Form.Pages.Requester
             {
                 return NotFound();
             }
-            Submission = await _context.Submissions.FirstOrDefaultAsync(s => s.ID == id);
+            Proposal = await _context.Proposals.FirstOrDefaultAsync(s => s.ID == id);
 
             return Page();
             // try
             // {
-            //     Submissions = await _context.Submissions.ToListAsync();
+            //     Proposals = await _context.Proposals.ToListAsync();
 
             // }
             // catch(SqlException)
@@ -50,11 +50,11 @@ namespace IST_Submission_Form.Pages.Requester
                 return NotFound();
             }
 
-            Submission = await _context.Submissions.FindAsync(id);
+            Proposal = await _context.Proposals.FindAsync(id);
 
-            if (Submission != null)
+            if (Proposal != null)
             {
-                _context.Submissions.Remove(Submission);
+                _context.Proposals.Remove(Proposal);
                 await _context.SaveChangesAsync();
             }
 

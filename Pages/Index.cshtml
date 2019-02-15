@@ -8,15 +8,11 @@
   </a>
   <form method="post" enctype="multipart/form-data">
     <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="firstName" class="auto-populated-label">First Name</label><br>
-        <input type="text" asp-for="FirstName" class="auto-populated-information" name="FirstName" id="firstName" readonly>
+      <div class="form-group col-md-6 mx-auto">
+        <label for="submitterName" class="auto-populated-label">Name</label><br>
+        <input type="text" asp-for="SubmitterName" class="auto-populated-information" name="SubmitterName" id="submitterName" readonly>
       </div>
-      <div class="form-group col-md-4">
-        <label for="lastName" class="auto-populated-label">Last Name</label><br>
-        <input type="text" asp-for="LastName" class="auto-populated-information" name="LastName" id="lastName" readonly>
-      </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-6 mx-auto">
         <label for="email" class="auto-populated-label">Email</label><br>
         <input type="email" asp-for="Email" class="auto-populated-information email" name="Email" id="email" readonly>
       </div>

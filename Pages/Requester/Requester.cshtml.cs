@@ -9,13 +9,13 @@ namespace IST_Submission_Form.Pages.Requester
 {
     public class RequesterModel : PageModel
     {
-        public IList<Submission> Submissions { get; set; }
+        public IList<Proposal> Proposals { get; set; }
         public IList<StatusCodes> StatusCodes { get; set; }
-        private readonly SubmissionContext _context;
+        private readonly ProposalContext _context;
         private readonly StatusCodesContext _StatusCodesContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public RequesterModel(SubmissionContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
+        public RequesterModel(ProposalContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
         {
             _context = context;
             _StatusCodesContext = StatusCodesContext;
@@ -26,15 +26,15 @@ namespace IST_Submission_Form.Pages.Requester
         {
             var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
 
-            Submissions = await _context.Submissions.Where(s => s.RequesterID == name.EmployeeID)
-                                                    .OrderByDescending(d => d.Date)
+            Proposals = await _context.Proposals.Where(s => s.RequesterID == name.EmployeeID)
+                                                    .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
             StatusCodes = await _StatusCodesContext.StatusCode
                             .Where(c => c.SortProposals > 0)
                             .ToListAsync();
             // try
             // {
-            //     Submissions = await _context.Submissions.ToListAsync();
+            //     Proposals = await _context.Proposals.ToListAsync();
 
             // }
             // catch(SqlException)

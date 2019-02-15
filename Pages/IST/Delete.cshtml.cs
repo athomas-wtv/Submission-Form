@@ -11,15 +11,15 @@ namespace IST_Submission_Form.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly SubmissionContext _context;
+        private readonly ProposalContext _context;
 
-        public DeleteModel(SubmissionContext context)
+        public DeleteModel(ProposalContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Submission Submission { get; set; }
+        public Proposal Proposal { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,9 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
             }
 
-            Submission = await _context.Submissions.FirstOrDefaultAsync(m => m.ID == id);
+            Proposal = await _context.Proposals.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Submission == null)
+            if (Proposal == null)
             {
                 return NotFound();
             }
@@ -44,11 +44,11 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
             }
 
-            Submission = await _context.Submissions.FindAsync(id);
+            Proposal = await _context.Proposals.FindAsync(id);
 
-            if (Submission != null)
+            if (Proposal != null)
             {
-                _context.Submissions.Remove(Submission);
+                _context.Proposals.Remove(Proposal);
                 await _context.SaveChangesAsync();
             }
 

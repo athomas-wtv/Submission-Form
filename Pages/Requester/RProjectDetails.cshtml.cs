@@ -14,16 +14,16 @@ namespace IST_Submission_Form.Pages
     public class RProjectDetails : PageModel
     {
         [BindProperty]
-        public Submission Submission { get; set; }
+        public Proposal Proposal { get; set; }
         [BindProperty]
         public List<Comment> RequesterComments { get; set; }
         public List<Comment> DeveloperComments { get; set; }
-        private readonly SubmissionContext _SubmissionContext;
+        private readonly ProposalContext _ProposalContext;
         private readonly StaffDirectoryContext _StaffDirectory;
 
-        public RProjectDetails(SubmissionContext SubmissionContext, StaffDirectoryContext StaffDirectory)
+        public RProjectDetails(ProposalContext ProposalContext, StaffDirectoryContext StaffDirectory)
         {
-            _SubmissionContext = SubmissionContext;
+            _ProposalContext = ProposalContext;
             _StaffDirectory = StaffDirectory;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -33,10 +33,10 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
             }
 
-            Submission = await _SubmissionContext.Submissions.FirstOrDefaultAsync(m => m.ID == id);
-            RequesterComments = await _SubmissionContext.Comments.Where(c => c.CreatedByID == Submission.RequesterID && c.SubmissionID == Submission.ID).ToListAsync();
+            Proposal = await _ProposalContext.Proposals.FirstOrDefaultAsync(m => m.ID == id);
+            RequesterComments = await _ProposalContext.Comments.Where(c => c.CreatedByID == Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
 
-            if (Submission == null)
+            if (Proposal == null)
             {
                 return NotFound();
             }
@@ -52,14 +52,14 @@ namespace IST_Submission_Form.Pages
             Comment Comment = new Comment();
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
-            Comment.SubmissionID = Submission.ID;
+            Comment.ProposalID = Proposal.ID;
             Comment.CreatedByName = name.FName + " " + name.LName;
             Comment.Body = Body;
             Comment.CreatedByID = name.EmployeeID;
             Comment.CreatedAt = DateTime.Now;
-            _SubmissionContext.Comments.Add(Comment);
+            _ProposalContext.Comments.Add(Comment);
 
-            await _SubmissionContext.SaveChangesAsync();
+            await _ProposalContext.SaveChangesAsync();
 
             return RedirectToPage("RProjectDetails", new { ID = ID });
         }

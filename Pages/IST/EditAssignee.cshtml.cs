@@ -10,24 +10,24 @@ namespace IST_Submission_Form.Pages
 {
     public class EditAssignee : PageModel
     {
-        public Submission Submission;
+        public Proposal Proposal;
         [BindProperty]
         public string Assignee { get; set; }
         private readonly StatusCodesContext _StatusCodeContext;
-        private readonly SubmissionContext _SubmissionContext;
+        private readonly ProposalContext _ProposalContext;
 
-        public EditAssignee(StatusCodesContext StatusCodeContext, SubmissionContext SubmissionContext)
+        public EditAssignee(StatusCodesContext StatusCodeContext, ProposalContext ProposalContext)
         {
             _StatusCodeContext = StatusCodeContext;
-            _SubmissionContext = SubmissionContext;
+            _ProposalContext = ProposalContext;
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Submission = _SubmissionContext.Submissions
+            Proposal = _ProposalContext.Proposals
                             .Where(s => s.ID == id).First();
-            Submission.AssignedToName = Assignee;
-            await _SubmissionContext.SaveChangesAsync();
+            Proposal.AssignedToName = Assignee;
+            await _ProposalContext.SaveChangesAsync();
 
             return RedirectToPage("ProjectDetails/", id);
             // return RedirectToPage("ProjectDetails", new { id = id });

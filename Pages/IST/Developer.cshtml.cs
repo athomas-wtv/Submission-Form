@@ -13,10 +13,10 @@ namespace IST_Submission_Form.Pages
 {
     public class DeveloperModel : PageModel
     {
-        public IList<Submission> Submissions { get; set; }
-        private readonly SubmissionContext _context;
+        public IList<Proposal> Proposals { get; set; }
+        private readonly ProposalContext _context;
         public string Username;
-        public DeveloperModel(SubmissionContext context)
+        public DeveloperModel(ProposalContext context)
         {
             _context = context;
         }
@@ -24,7 +24,7 @@ namespace IST_Submission_Form.Pages
         public async Task OnGetAsync()
         {
             string Username = User.FindFirst("username").Value;
-            Submissions = await _context.Submissions
+            Proposals = await _context.Proposals
                                 .Where(s => s.AssignedToName == Username).ToListAsync();
         }
 

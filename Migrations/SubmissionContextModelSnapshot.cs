@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IST_Submission_Form.Migrations
 {
-    [DbContext(typeof(SubmissionContext))]
+    [DbContext(typeof(ProposalContext))]
     partial class SubmissionContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -36,11 +36,11 @@ namespace IST_Submission_Form.Migrations
 
                     b.Property<string>("From");
 
-                    b.Property<int>("SubmissionID");
+                    b.Property<int>("ProposalID");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SubmissionID");
+                    b.HasIndex("ProposalID");
 
                     b.ToTable("Comments");
                 });
