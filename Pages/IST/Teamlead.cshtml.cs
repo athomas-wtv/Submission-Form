@@ -14,7 +14,6 @@ namespace IST_Submission_Form.Pages
     {
         public IList<Proposal> Proposals { get; set; }
         private readonly ProposalContext _context;
-
         public TeamleadModel(ProposalContext context)
         {
             _context = context;
@@ -39,5 +38,6 @@ namespace IST_Submission_Form.Pages
             // }
         }
 
+        
     }
 }

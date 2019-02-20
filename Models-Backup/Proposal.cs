@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace IST_Submission_Form.Models
 {
     [Table("Proposals")]
-    public class Proposal
+    public class Proposal : IComparable<Proposal>
     {
         // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
@@ -24,9 +24,13 @@ namespace IST_Submission_Form.Models
         public string DesiredCompletionDate { get; set; }
         public byte Status { get; set; }
         public string Files { get; set; }
-        public string AssignedToID { get; set; }
         public string AssignedToName { get; set; }
         public ICollection<Comment> ISTComments { get; set; } = new List<Comment>();
         public ICollection<Comment> SubmitterComments { get; set; } = new List<Comment>();
+
+        public int CompareTo(Proposal other)
+        {
+            return SubmitDate.CompareTo(other.SubmitDate);
+        }
     }
 }

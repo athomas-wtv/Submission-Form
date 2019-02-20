@@ -58,7 +58,6 @@ namespace IST_Submission_Form.Pages
             Proposal.SubmitDate = DateTime.Now;
             Proposal.Status = 14;
             Proposal.RequesterID = name.EmployeeID;
-            Proposal.AssignedToID = "200568";
             Proposal.AssignedToName = "PKOUTOUL";
             _proposalcontext.Proposals.Add(Proposal);
 

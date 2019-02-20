@@ -26,7 +26,7 @@ namespace IST_Submission_Form.Pages.Requester
         {
             var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
 
-            Proposals = await _context.Proposals.Where(s => s.RequesterID == name.EmployeeID)
+            Proposals = await _context.Proposals.Where(p => p.RequesterID == name.EmployeeID)
                                                     .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
             StatusCodes = await _StatusCodesContext.StatusCode
