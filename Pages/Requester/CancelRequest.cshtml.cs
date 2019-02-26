@@ -10,11 +10,11 @@ namespace IST_Submission_Form.Pages.Requester
 {
     public class CancelRequestModel : PageModel
     {
-        public Proposal Proposal { get; set; }
+        public Proposals Proposal { get; set; }
         public IList<Proposal> Proposals { get; set; }
-        private readonly ProposalContext _context;
+        private readonly ISTProjectsContext _context;
 
-        public CancelRequestModel(ProposalContext context)
+        public CancelRequestModel(ISTProjectsContext context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace IST_Submission_Form.Pages.Requester
             {
                 return NotFound();
             }
-            Proposal = await _context.Proposals.FirstOrDefaultAsync(s => s.ID == id);
+            Proposal = await _context.Proposals.FirstOrDefaultAsync(s => s.Id == id);
 
             return Page();
             // try

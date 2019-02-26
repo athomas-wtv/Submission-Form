@@ -51,3 +51,8 @@ header h2 {
     height: 300px;
     overflow: scroll;
 }
+
+.CommentSentTime {
+  font-size: .6em;
+  font-style: italic;
+}

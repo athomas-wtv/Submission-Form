@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,12 +13,13 @@ namespace IST_Submission_Form.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly Models.ProposalContext _proposalcontext;
+        private readonly ISTProjectsContext _istprojectscontext;
         private readonly StaffDirectoryContext _staffcontext;
 
-        public IndexModel(ProposalContext proposalcontext, StaffDirectoryContext staffcontext){
+        public IndexModel(ISTProjectsContext istprojectscontext, StaffDirectoryContext staffcontext)
+        {
 
-            _proposalcontext = proposalcontext;
+            _istprojectscontext = istprojectscontext;
             _staffcontext = staffcontext;
 
         }
@@ -44,7 +42,7 @@ namespace IST_Submission_Form.Pages
 
         }
         [BindProperty]
-        public Proposal Proposal { get; set; }
+        public Proposals Proposal { get; set; }
         
         public async Task<IActionResult> OnPostAsync(IFormFile Files)
         {
@@ -57,13 +55,14 @@ namespace IST_Submission_Form.Pages
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Proposal.SubmitDate = DateTime.Now;
             Proposal.Status = 14;
-            Proposal.RequesterID = name.EmployeeID;
-            Proposal.AssignedToName = "PKOUTOUL";
-            _proposalcontext.Proposals.Add(Proposal);
+            Proposal.SubmittedBy = name.LoginID;
+            Proposal.AssignedTo = "PKOUTOUL";
+            _istprojectscontext.Proposals.Add(Proposal);
 
             // Business logic to store uploaded file
-            if (Files == null || Files.Length == 0)
-                return Content("file not selected");
+            // This first step checks to see if any files have been attached to the form to be uploaded.
+            // if (Files == null || Files.Length == 0)
+            //     return Content("file not selected");
 
             var path = Path.Combine(
                         Directory.GetCurrentDirectory(), "uploadedFiles",
@@ -77,7 +76,7 @@ namespace IST_Submission_Form.Pages
                 await Files.CopyToAsync(stream);
             }
 
-            await _proposalcontext.SaveChangesAsync();
+            await _istprojectscontext.SaveChangesAsync();
 
             return RedirectToPage("/Requester/Requester");
         }

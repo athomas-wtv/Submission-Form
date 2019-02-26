@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,9 +9,9 @@ namespace IST_Submission_Form.Pages
 {
     public class TeamleadModel : PageModel
     {
-        public IList<Proposal> Proposals { get; set; }
-        private readonly ProposalContext _context;
-        public TeamleadModel(ProposalContext context)
+        public IList<Proposals> Proposals { get; set; }
+        private readonly ISTProjectsContext _context;
+        public TeamleadModel(ISTProjectsContext context)
         {
             _context = context;
         }

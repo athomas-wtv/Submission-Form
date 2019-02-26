@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Models
 {
@@ -16,44 +13,47 @@ namespace IST_Submission_Form.Models
         {
         }
 
-        public virtual DbSet<CommentsTicket> CommentsTicket { get; set; }
+        public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Proposals> Proposals { get; set; }
         public virtual DbSet<Status> Status { get; set; }
-        public IConfiguration Configuration { get; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]);
+                optionsBuilder.UseSqlServer("Server=cen-web-sql1,18533;Database=ISTProjects;User ID=webdatawriter;Password=h2@34XtPYx887;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CommentsTicket>(entity =>
+            modelBuilder.Entity<Comments>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Comment)
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.DateTime).HasColumnType("smalldatetime");
+                entity.Property(e => e.Commenter)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.InverseIdNavigation)
-                    .HasForeignKey<CommentsTicket>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CommentsTicket_CommentsTicket");
+                entity.Property(e => e.DateTime)
+                    .HasColumnType("smalldatetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ProposalId).HasColumnName("ProposalID");
             });
 
             modelBuilder.Entity<Proposals>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AssignedTo)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Description)
                     .IsRequired()
@@ -67,7 +67,9 @@ namespace IST_Submission_Form.Models
                     .HasColumnName("ISTComments")
                     .IsUnicode(false);
 
-                entity.Property(e => e.SubmitDate).HasColumnType("date");
+                entity.Property(e => e.SubmitDate)
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.SubmittedBy)
                     .IsRequired()

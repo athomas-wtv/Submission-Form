@@ -43,7 +43,7 @@ namespace IST_Submission_Form
             });
 
             // Adding Databases to use in App
-            services.AddDbContext<ProposalContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ProposalContext"]); });
+            services.AddDbContext<ISTProjectsContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]); });
             services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
             services.AddDbContext<StatusCodesContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StatusCodesContext"]); });
 

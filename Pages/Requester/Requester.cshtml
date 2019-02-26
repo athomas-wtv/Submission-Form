@@ -19,9 +19,9 @@
                 </div>
                     <div class="card-body">
                         <p class="card-text" style="overflow: scroll; height:100px">
-                            @Html.DisplayFor(modelItem => Proposal.ProjectDescription)
+                            @Html.DisplayFor(modelItem => Proposal.Description)
                         </p>
-                        <a asp-page="/Requester/RProjectDetails" asp-route-id="@Proposal.ID" class="btn btn-success">Details</a>
+                        <a asp-page="/Requester/RProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success">Details</a>
                     </div>
                 <div class="container card-footer text-muted">
                     <div class="row">
@@ -29,7 +29,7 @@
                             <b>Status: </b>@Html.DisplayFor(modelItem => Proposal.Status)
                         </div>
                         <div class="col d-flex justify-content-end">
-                            <a class="text-danger" asp-page="./CancelRequest" asp-route-id="@Proposal.ID"><i class="fas fa-trash-alt"></i></a>
+                            <a class="text-danger" asp-page="./CancelRequest" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>

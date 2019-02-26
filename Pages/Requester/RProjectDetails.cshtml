@@ -20,13 +20,9 @@
 </div>
 <div class="container mb-2">
     <div class="row">
-        <div class="col-6">
-            <h4>@Html.DisplayNameFor(model => model.Proposal.ProjectDescription)</h4><hr>
-            <p>@Html.DisplayFor(model => model.Proposal.ProjectDescription)</p>
-        </div>
-        <div class="col-6">
-            <h4>@Html.DisplayNameFor(model => model.Proposal.Goal)</h4><hr>
-            @Html.DisplayFor(model => model.Proposal.Goal)
+        <div class="col">
+            <h4>@Html.DisplayNameFor(model => model.Proposal.Description)</h4><hr>
+            <p>@Html.DisplayFor(model => model.Proposal.Description)</p>
         </div>
     </div>
 </div>
@@ -39,14 +35,14 @@
                 @foreach(var Comment in Model.RequesterComments)
                 {
                     <div class="message to bg-info">
-                        <p><b>@Html.DisplayFor(modelItem => Comment.CreatedByName)</b></p>
-                        <p>@Html.DisplayFor(modelItem => Comment.Body)</p>
-                        <p class="CommentSentAt">Sent at @Html.DisplayFor(modelItem => Comment.CreatedAt)</p>
+                        <p class="mb-1"><b>@Html.DisplayFor(modelItem => Comment.Commenter)</b></p>
+                        <p class="pl-2 mb-1">@Html.DisplayFor(modelItem => Comment.Comment)</p>
+                        <p class="CommentSentTime mb-1">Sent at @Html.DisplayFor(modelItem => Comment.DateTime)</p>
                     </div>
                 }
             </div>
             <form method="post">
-                <input type="hidden" class="form-control" name="ID" value="@Model.Proposal.ID" />
+                <input type="hidden" class="form-control" name="ID" value="@Model.Proposal.Id" />
                 <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
                 <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
             </form>
@@ -56,5 +52,5 @@
 
 <div>
     <a asp-page="/Requester/Requester">Back to List</a> | 
-    <a asp-page="/Requester/CancelRequest" asp-route-id="@Model.Proposal.ID" class="btn text-danger"><i class="fas fa-trash-alt"></i></a>
+    <a asp-page="/Requester/CancelRequest" asp-route-id="@Model.Proposal.Id" class="btn text-danger"><i class="fas fa-trash-alt"></i></a>
 </div>

@@ -9,13 +9,13 @@ namespace IST_Submission_Form.Pages.Requester
 {
     public class RequesterModel : PageModel
     {
-        public IList<Proposal> Proposals { get; set; }
+        public IList<Proposals> Proposals { get; set; }
         public IList<StatusCodes> StatusCodes { get; set; }
-        private readonly ProposalContext _context;
+        private readonly ISTProjectsContext _context;
         private readonly StatusCodesContext _StatusCodesContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public RequesterModel(ProposalContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
+        public RequesterModel(ISTProjectsContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
         {
             _context = context;
             _StatusCodesContext = StatusCodesContext;
@@ -26,7 +26,7 @@ namespace IST_Submission_Form.Pages.Requester
         {
             var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
 
-            Proposals = await _context.Proposals.Where(p => p.RequesterID == name.EmployeeID)
+            Proposals = await _context.Proposals.Where(p => p.SubmittedBy == name.LoginID)
                                                     .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
             StatusCodes = await _StatusCodesContext.StatusCode

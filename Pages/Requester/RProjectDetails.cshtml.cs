@@ -14,16 +14,16 @@ namespace IST_Submission_Form.Pages
     public class RProjectDetails : PageModel
     {
         [BindProperty]
-        public Proposal Proposal { get; set; }
+        public Proposals Proposal { get; set; }
         [BindProperty]
-        public List<Comment> RequesterComments { get; set; }
-        public List<Comment> DeveloperComments { get; set; }
-        private readonly ProposalContext _ProposalContext;
+        public List<Comments> RequesterComments { get; set; }
+        public List<Comments> DeveloperComments { get; set; }
+        private readonly ISTProjectsContext _ISTProjectsContext;
         private readonly StaffDirectoryContext _StaffDirectory;
 
-        public RProjectDetails(ProposalContext ProposalContext, StaffDirectoryContext StaffDirectory)
+        public RProjectDetails(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectory)
         {
-            _ProposalContext = ProposalContext;
+            _ISTProjectsContext = ISTProjectsContext;
             _StaffDirectory = StaffDirectory;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -33,8 +33,8 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
             }
 
-            Proposal = await _ProposalContext.Proposals.FirstOrDefaultAsync(m => m.ID == id);
-            RequesterComments = await _ProposalContext.Comments.Where(c => c.CreatedByID == Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
+            Proposal = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
+            RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposal.SubmittedBy && c.ProposalId == Proposal.Id).ToListAsync();
 
             if (Proposal == null)
             {
@@ -49,17 +49,18 @@ namespace IST_Submission_Form.Pages
                 return Page();
             
             var name = _StaffDirectory.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
-            Comment Comment = new Comment();
+            Comments Comment = new Comments();
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
-            Comment.ProposalID = Proposal.ID;
-            Comment.CreatedByName = name.FName + " " + name.LName;
-            Comment.Body = Body;
-            Comment.CreatedByID = name.EmployeeID;
-            Comment.CreatedAt = DateTime.Now;
-            _ProposalContext.Comments.Add(Comment);
+            Comment.ProposalId = Proposal.Id;
+            Comment.Commenter = name.LoginID;
+            // Comment.Commenter = name.FName + " " + name.LName;
+            Comment.Comment = Body;
+            // Comment.CreatedByID = name.EmployeeID;
+            Comment.DateTime = DateTime.Now;
+            _ISTProjectsContext.Comments.Add(Comment);
 
-            await _ProposalContext.SaveChangesAsync();
+            await _ISTProjectsContext.SaveChangesAsync();
 
             return RedirectToPage("RProjectDetails", new { ID = ID });
         }

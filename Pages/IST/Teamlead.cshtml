@@ -18,13 +18,13 @@
                     @Html.DisplayFor(modelItem => Proposal.Title)
                     </h5>
                     <p class="card-text" style="overflow: scroll; height:100px">
-                        @Html.DisplayFor(modelItem => Proposal.ProjectDescription)
+                        @Html.DisplayFor(modelItem => Proposal.Description)
                     </p>
-                    <a asp-page="./ProjectDetails" asp-route-id="@Proposal.ID" class="btn btn-success">Details</a>
+                    <a asp-page="./ProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success">Details</a>
                 </div>
                 <div class="card-footer text-muted">
-                    <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.AssignedToName)<br>
-                    <b>Status: </b><a asp-page="./EditStatusCode" asp-route-id="@Proposal.ID">@Html.DisplayFor(modelItem => Proposal.Status)</a> | <a class="text-danger" asp-page="./Delete" asp-route-id="@Proposal.ID"><i class="fas fa-trash-alt"></i></a>
+                    <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.AssignedTo)<br>
+                    <b>Status: </b><a asp-page="./EditStatusCode" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.Status)</a> | <a class="text-danger" asp-page="./Delete" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>
                 </div>
             </div>
         </div>

@@ -19,15 +19,15 @@
             @Html.DisplayFor(model => model.Proposal.Title)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Proposal.ProjectDescription)
+            @Html.DisplayNameFor(model => model.Proposal.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Proposal.ProjectDescription)
+            @Html.DisplayFor(model => model.Proposal.Description)
         </dd>
     </dl>
 
     <form method="post">
-        <input type="hidden" asp-for="Proposal.ID" />
+        <input type="hidden" asp-for="Proposal.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Teamlead">Back to List</a>
     </form>

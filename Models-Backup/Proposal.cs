@@ -19,12 +19,11 @@ namespace IST_Submission_Form.Models
         public string SubmitterLocation { get; set; }
         [Column("Description", TypeName = "text")]
         public string ProjectDescription { get; set; }
-        public string Goal { get; set; }
         [Column("DesiredCompletion")]
         public string DesiredCompletionDate { get; set; }
         public byte Status { get; set; }
         public string Files { get; set; }
-        public string AssignedToName { get; set; }
+        public string AssignedTo { get; set; }
         public ICollection<Comment> ISTComments { get; set; } = new List<Comment>();
         public ICollection<Comment> SubmitterComments { get; set; } = new List<Comment>();
 
