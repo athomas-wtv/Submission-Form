@@ -17,7 +17,6 @@ namespace IST_Submission_Form.Pages
         public Proposals Proposal { get; set; }
         [BindProperty]
         public List<Comments> RequesterComments { get; set; }
-        public List<Comments> DeveloperComments { get; set; }
         private readonly ISTProjectsContext _ISTProjectsContext;
         private readonly StaffDirectoryContext _StaffDirectory;
 
@@ -58,6 +57,7 @@ namespace IST_Submission_Form.Pages
             Comment.Comment = Body;
             // Comment.CreatedByID = name.EmployeeID;
             Comment.DateTime = DateTime.Now;
+            Comment.CommentType = "Requester";
             _ISTProjectsContext.Comments.Add(Comment);
 
             await _ISTProjectsContext.SaveChangesAsync();

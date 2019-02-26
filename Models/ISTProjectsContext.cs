@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace IST_Submission_Form.Models
 {
@@ -15,7 +17,6 @@ namespace IST_Submission_Form.Models
 
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Proposals> Proposals { get; set; }
-        public virtual DbSet<Status> Status { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,14 +36,16 @@ namespace IST_Submission_Form.Models
                     .IsRequired()
                     .IsUnicode(false);
 
+                entity.Property(e => e.CommentType)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Commenter)
                     .IsRequired()
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DateTime)
-                    .HasColumnType("smalldatetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.DateTime).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.ProposalId).HasColumnName("ProposalID");
             });
@@ -67,9 +70,7 @@ namespace IST_Submission_Form.Models
                     .HasColumnName("ISTComments")
                     .IsUnicode(false);
 
-                entity.Property(e => e.SubmitDate)
-                    .HasColumnType("date")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.SubmitDate).HasColumnType("date");
 
                 entity.Property(e => e.SubmittedBy)
                     .IsRequired()
@@ -94,18 +95,6 @@ namespace IST_Submission_Form.Models
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(200)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Status>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.StatusDescription)
-                    .IsRequired()
-                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
         }

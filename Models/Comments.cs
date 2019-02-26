@@ -10,5 +10,6 @@ namespace IST_Submission_Form.Models
         public string Commenter { get; set; }
         public string Comment { get; set; }
         public DateTime DateTime { get; set; }
+        public string CommentType { get; set; }
     }
 }

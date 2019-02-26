@@ -34,8 +34,12 @@ namespace IST_Submission_Form.Pages
             }
 
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
-            RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy && c.ProposalId == Proposals.Id).ToListAsync();
-            DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter != Proposals.SubmittedBy && c.ProposalId == Proposals.Id).ToListAsync();
+            RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy 
+                                                                            && c.ProposalId == Proposals.Id
+                                                                            && c.CommentType == "Requester").ToListAsync();
+            DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter != Proposals.SubmittedBy 
+                                                                            && c.ProposalId == Proposals.Id
+                                                                            && c.CommentType == "Developer").ToListAsync();
             // RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy && c.ProposalID == Proposal.ID).ToListAsync();
             // DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.CreatedByID != Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
 
@@ -46,7 +50,8 @@ namespace IST_Submission_Form.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int ID, string Body)
+
+        public async Task<IActionResult> OnPostAsyncRequester(int ID, string Body)
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -58,6 +63,7 @@ namespace IST_Submission_Form.Pages
             Comment.Commenter = name.LoginID;
             Comment.Comment = Body;
             Comment.DateTime = DateTime.Now;
+            Comment.CommentType = "Requester";
             _ISTProjectsContext.Comments.Add(Comment);
 
             await _ISTProjectsContext.SaveChangesAsync();
@@ -65,5 +71,24 @@ namespace IST_Submission_Form.Pages
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
 
+        public async Task<IActionResult> OnPostAsyncDeveloper(int ID, string Body)
+        {
+            if (!ModelState.IsValid)
+                return Page();
+
+            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            Comments Comment = new Comments();
+            // Adding values to fields automatically. These fields are not on the form for users to see and update.
+            Comment.ProposalId = Proposals.Id;
+            Comment.Commenter = name.LoginID;
+            Comment.Comment = Body;
+            Comment.DateTime = DateTime.Now;
+            Comment.CommentType = "Developer";
+            _ISTProjectsContext.Comments.Add(Comment);
+
+            await _ISTProjectsContext.SaveChangesAsync();
+
+            return RedirectToPage("ProjectDetails", new { ID = ID });
+        }
     }
 }
