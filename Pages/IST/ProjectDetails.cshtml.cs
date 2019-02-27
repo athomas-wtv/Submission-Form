@@ -34,16 +34,12 @@ namespace IST_Submission_Form.Pages
             }
 
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
-            RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy 
-                                                                            && c.ProposalId == Proposals.Id
-                                                                            && c.CommentType == "Requester").ToListAsync();
-            DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter != Proposals.SubmittedBy 
-                                                                            && c.ProposalId == Proposals.Id
-                                                                            && c.CommentType == "Developer").ToListAsync();
+            RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Requester").ToListAsync();
+            DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Developer").ToListAsync();
             // RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy && c.ProposalID == Proposal.ID).ToListAsync();
             // DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.CreatedByID != Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
 
-            if (Proposals == null)
+            if (DeveloperComments == null)
             {
                 return NotFound();
             }
@@ -51,7 +47,7 @@ namespace IST_Submission_Form.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsyncRequester(int ID, string Body)
+        public async Task<IActionResult> OnPostRequesterAsync(int ID, string Body)
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -71,7 +67,7 @@ namespace IST_Submission_Form.Pages
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
 
-        public async Task<IActionResult> OnPostAsyncDeveloper(int ID, string Body)
+        public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Body)
         {
             if (!ModelState.IsValid)
                 return Page();

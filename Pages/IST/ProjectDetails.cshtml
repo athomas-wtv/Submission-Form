@@ -18,7 +18,7 @@
         </div>
         <div class="col-3">
             <h4>Requester</h4><hr>
-            @Html.DisplayFor(model => model.Proposals.SubmittedBy)
+            @Html.DisplayFor(model => model.Proposals.SubmitterName)
         </div>
         <div class="col-3">
             <h4>Location</h4><hr>
@@ -68,6 +68,7 @@
                         <span style="font-size: 0.5em; font-style: italic;">
                             Sent at @Html.DisplayFor(modelItem => Comment.DateTime)
                         </span>
+                        </p>
                     </div>
                 }
             </div>
