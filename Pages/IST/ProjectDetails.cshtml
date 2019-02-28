@@ -43,20 +43,25 @@
             <h4>Status</h4><hr>
             @Html.DisplayFor(model => model.Proposals.Status)
         </div>
-        <div class="col-3">
-            <h4>Assigned To</h4>
-            <hr>
-            @Html.DisplayFor(model => model.Proposals.AssignedTo)
-            <a asp-page="./Edit" class="text-info" asp-route-id="@Model.Proposals.Id">Update</a>
-        </div>
+        @if(User.IsInRole("ist_Teamleader"))
+        {
+            <div class="col-3">
+                <h4>Assigned To</h4>
+                <hr>
+                @Html.DisplayFor(model => model.Proposals.AssignedTo)
+                <a asp-page="./Edit" class="text-info" asp-route-id="@Model.Proposals.Id">Update</a>
+            </div>
+        }
     </div>
 </div>
 
 <div class="container mt-3">
     <div class="row">
+    @if(User.IsInRole("ist_Teamleader") || !User.IsInRole("Information Solutions Team"))
+    {
         <div class="col-6">
             <h4>Requester Comments</h4><hr>
-            <div class="scroll-comments w3-border mb-3 py-2 rounded">
+            <div class="scroll-comments w3-border-bottom mb-3 py-2">
                 @foreach(var Comment in Model.RequesterComments)
                 {
                     <div class="message to bg-info">
@@ -78,9 +83,12 @@
                 <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
             </form>
         </div>
+    }
+    @if(User.IsInRole("Information Solutions Team"))
+    {
         <div class="col-6">
             <h4>Developer Comments</h4><hr>
-            <div class="scroll-comments w3-border mb-3 py-2 rounded">
+            <div class="scroll-comments w3-border-bottom mb-3 py-2 rounded">
                 @foreach(var Comment in Model.DeveloperComments)
                 {
                     <div class="message to bg-dark">
@@ -102,6 +110,7 @@
                 <input type="submit" class="btn btn-dark btn-sm my-2 float-right" />
             </form>
         </div>
+    }
     </div>
 </div>
 

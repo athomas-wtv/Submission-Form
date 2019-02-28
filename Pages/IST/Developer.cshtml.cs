@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IST_Submission_Form.Pages
 {
+    [Authorize(Roles = "Information Solutions Team")]
     public class DeveloperModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }

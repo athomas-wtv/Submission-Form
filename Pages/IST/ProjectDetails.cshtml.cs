@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Novell.Directory.Ldap;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IST_Submission_Form.Pages
 {
+    // [Authorize(Roles = "Information Solutions Team")]
     public class ProjectDetails : PageModel
     {
         [BindProperty]
@@ -45,7 +47,6 @@ namespace IST_Submission_Form.Pages
             }
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostRequesterAsync(int ID, string Body)
         {

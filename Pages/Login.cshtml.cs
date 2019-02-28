@@ -23,17 +23,12 @@ namespace IST_Submission_Form.Pages
             _authService = authService;
         }
 
-        public void OnGet()
-        {
-            
-
-        }
-
         public bool? Result { get; set; } = null;
         public async Task<ActionResult> OnPostAsync()
         {
             bool access = _authService.Login(email, password);
             IList<LdapEntry> users = _authService.Search(email);
+            IList<string> groups = _authService.Groups(email);
             
             if(access)
             {
@@ -44,6 +39,11 @@ namespace IST_Submission_Form.Pages
                     new Claim(ClaimTypes.NameIdentifier, email),
                     new Claim("username", users.First().getAttribute("sAMAccountName").StringValue),
                 };
+                
+                foreach(string group in groups)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, group));
+                }
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);

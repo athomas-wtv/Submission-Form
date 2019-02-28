@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
 {
+    // [Authorize(Roles = "ist_Teamleader")]
     public class Edit : PageModel
     {
         [BindProperty]

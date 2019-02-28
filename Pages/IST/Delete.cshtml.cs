@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IST_Submission_Form.Pages
 {
+    // [Authorize(Roles = "ist_TeamLeader")]
     public class DeleteModel : PageModel
     {
         private readonly ISTProjectsContext _context;
