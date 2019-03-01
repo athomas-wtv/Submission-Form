@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace IST_Submission_Form.Models
 {
@@ -11,7 +10,6 @@ namespace IST_Submission_Form.Models
         public string SubmitterName { get; set; }
         public string SubmitterEmail { get; set; }
         public string SubmitterLocation { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime SubmitDate { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

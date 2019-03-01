@@ -10,21 +10,19 @@ namespace IST_Submission_Form.Pages
 {
     public class EditStatusCode : PageModel
     {
-        public IList<StatusCodes> StatusCodes { get; set; }
+        public IList<Status> Status { get; set; }
         public Proposals Proposal;
         [BindProperty]
         public byte NewStatusCode { get; set; }
-        private readonly StatusCodesContext _StatusCodeContext;
         private readonly ISTProjectsContext _ISTProjectsContext;
 
-        public EditStatusCode(StatusCodesContext StatusCodeContext, ISTProjectsContext ISTProjectsContext)
+        public EditStatusCode(ISTProjectsContext ISTProjectsContext)
         {
-            _StatusCodeContext = StatusCodeContext;
             _ISTProjectsContext = ISTProjectsContext;
         }
         public async Task OnGetAsync(int id)
         {
-            StatusCodes = await _StatusCodeContext.StatusCode
+            Status = await _ISTProjectsContext.Status
                             .Where(c => c.SortProposals > 0).ToListAsync();
             Proposal = _ISTProjectsContext.Proposals
                             .Where(s => s.Id == id).First();

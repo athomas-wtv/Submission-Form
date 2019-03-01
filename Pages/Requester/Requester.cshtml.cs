@@ -10,15 +10,13 @@ namespace IST_Submission_Form.Pages.Requester
     public class RequesterModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }
-        public IList<StatusCodes> StatusCodes { get; set; }
+        public IList<Status> Status { get; set; }
         private readonly ISTProjectsContext _context;
-        private readonly StatusCodesContext _StatusCodesContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public RequesterModel(ISTProjectsContext context, StatusCodesContext StatusCodesContext, StaffDirectoryContext StaffDirectoryContext)
+        public RequesterModel(ISTProjectsContext context, StaffDirectoryContext StaffDirectoryContext)
         {
             _context = context;
-            _StatusCodesContext = StatusCodesContext;
             _StaffDirectoryContext = StaffDirectoryContext;
         }
         
@@ -29,7 +27,7 @@ namespace IST_Submission_Form.Pages.Requester
             Proposals = await _context.Proposals.Where(p => p.SubmittedBy == name.LoginID)
                                                     .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
-            StatusCodes = await _StatusCodesContext.StatusCode
+            Status = await _context.Status
                             .Where(c => c.SortProposals > 0)
                             .ToListAsync();
             // try

@@ -19,9 +19,9 @@
         <dd>
             <form method="post">
                 <select class="custom-select mb-4 col-6" name="NewStatusCode">
-                    @foreach(var Code in Model.StatusCodes)
+                    @foreach(var Code in Model.Status)
                     {
-                        <option value="@Code.ID" name="NewStatusCode">@Html.DisplayFor(model => Code.ID) - @Html.DisplayFor(model => Code.StatusDescription)</option>
+                        <option value="@Code.Id" name="NewStatusCode">@Html.DisplayFor(model => Code.Id) - @Html.DisplayFor(model => Code.StatusDescription)</option>
                     }
                 </select>
                 <br>

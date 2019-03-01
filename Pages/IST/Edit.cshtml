@@ -13,12 +13,14 @@
                     Assignee for @Html.DisplayFor(model => model.Proposal.Title)
                 </dd>
                 <dd>
-                    <select class="custom-select mb-4 col-12" name="Assignee">
+                    <select class="custom-select mb-4 col-12" asp-for="Assignee" asp-items="@Model.CurrentUsers">
+                    </select>
+                    <!-- <select class="custom-select mb-4 col-12" name="Assignee">
                         <option value="PKOUTOUL">Pete</option>
                         <option value="andre.thomas">Andre</option>
                         <option value="RMCQUERR">Ryan</option>
                         <option value="james.howard2">James</option>
-                    </select>
+                    </select> -->
                     <br>
                 </dd>
             </dl>
@@ -30,15 +32,9 @@
                     Status Code
                 </dt>
                 <dd>
-                    <select class="custom-select mb-4 col-12" name="NewStatusCode">
-                        @foreach(var Code in Model.StatusCodes)
-                        {
-                            <option value="@Code.ID" name="NewStatusCode">@Html.DisplayFor(model => Code.ID) - @Html.DisplayFor(model => Code.StatusDescription)</option>
-                        }
+                    <select class="custom-select mb-4 col-12" asp-for="NewStatusCode" asp-items="@Model.Status">
                     </select>
                     <br>
-                    <!-- <button type="submit" class="btn btn-info">Save</button>
-                    <a class="btn btn-danger" asp-page="./Teamlead">Cancel</a> -->
                 </dd>
             </dl>
         </div>

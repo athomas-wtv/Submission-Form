@@ -5,6 +5,7 @@ using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
@@ -15,24 +16,33 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public string Assignee { get; set; }
         [BindProperty]
+        public IList<Status> StatusCodes { get; set; }
+        [BindProperty]
         public byte NewStatusCode { get; set; }
-        public IList<StatusCodes> StatusCodes { get; set; }
+        public IList<Users> Users { get; set; }
         public Proposals Proposal;
-        private readonly StatusCodesContext _StatusCodesContext;
         private readonly ISTProjectsContext _ISTProjectsContext;
 
-        public Edit(StatusCodesContext StatusCodesContext, ISTProjectsContext ISTProjectsContext)
+        public Edit(ISTProjectsContext ISTProjectsContext)
         {
-            _StatusCodesContext = StatusCodesContext;
             _ISTProjectsContext = ISTProjectsContext;
         }
-        
+        public SelectList CurrentUsers { get; set; }
+        public SelectList Status { get; set; }
         public async Task OnGetAsync(int id)
         {
-            StatusCodes = await _StatusCodesContext.StatusCode
+            StatusCodes = await _ISTProjectsContext.Status
                             .Where(c => c.SortProposals > 0).ToListAsync();
             Proposal = _ISTProjectsContext.Proposals
                             .Where(s => s.Id == id).First();
+            Users = await _ISTProjectsContext.Users.ToListAsync();
+
+            Status = new SelectList(StatusCodes, "Id", "StatusDescription");
+            CurrentUsers = new SelectList(Users, "NetworkId", "Name");
+
+            NewStatusCode = Proposal.Status;
+            Assignee = Proposal.AssignedTo;
+
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
@@ -47,7 +57,7 @@ namespace IST_Submission_Form.Pages
 
         }
 
-        [Route ("/IST/ProjectDetails/{id}")]
+        [Route("/IST/ProjectDetails/{id}")]
         public IActionResult Cancel(int ID)
         {
             return RedirectToPage("ProjectDetails", new { ID = ID });

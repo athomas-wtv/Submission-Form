@@ -45,7 +45,6 @@ namespace IST_Submission_Form
             // Adding Databases to use in App
             services.AddDbContext<ISTProjectsContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]); });
             services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
-            services.AddDbContext<StatusCodesContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StatusCodesContext"]); });
 
             services.AddSingleton<ILdapService, LdapService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

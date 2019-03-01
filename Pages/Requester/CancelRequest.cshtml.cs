@@ -11,7 +11,7 @@ namespace IST_Submission_Form.Pages.Requester
     public class CancelRequestModel : PageModel
     {
         public Proposals Proposal { get; set; }
-        public IList<Proposal> Proposals { get; set; }
+        public IList<Proposals> Proposals { get; set; }
         private readonly ISTProjectsContext _context;
 
         public CancelRequestModel(ISTProjectsContext context)

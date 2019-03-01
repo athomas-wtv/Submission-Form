@@ -17,6 +17,8 @@ namespace IST_Submission_Form.Models
 
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Proposals> Proposals { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -95,6 +97,50 @@ namespace IST_Submission_Form.Models
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(200)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.StatusDescription)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Istmember).HasColumnName("ISTMember");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NetworkId)
+                    .HasColumnName("NetworkID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Telephone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
         }

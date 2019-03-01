@@ -15,12 +15,10 @@ namespace IST_Submission_Form.Pages
         public Proposals Proposal;
         [BindProperty]
         public string Assignee { get; set; }
-        private readonly StatusCodesContext _StatusCodeContext;
         private readonly ISTProjectsContext _ISTProjectsContext;
 
-        public EditAssignee(StatusCodesContext StatusCodeContext, ISTProjectsContext ISTProjectsContext)
+        public EditAssignee(ISTProjectsContext ISTProjectsContext)
         {
-            _StatusCodeContext = StatusCodeContext;
             _ISTProjectsContext = ISTProjectsContext;
         }
 
