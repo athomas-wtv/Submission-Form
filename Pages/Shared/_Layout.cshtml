@@ -27,10 +27,23 @@
             <img src="~/images/ist-logo.png" width="68" height="50" class="d-inline-block" alt="IST Logo">
             Information Solutions Team Request Form
         </a>
-        @if(User.Identity.IsAuthenticated)
-        {
-            <a class="nav-link d-flex justify-content-end text-secondary" href="/Logout">Logout</a>
-        }
+        <div class="d-flex justify-content-end">
+            @if(User.Identity.IsAuthenticated && User.IsInRole("ist_TeamLeader"))
+            {
+                <a class="nav-link d-flex text-secondary" href="/Teamlead">Dashboard</a>
+                <a class="nav-link d-flex text-secondary" href="/Logout">Logout</a>
+            }
+            @if(User.Identity.IsAuthenticated && User.IsInRole("Information Solutions Team"))
+            {
+                <a class="nav-link text-secondary" href="/IST/Developer">Dashboard</a>
+                <a class="nav-link text-secondary" href="/Logout">Logout</a>
+            }
+            @if(User.Identity.IsAuthenticated && !User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_TeamLeader"))
+            {
+                <a class="nav-link d-flex text-secondary" href="/Developer">Dashboard</a>
+                <a class="nav-link d-flex text-secondary" href="/Logout">Logout</a>
+            }
+        </div>
     </nav>
 
     <partial name="_CookieConsentPartial" />
@@ -51,9 +64,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/IST/Developer">Developer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/IST/Edit">Edit</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Requester/Requester">Requester</a>
