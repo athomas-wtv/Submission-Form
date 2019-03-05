@@ -113,7 +113,17 @@
     }
     </div>
 </div>
-
 <div>
-    <a asp-page="./Teamlead">Back to List</a>
+    @if(User.IsInRole("ist_teamleader"))
+    {
+        <a asp-page="./Teamlead">Back to List</a>
+    }
+    @if(User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_teamleader"))
+    {
+        <a asp-page="./Developer">Back to List</a>
+    }
+    @if(!User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_teamleader"))
+    {
+        <a asp-page="./Requester">Back to My Requests</a>
+    }
 </div>

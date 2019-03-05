@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Novell.Directory.Ldap;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
 namespace IST_Submission_Form.Pages
 {
@@ -40,8 +37,6 @@ namespace IST_Submission_Form.Pages
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
             RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Requester").ToListAsync();
             DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Developer").ToListAsync();
-            // RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.Commenter == Proposals.SubmittedBy && c.ProposalID == Proposal.ID).ToListAsync();
-            // DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.CreatedByID != Proposal.RequesterID && c.ProposalID == Proposal.ID).ToListAsync();
 
             if (DeveloperComments == null)
             {
@@ -89,5 +84,11 @@ namespace IST_Submission_Form.Pages
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
+
+        public bool CheckUserRole()
+        {
+            return User.IsInRole("ist_Teamleader");
+        }
     }
+
 }
