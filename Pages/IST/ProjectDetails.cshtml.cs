@@ -29,8 +29,7 @@ namespace IST_Submission_Form.Pages
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var AllProposals = await _ISTProjectsContext.Proposals.Where(p => p.Id == id).ToListAsync();
-            // if (id == null)
-            if (AllProposals == null)
+            if (AllProposals.Count == 0)
             {
                 return NotFound();
             }
