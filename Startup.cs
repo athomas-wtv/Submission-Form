@@ -69,6 +69,8 @@ namespace IST_Submission_Form
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            // app.UseStatusCodePages("text/html", "<h1>Error! Status Code {0}</h1>");
+            // app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
             app.UseMvc();
         }
