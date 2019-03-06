@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IST_Submission_Form.Models
 {
@@ -10,5 +11,7 @@ namespace IST_Submission_Form.Models
         public int SortProjects { get; set; }
         public int SortProposals { get; set; }
         public int SortTickets { get; set; }
+        [NotMapped]
+        public IList<Proposals> Proposals { get; set; }
     }
 }

@@ -28,8 +28,10 @@
 </div>
 <div class="container mb-2">
     <div class="row">
-        <h4>@Html.DisplayNameFor(model => model.Proposals.Description)</h4><hr>
-        <p>@Html.DisplayFor(model => model.Proposals.Description)</p>
+        <div class="col">
+            <h4>@Html.DisplayNameFor(model => model.Proposals.Description)</h4><hr>
+            <p>@Html.DisplayFor(model => model.Proposals.Description)</p>
+        </div>
     </div>
 </div>
 
@@ -41,9 +43,9 @@
         </div>
         <div class="col-3">
             <h4>Status</h4><hr>
-            @Html.DisplayFor(model => model.Proposals.Status)
+            @Html.DisplayFor(model => model.Proposals.StatusId) - @Html.DisplayFor(model => model.Status.StatusDescription)
         </div>
-        @if(User.IsInRole("ist_Teamleader"))
+        @if(User.IsInRole("ist_TeamLeader"))
         {
             <div class="col-3">
                 <h4>Assigned To</h4>
@@ -57,7 +59,7 @@
 
 <div class="container mt-3">
     <div class="row">
-    @if(User.IsInRole("ist_Teamleader") || !User.IsInRole("Information Solutions Team"))
+    @if(User.IsInRole("ist_TeamLeader") || !User.IsInRole("Information Solutions Team"))
     {
         <div class="col-6">
             <h4>Requester Comments</h4><hr>
@@ -114,15 +116,15 @@
     </div>
 </div>
 <div>
-    @if(User.IsInRole("ist_teamleader"))
+    @if(User.IsInRole("ist_TeamLeader"))
     {
         <a asp-page="./Teamlead">Back to List</a>
     }
-    @if(User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_teamleader"))
+    @if(User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_TeamLeader"))
     {
         <a asp-page="./Developer">Back to List</a>
     }
-    @if(!User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_teamleader"))
+    @if(!User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_TeamLeader"))
     {
         <a asp-page="./Requester">Back to My Requests</a>
     }

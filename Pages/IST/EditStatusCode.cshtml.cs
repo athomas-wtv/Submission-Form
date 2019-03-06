@@ -32,7 +32,7 @@ namespace IST_Submission_Form.Pages
         {
             Proposal = _ISTProjectsContext.Proposals
                             .Where(s => s.Id == id).First();
-            Proposal.Status = NewStatusCode;
+            Proposal.StatusId = NewStatusCode;
             await _ISTProjectsContext.SaveChangesAsync();
 
             return RedirectToPage("Teamlead");

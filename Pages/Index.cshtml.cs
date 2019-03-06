@@ -54,7 +54,7 @@ namespace IST_Submission_Form.Pages
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Proposal.SubmitDate = DateTime.Now;
-            Proposal.Status = 14;
+            Proposal.StatusId = 14;
             Proposal.SubmittedBy = name.LoginID;
             Proposal.AssignedTo = "PKOUTOUL";
             _istprojectscontext.Proposals.Add(Proposal);

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles = "ist_Teamleader")]
+    // [Authorize(Roles = "ist_TeamLeader")]
     public class Edit : PageModel
     {
         [BindProperty]
@@ -40,7 +40,7 @@ namespace IST_Submission_Form.Pages
             Status = new SelectList(StatusCodes, "Id", "StatusDescription");
             CurrentUsers = new SelectList(Users, "NetworkId", "Name");
 
-            NewStatusCode = Proposal.Status;
+            NewStatusCode = Proposal.StatusId;
             Assignee = Proposal.AssignedTo;
 
         }
@@ -51,7 +51,7 @@ namespace IST_Submission_Form.Pages
                             .Where(s => s.Id == id).First();
 
             Proposal.AssignedTo = Assignee;
-            Proposal.Status = NewStatusCode;
+            Proposal.StatusId = NewStatusCode;
             await _ISTProjectsContext.SaveChangesAsync();
             return RedirectToPage("ProjectDetails", new { id = id });
 

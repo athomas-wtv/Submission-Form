@@ -14,6 +14,7 @@ namespace IST_Submission_Form.Pages
     {
         [BindProperty]
         public Proposals Proposals { get; set; }
+        public Status Status { get; set; }
         [BindProperty]
         public List<Comments> RequesterComments { get; set; }
         public List<Comments> DeveloperComments { get; set; }
@@ -25,9 +26,9 @@ namespace IST_Submission_Form.Pages
             _ISTProjectsContext = ISTProjectsContext;
             _StaffDirectoryContext = StaffDirectoryContext;
         }
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var AllProposals = _ISTProjectsContext.Proposals.Where(p => p.Id == id);
+            var AllProposals = await _ISTProjectsContext.Proposals.Where(p => p.Id == id).ToListAsync();
             // if (id == null)
             if (AllProposals == null)
             {
@@ -37,6 +38,7 @@ namespace IST_Submission_Form.Pages
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
             RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Requester").ToListAsync();
             DeveloperComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Developer").ToListAsync();
+            Status = await _ISTProjectsContext.Status.Where(s => s.Id == Proposals.StatusId).FirstAsync();
 
             if (DeveloperComments == null)
             {
@@ -87,7 +89,7 @@ namespace IST_Submission_Form.Pages
 
         public bool CheckUserRole()
         {
-            return User.IsInRole("ist_Teamleader");
+            return User.IsInRole("ist_TeamLeader");
         }
     }
 

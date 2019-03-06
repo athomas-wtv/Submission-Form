@@ -98,6 +98,8 @@ namespace IST_Submission_Form.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
+                entity.HasOne(p => p.Status).WithMany(s => s.Proposals);
             });
 
             modelBuilder.Entity<Status>(entity =>

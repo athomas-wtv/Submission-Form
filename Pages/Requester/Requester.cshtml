@@ -26,7 +26,7 @@
                 <div class="container card-footer text-muted">
                     <div class="row">
                         <div class="col">
-                            <b>Status: </b>@Html.DisplayFor(modelItem => Proposal.Status)
+                            <b>Status: </b>@Html.DisplayFor(modelItem => Proposal.Status.StatusDescription)
                         </div>
                         <div class="col d-flex justify-content-end">
                             <a class="text-danger" asp-page="./CancelRequest" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>

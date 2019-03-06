@@ -11,12 +11,13 @@ namespace IST_Submission_Form.Pages.Requester
     {
         public IList<Proposals> Proposals { get; set; }
         public IList<Status> Status { get; set; }
-        private readonly ISTProjectsContext _context;
+        public object CodeDescription { get; set; }
+        private readonly ISTProjectsContext _ISTProjectsContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
 
-        public RequesterModel(ISTProjectsContext context, StaffDirectoryContext StaffDirectoryContext)
+        public RequesterModel(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext)
         {
-            _context = context;
+            _ISTProjectsContext = ISTProjectsContext;
             _StaffDirectoryContext = StaffDirectoryContext;
         }
         
@@ -24,15 +25,11 @@ namespace IST_Submission_Form.Pages.Requester
         {
             var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
 
-            Proposals = await _context.Proposals.Where(p => p.SubmittedBy == name.LoginID)
+            Proposals = await _ISTProjectsContext.Proposals.Include(p => p.Status)
+                                                    .Where(p => p.SubmittedBy == name.LoginID)
                                                     .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
-            Status = await _context.Status
-                            .Where(c => c.SortProposals > 0)
-                            .ToListAsync();
-            // try
-            // {
-            //     Proposals = await _context.Proposals.ToListAsync();
+
 
             // }
             // catch(SqlException)
