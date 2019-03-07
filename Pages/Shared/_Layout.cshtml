@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/comment-styling.css" />
+        <link rel="stylesheet" href="~/css/error.css" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     </environment>
@@ -30,19 +31,17 @@
         <div class="d-flex justify-content-end">
             @if(User.Identity.IsAuthenticated && User.IsInRole("ist_TeamLeader"))
             {
-                <a class="nav-link d-flex text-secondary" href="/Teamlead">Dashboard</a>
-                <a class="nav-link d-flex text-secondary" href="/Logout">Logout</a>
+                <a class="nav-link text-secondary" href="/Teamlead">Dashboard</a>
             }
             @if(User.Identity.IsAuthenticated && User.IsInRole("Information Solutions Team"))
             {
                 <a class="nav-link text-secondary" href="/IST/Developer">Dashboard</a>
-                <a class="nav-link text-secondary" href="/Logout">Logout</a>
             }
             @if(User.Identity.IsAuthenticated && !User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_TeamLeader"))
             {
-                <a class="nav-link d-flex text-secondary" href="/Developer">Dashboard</a>
-                <a class="nav-link d-flex text-secondary" href="/Logout">Logout</a>
+                <a class="nav-link text-secondary" href="/Developer">Dashboard</a>
             }
+            <a class="nav-link text-secondary" href="/Logout">Logout</a>
         </div>
     </nav>
 
@@ -67,6 +66,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Requester/Requester">Requester</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="/IST/ProjectDetails/999999">404 Check</a>
                         </li>
                         @if(User.Identity.IsAuthenticated)
                         {

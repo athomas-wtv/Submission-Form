@@ -31,8 +31,8 @@ namespace IST_Submission_Form.Pages
             var AllProposals = await _ISTProjectsContext.Proposals.Where(p => p.Id == id).ToListAsync();
             if (AllProposals.Count == 0)
             {
-                return Redirect("/Errors/404?error=project_not_found");
-                // return NotFound();
+                return NotFound();
+                // return Redirect("/Errors/404?message=Project Does Not Exist&code=404 - Project Not Found");
             }
 
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);

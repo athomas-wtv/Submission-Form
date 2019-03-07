@@ -33,7 +33,7 @@ namespace IST_Submission_Form
                 .AddCookie(o => 
                 {
                     o.LoginPath = new PathString("/Index");
-                    o.AccessDeniedPath = new PathString("/Login");
+                    // o.AccessDeniedPath = new PathString("/Login");
                 });
                 
             services.Configure<CookiePolicyOptions>(options =>
@@ -69,7 +69,8 @@ namespace IST_Submission_Form
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            // app.UseStatusCodePages("text/html", "<h1>Error! Status Code {0}</h1>");
+            app.UseStatusCodePages();
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}", "?code={0} - Not Found");
             // app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
             app.UseMvc();
