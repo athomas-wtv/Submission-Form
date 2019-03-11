@@ -103,6 +103,7 @@ namespace IST_Submission_Form.Pages
             await _ISTProjectsContext.SaveChangesAsync();
 
             // Query database to get the assigned developer's email address
+            Console.Write("PROPOSAL ASSIGNED TO:" + Proposals.AssignedTo + "<- HERE!!!!!!");
             var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => s.LoginID == Proposals.AssignedTo).First();
 
             // Set EmailAddress variable to the email of the person not making the comment

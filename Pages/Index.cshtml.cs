@@ -31,6 +31,10 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public string Files { get; set; }
 
+        // public IActionResult OnGet()
+        // {
+
+        // }
         public void OnGet()
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
