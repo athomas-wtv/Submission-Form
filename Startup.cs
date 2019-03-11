@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using IST_Submission_Form.Models;
-using IST_Submission_Form.Pages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +44,11 @@ namespace IST_Submission_Form
             services.AddSingleton<ILdapService, LdapService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services
+                .AddFluentEmail("ist@fayette.kyschools.us")
+                .AddRazorRenderer()
+                .AddSmtpSender("ketsmail.us", 25);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +70,6 @@ namespace IST_Submission_Form
             app.UseAuthentication();
             app.UseStatusCodePages();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}", "?code={0} - Not Found");
-            // app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
             app.UseMvc();
         }

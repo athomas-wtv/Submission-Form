@@ -2,6 +2,44 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "FluentEmail.Core/2.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentEmail.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentEmail.Core.dll": {}
+        }
+      },
+      "FluentEmail.Razor/2.5.2": {
+        "type": "package",
+        "dependencies": {
+          "FluentEmail.Core": "2.5.1",
+          "Microsoft.CSharp": "4.4.1",
+          "RazorLight": "2.0.0-beta1"
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentEmail.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentEmail.Razor.dll": {}
+        }
+      },
+      "FluentEmail.Smtp/2.5.2": {
+        "type": "package",
+        "dependencies": {
+          "FluentEmail.Core": "2.5.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentEmail.Smtp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentEmail.Smtp.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -2709,6 +2747,30 @@
           "lib/netstandard2.0/Novell.Directory.Ldap.NETStandard.dll": {}
         }
       },
+      "RazorLight/2.0.0-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.0",
+          "Microsoft.AspNetCore.Html.Abstractions": "2.0.0",
+          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "2.0.0",
+          "Microsoft.AspNetCore.Razor.Language": "2.0.0",
+          "Microsoft.AspNetCore.Razor.Runtime": "2.0.0",
+          "Microsoft.CodeAnalysis.Razor": "2.0.0",
+          "Microsoft.Extensions.Caching.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Caching.Memory": "2.0.0",
+          "Microsoft.Extensions.DependencyInjection": "2.0.0",
+          "Microsoft.Extensions.DependencyModel": "2.0.3",
+          "Microsoft.Extensions.FileProviders.Physical": "2.0.0",
+          "Microsoft.Extensions.Primitives": "2.0.0",
+          "System.Buffers": "4.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/RazorLight.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RazorLight.dll": {}
+        }
+      },
       "Remotion.Linq/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -4568,6 +4630,39 @@
     }
   },
   "libraries": {
+    "FluentEmail.Core/2.5.1": {
+      "sha512": "ekNRfV1/Eh6n5Z7D8ZHaRG+VDxSCahl6y9OEgOgLPMX7R3NDIisQA2exc44SmFahaiqv6jio2vkbpb0SYZ2mUQ==",
+      "type": "package",
+      "path": "fluentemail.core/2.5.1",
+      "files": [
+        ".signature.p7s",
+        "fluentemail.core.2.5.1.nupkg.sha512",
+        "fluentemail.core.nuspec",
+        "lib/netstandard2.0/FluentEmail.Core.dll"
+      ]
+    },
+    "FluentEmail.Razor/2.5.2": {
+      "sha512": "tQ9yBZypTU+1ZwPc9QieiYphNwhjPOmkSUjDcnNhtXeNHaC7LhePPC8aMUwHdUWjCFXhI6qVGqSVUc5ZfPbwYA==",
+      "type": "package",
+      "path": "fluentemail.razor/2.5.2",
+      "files": [
+        ".signature.p7s",
+        "fluentemail.razor.2.5.2.nupkg.sha512",
+        "fluentemail.razor.nuspec",
+        "lib/netstandard2.0/FluentEmail.Razor.dll"
+      ]
+    },
+    "FluentEmail.Smtp/2.5.2": {
+      "sha512": "ApfMj97p4gyR74WcvvyU/cwothMmcszolRm+sezs88LPbuxjL6HKBj+uvxCG84Oh3LRqz9Hw7CQ3yR7UgOP4Qw==",
+      "type": "package",
+      "path": "fluentemail.smtp/2.5.2",
+      "files": [
+        ".signature.p7s",
+        "fluentemail.smtp.2.5.2.nupkg.sha512",
+        "fluentemail.smtp.nuspec",
+        "lib/netstandard2.0/FluentEmail.Smtp.dll"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
       "type": "package",
@@ -7239,6 +7334,17 @@
         "lib/netstandard2.0/Novell.Directory.Ldap.NETStandard.xml",
         "novell.directory.ldap.netstandard2_0.3.1.0.nupkg.sha512",
         "novell.directory.ldap.netstandard2_0.nuspec"
+      ]
+    },
+    "RazorLight/2.0.0-beta1": {
+      "sha512": "kTQqMQ0fAG/SOXUs5hFIEqfOrJuhz8x0WrQAeFwpYZooxeUTmvhOQpY0EoLMbgdHTAkkpZ8C3xPBvjyzuiKvKA==",
+      "type": "package",
+      "path": "razorlight/2.0.0-beta1",
+      "files": [
+        ".signature.p7s",
+        "lib/netstandard2.0/RazorLight.dll",
+        "razorlight.2.0.0-beta1.nupkg.sha512",
+        "razorlight.nuspec"
       ]
     },
     "Remotion.Linq/2.2.0": {
@@ -12084,6 +12190,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "FluentEmail.Core >= 2.5.1",
+      "FluentEmail.Razor >= 2.5.2",
+      "FluentEmail.Smtp >= 2.5.2",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Diagnostics.Abstractions >= 2.1.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.1.8",
@@ -12132,6 +12241,18 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "FluentEmail.Core": {
+            "target": "Package",
+            "version": "[2.5.1, )"
+          },
+          "FluentEmail.Razor": {
+            "target": "Package",
+            "version": "[2.5.2, )"
+          },
+          "FluentEmail.Smtp": {
+            "target": "Package",
+            "version": "[2.5.2, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

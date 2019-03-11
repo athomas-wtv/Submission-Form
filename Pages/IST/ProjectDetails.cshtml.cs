@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using FluentEmail.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace IST_Submission_Form.Pages
 {
@@ -20,11 +22,13 @@ namespace IST_Submission_Form.Pages
         public List<Comments> DeveloperComments { get; set; }
         private readonly ISTProjectsContext _ISTProjectsContext;
         private readonly StaffDirectoryContext _StaffDirectoryContext;
+        public IConfiguration _config { get; }
 
-        public ProjectDetails(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext)
+        public ProjectDetails(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext, IConfiguration config)
         {
             _ISTProjectsContext = ISTProjectsContext;
             _StaffDirectoryContext = StaffDirectoryContext;
+            _config = config;
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -47,42 +51,70 @@ namespace IST_Submission_Form.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRequesterAsync(int ID, string Body)
+        public async Task<IActionResult> OnPostRequesterAsync(int ID, string Body, [FromServices]IFluentEmail email)
         {
             if (!ModelState.IsValid)
                 return Page();
             
-            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
             Comments Comment = new Comments();
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Comment.ProposalId = Proposals.Id;
-            Comment.Commenter = name.LoginID;
+            Comment.Commenter = LoggedInUser.LoginID;
             Comment.Comment = Body;
             Comment.DateTime = DateTime.Now;
             Comment.CommentType = "Requester";
             _ISTProjectsContext.Comments.Add(Comment);
 
             await _ISTProjectsContext.SaveChangesAsync();
+            
+            // Query database to get the assigned developer's email address
+            var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => Proposals.AssignedTo == s.LoginID).First();
+
+            // Set EmailAddress variable to the email of the person not making the comment
+            string RecipientEmailAddress = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["TeamLeader"];
+            string RecipientName = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["TeamLeaderName"];
+
+            // Send email notification to EmailAddress
+            await email
+                .To(RecipientEmailAddress, RecipientName)
+                .Subject("Someone has Commented on your proposal.")
+                .Body("Go to you dashboard to view the new comment.")
+                .SendAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
 
-        public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Body)
+        public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Body, [FromServices]IFluentEmail email)
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
+            var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
             Comments Comment = new Comments();
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Comment.ProposalId = Proposals.Id;
-            Comment.Commenter = name.LoginID;
+            Comment.Commenter = LoggedInUser.LoginID;
             Comment.Comment = Body;
             Comment.DateTime = DateTime.Now;
             Comment.CommentType = "Developer";
             _ISTProjectsContext.Comments.Add(Comment);
 
             await _ISTProjectsContext.SaveChangesAsync();
+
+            // Query database to get the assigned developer's email address
+            var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => s.LoginID == Proposals.AssignedTo).First();
+
+            // Set EmailAddress variable to the email of the person not making the comment
+            string RecipientEmailAddress = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["TestTeamLeaderEmail"];
+            string RecipientName = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["TeamLeaderName"];
+
+            // Send email to Teamleader
+            await email
+                .To(RecipientEmailAddress, RecipientName)
+                .Subject("Someone has Commented on the proposal you're assigned to.")
+                .Body("Comment Reads:" + "<i>" + Body + "</i>" + "Go to you dashboard to view the new comment.")
+                .SendAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
