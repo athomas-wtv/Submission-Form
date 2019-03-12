@@ -1,0 +1,59 @@
+﻿@page
+@model FormModel
+@{
+    ViewData["Title"] = "IST Submission Form";
+}
+<div class="d-flex justify-content-end">
+  <a asp-page="/Requester/Requester" class="btn btn-info">
+    <i>Back to Dashboard</i>
+  </a>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+  <div class="form-row">
+    <div class="form-group col-md-6 mx-auto">
+      <label for="submitterName" class="auto-populated-label">Name</label><br>
+      <input type="text" asp-for="SubmitterName" class="auto-populated-information" name="SubmitterName" id="submitterName" readonly>
+    </div>
+    <div class="form-group col-md-6 mx-auto ">
+      <label for="email" class="auto-populated-label">Email</label><br>
+      <input type="email" asp-for="Email" class="auto-populated-information email" name="SubmitterEmail" id="email" readonly>
+    </div>
+  </div>
+      <input type="text" asp-for="LoginID" name="LoginID" id="loginID" hidden>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="title">Project Title</label>
+        <input type="text" class="form-control" name="Title" id="title" placeholder="Project Title">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="location">My Location</label>
+        <input type="text" class="form-control" name="SubmitterLocation" id="location" placeholder="Location">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="projectDescription">Project Description</label>
+      <h6 class="card-subtitle mb-2 text-muted"><i>Describe what you want your application to do?</i></h6>
+      <textarea type="text" class="form-control" name="Description" id="description"></textarea>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="DesiredCompletion">Desired Completion Date</label>
+        <h6 class="card-subtitle mb-2 text-muted"><i>How soon will you need this application?</i></h6>
+        <input name="DesiredCompletion" id="DesiredCompletion" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="files">Relevant Document(s)</label>
+        <h6 class="card-subtitle mb-2 text-muted"><i>Add documents that are relavant to your request.</i></h6>
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <input type="file" name="files" class="custom-file-input" id="chooseFileInput">
+            <label class="custom-file-label" for="files" aria-describedby="filesToUpload" id="chooseFileLabel">Choose file</label>
+          </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info btn-lg btn-block">Submit</button>
+  </div>
+</form>

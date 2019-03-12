@@ -87,6 +87,7 @@ namespace IST_Submission_Form.Pages
 
         public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Body, [FromServices]IFluentEmail email)
         {
+
             if (!ModelState.IsValid)
                 return Page();
 
@@ -103,12 +104,26 @@ namespace IST_Submission_Form.Pages
             await _ISTProjectsContext.SaveChangesAsync();
 
             // Query database to get the assigned developer's email address
-            Console.Write("PROPOSAL ASSIGNED TO:" + Proposals.AssignedTo + "<- HERE!!!!!!");
             var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => s.LoginID == Proposals.AssignedTo).First();
 
             // Set EmailAddress variable to the email of the person not making the comment
             string RecipientEmailAddress = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["TestTeamLeaderEmail"];
             string RecipientName = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["TeamLeaderName"];
+            
+            // Console.Write("Email Renderer: " + email.Renderer + " <- HERE!");
+            // Console.Write("Email Sender: " + email.Sender + " <- HERE!");
+            // Console.Write("Email Attachments: " + email.Data.Attachments + " <- HERE!");
+            // Console.Write("Email BccAddresses: " + email.Data.BccAddresses + " <- HERE!");
+            // Console.Write("Email Body: " + email.Data.Body + " <- HERE!");
+            // Console.Write("Email CcAddresses: " + email.Data.CcAddresses + " <- HERE!");
+            // Console.Write("Email FromAddress: " + email.Data.FromAddress + " <- HERE!");
+            // Console.Write("Email IsHtml: " + email.Data.IsHtml + " <- HERE!");
+            // Console.Write("Email PlaintextAlternativeBody: " + email.Data.PlaintextAlternativeBody + " <- HERE!");
+            // Console.Write("Email Priority: " + email.Data.Priority + " <- HERE!");
+            // Console.Write("Email ReplyToAddresses: " + email.Data.ReplyToAddresses + " <- HERE!");
+            // Console.Write("Email Subject: " + email.Data.Subject + " <- HERE!");
+            // Console.Write("Email Tags: " + email.Data.Tags + " <- HERE!");
+            // Console.Write("Email ToAddresses: " + email.Data.ToAddresses + " <- HERE!");
 
             // Send email to Teamleader
             await email

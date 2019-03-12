@@ -59,60 +59,61 @@
 
 <div class="container mt-3">
     <div class="row">
-    @if(User.IsInRole("ist_TeamLeader") || !User.IsInRole("Information Solutions Team"))
-    {
-        <div class="col-6">
-            <h4>Requester Comments</h4><hr>
-            <div class="scroll-comments w3-border-bottom mb-3 py-2">
-                @foreach(var Comment in Model.RequesterComments)
-                {
-                    <div class="message to bg-info">
-                        <p>
-                        <b>@Html.DisplayFor(modelItem => Comment.Commenter)</b>
-                        <br>
-                        @Html.DisplayFor(modelItem => Comment.Comment)
-                        <br>
-                        <span style="font-size: 0.5em; font-style: italic;">
-                            Sent at @Html.DisplayFor(modelItem => Comment.DateTime)
-                        </span>
-                        </p>
-                    </div>
-                }
+        @if(User.IsInRole("ist_TeamLeader") || !User.IsInRole("Information Solutions Team"))
+        {
+            <div class="col-6">
+                <h4>Requester Comments</h4><hr>
+                <div class="scroll-comments w3-border-bottom mb-3 py-2">
+                    @foreach(var Comment in Model.RequesterComments)
+                    {
+                        <div class="message to bg-info">
+                            <p>
+                            <b>@Html.DisplayFor(modelItem => Comment.Commenter)</b>
+                            <br>
+                            @Html.DisplayFor(modelItem => Comment.Comment)
+                            <br>
+                            <span style="font-size: 0.5em; font-style: italic;">
+                                Sent at @Html.DisplayFor(modelItem => Comment.DateTime)
+                            </span>
+                            </p>
+                        </div>
+                    }
+                </div>
+                <form asp-page-handler="requester" method="post">
+                    <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
+                    <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+                    <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
+                </form>
             </div>
-            <form asp-page-handler="requester" method="post">
-                <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
-                <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
-                <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
-            </form>
-        </div>
-    }
-    @if(User.IsInRole("Information Solutions Team"))
-    {
-        <div class="col-6">
-            <h4>Developer Comments</h4><hr>
-            <div class="scroll-comments w3-border-bottom mb-3 py-2 rounded">
-                @foreach(var Comment in Model.DeveloperComments)
-                {
-                    <div class="message to bg-dark">
-                        <p>
-                        <b>@Html.DisplayFor(modelItem => Comment.Commenter)</b>
-                        <br>
-                        @Html.DisplayFor(modelItem => Comment.Comment)
-                        <br>
-                        <span style="font-size: 0.5em; font-style: italic;">
-                            Sent at @Html.DisplayFor(modelItem => Comment.DateTime)
-                        </span>
-                        </p>
-                    </div>
-                }
+        }
+        @if(User.IsInRole("Information Solutions Team"))
+        {
+            <div class="col-6">
+                <h4>Developer Comments</h4><hr>
+                <div class="scroll-comments w3-border-bottom mb-3 py-2 rounded">
+                    @foreach(var Comment in Model.DeveloperComments)
+                    {
+                        <div class="message to bg-dark">
+                            <p>
+                            <b>@Html.DisplayFor(modelItem => Comment.Commenter)</b>
+                            <br>
+                            @Html.DisplayFor(modelItem => Comment.Comment)
+                            <br>
+                            <span style="font-size: 0.5em; font-style: italic;">
+                                Sent at @Html.DisplayFor(modelItem => Comment.DateTime)
+                            </span>
+                            </p>
+                        </div>
+                    }
+                </div>
+                <form asp-page-handler="developer" method="post">
+                    <input type="hidden" class="form-control" name="AssignedTo" value="@Model.Proposals.AssignedTo" />
+                    <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
+                    <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
+                    <input type="submit" class="btn btn-dark btn-sm my-2 float-right" />
+                </form>
             </div>
-            <form asp-page-handler="developer" method="post">
-                <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
-                <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
-                <input type="submit" class="btn btn-dark btn-sm my-2 float-right" />
-            </form>
-        </div>
-    }
+        }
     </div>
 </div>
 <div>
