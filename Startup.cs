@@ -38,8 +38,8 @@ namespace IST_Submission_Form
             });
 
             // Adding Databases to use in App
-            services.AddDbContext<ISTProjectsContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]); });
-            services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]); });
+            services.AddDbContext<ISTProjectsContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]).EnableSensitiveDataLogging(); });
+            services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]).EnableSensitiveDataLogging(); });
 
             services.AddSingleton<ILdapService, LdapService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
