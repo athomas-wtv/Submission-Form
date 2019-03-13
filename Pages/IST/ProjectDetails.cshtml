@@ -81,6 +81,7 @@
                 </div>
                 <form asp-page-handler="requester" method="post">
                     <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
+                    <input type="hidden" class="form-control" name="Title" value="@Model.Proposals.Title" />
                     <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
                     <input type="submit" class="btn btn-info btn-sm my-2 float-right" />
                 </form>
@@ -108,6 +109,7 @@
                 </div>
                 <form asp-page-handler="developer" method="post">
                     <input type="hidden" class="form-control" name="AssignedTo" value="@Model.Proposals.AssignedTo" />
+                    <input type="hidden" class="form-control" name="Title" value="@Model.Proposals.Title" />
                     <input type="hidden" class="form-control" name="ID" value="@Model.Proposals.Id" />
                     <input type="text" class="form-control" name="Body" placeholder="Add Comment" />
                     <input type="submit" class="btn btn-dark btn-sm my-2 float-right" />

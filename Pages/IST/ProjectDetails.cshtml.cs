@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using FluentEmail.Core;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles = "Information Solutions Team")]
     public class ProjectDetails : PageModel
     {
         [BindProperty]
@@ -36,7 +36,6 @@ namespace IST_Submission_Form.Pages
             if (AllProposals.Count == 0)
             {
                 return NotFound();
-                // return Redirect("/Errors/404?message=Project Does Not Exist&code=404 - Project Not Found");
             }
 
             Proposals = await _ISTProjectsContext.Proposals.FirstOrDefaultAsync(m => m.Id == id);
@@ -51,7 +50,7 @@ namespace IST_Submission_Form.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRequesterAsync(int ID, string Body, [FromServices]IFluentEmail email)
+        public async Task<IActionResult> OnPostRequesterAsync(int ID, string Title, string Body, [FromServices]IFluentEmail email)
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -68,24 +67,24 @@ namespace IST_Submission_Form.Pages
 
             await _ISTProjectsContext.SaveChangesAsync();
             
-            // Query database to get the assigned developer's email address
-            var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => Proposals.AssignedTo == s.LoginID).First();
+            // Query database to get the requester's information
+            var Requester = _StaffDirectoryContext.Staff.Where(s => Proposals.SubmittedBy == User.FindFirst("username").Value).First();
 
             // Set EmailAddress variable to the email of the person not making the comment
-            string RecipientEmailAddress = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["TeamLeader"];
-            string RecipientName = _config["TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["TeamLeaderName"];
+            string RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Requester.Email : _config["email:TestTeamLeaderEmail"];
+            string RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Requester.FName : _config["email:TeamLeaderName"];
 
             // Send email notification to EmailAddress
             await email
                 .To(RecipientEmailAddress, RecipientName)
-                .Subject("Someone has Commented on your proposal.")
-                .Body("Go to you dashboard to view the new comment.")
+                .Subject(Requester.FName + " posted a comment on the '" + Proposals.Title + "' Proposal! | IST Form")
+                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/FromDeveloper.cshtml", new { Name = RecipientName })
                 .SendAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
         }
 
-        public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Body, [FromServices]IFluentEmail email)
+        public async Task<IActionResult> OnPostDeveloperAsync(int ID, string Title, string Body, [FromServices]IFluentEmail email)
         {
 
             if (!ModelState.IsValid)
@@ -107,23 +106,18 @@ namespace IST_Submission_Form.Pages
             var AssignedToStaff = _StaffDirectoryContext.Staff.Where(s => s.LoginID == Proposals.AssignedTo).First();
 
             // Set EmailAddress variable to the email of the person not making the comment
-            string RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["email:TestTeamLeaderEmail"];
-            string RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["email:TeamLeaderName"];
+            var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.Email : _config["email:TestTeamLeaderEmail"];
+            var RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? AssignedToStaff.FName : _config["email:TeamLeaderName"];
             
             // Send email to Teamleader
             await email
                 .To(RecipientEmailAddress, RecipientName)
-                .Subject("Someone has Commented on the proposal you're assigned to.")
-                .Body("Comment Reads:" + Body + "Go to you dashboard to view the new comment.")
+                .Subject(AssignedToStaff.FName + " posted a comment on the '" + Proposals.Title + "' Proposal! | IST Form")
+                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/FromDeveloper.cshtml", new { Name = RecipientName })
                 .SendAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
-        }
-
-        public bool CheckUserRole()
-        {
-            return User.IsInRole("ist_TeamLeader");
-        }
+        } 
     }
 
 }
