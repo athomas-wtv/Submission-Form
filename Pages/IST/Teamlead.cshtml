@@ -10,7 +10,7 @@
         <div class="col-sm-3">
             <div class="card text-center my-3 shadow">
                 <div class="card-header">
-                    <b>@Html.DisplayNameFor(model => model.Proposals[0].SubmitDate)</b>:
+                    <b>Submit Date</b>:
                     @Html.DisplayFor(modelItem => Proposal.SubmitDate)
                 </div>
                 <div class="card-body">
@@ -20,7 +20,7 @@
                     <p class="card-text" style="overflow: scroll; height:100px">
                         @Html.DisplayFor(modelItem => Proposal.Description)
                     </p>
-                    <a asp-page="./ProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success">Details</a>
+                    <a asp-page="./ProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success mt-2">Details</a>
                 </div>
                 <div class="card-footer text-muted">
                     <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.AssignedTo)<br>

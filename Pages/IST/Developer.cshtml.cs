@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IST_Submission_Form.Pages
 {
@@ -15,18 +16,17 @@ namespace IST_Submission_Form.Pages
     public class DeveloperModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }
-        private readonly ISTProjectsContext _context;
-        public string Username;
-        public DeveloperModel(ISTProjectsContext context)
+        private readonly ISTProjectsContext _ISTProjectsContext;
+        public DeveloperModel(ISTProjectsContext ISTProjectsContext)
         {
-            _context = context;
+            _ISTProjectsContext = ISTProjectsContext;
         }
 
         public async Task OnGetAsync()
         {
             string Username = User.FindFirst("username").Value;
-            Proposals = await _context.Proposals
-                                .Where(s => s.AssignedTo == Username).ToListAsync();
+            Proposals = await _ISTProjectsContext.Proposals.Where(p => p.AssignedTo == Username).Include(p => p.Status).ToListAsync();
+
         }
 
     }
