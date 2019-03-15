@@ -7,27 +7,24 @@
 <hr>
 <form method="post">
     <div class="row">
-        <div class="col-md-6">
-            <dl class="dl-horizontal">
-                <dt>
-                    Assignee for @Html.DisplayFor(model => model.Proposal.Title)
-                </dd>
-                <dd>
-                    <select class="custom-select mb-4 col-12" asp-for="Assignee" asp-items="@Model.CurrentUsers">
-                    </select>
-                    <br>
-                </dd>
-            </dl>
-        </div>
+        @if(User.FindFirst("username").Value == "pkoutoul")
+        {
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>Assignee for @Html.DisplayFor(model => model.Proposal.Title)</dt>
+                    <dd>
+                        <select class="custom-select mb-4 col-12" asp-for="Assignee" asp-items="@Model.CurrentUsers"></select>
+                        <br>
+                    </dd>
+                </dl>
+            </div>
+        }
 
         <div class="col-md-6">
             <dl class="dl-horizontal">
-                <dt>
-                    Status Code
-                </dt>
+                <dt>Status Code</dt>
                 <dd>
-                    <select class="custom-select mb-4 col-12" asp-for="NewStatusCode" asp-items="@Model.Status">
-                    </select>
+                    <select class="custom-select mb-4 col-12" asp-for="NewStatusCode" asp-items="@Model.Status"></select>
                     <br>
                 </dd>
             </dl>

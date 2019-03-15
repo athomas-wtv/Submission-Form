@@ -23,7 +23,7 @@
                     <a asp-page="./ProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success mt-2">Details</a>
                 </div>
                 <div class="card-footer text-muted">
-                    <b>Status: </b><a asp-page="./EditStatusCode" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.StatusId)
+                    <b>Status: </b><a asp-page="./Edit" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.StatusId)
                     - @Html.DisplayFor(modelItem => Proposal.Status.StatusDescription)</a>
                 </div>
             </div>

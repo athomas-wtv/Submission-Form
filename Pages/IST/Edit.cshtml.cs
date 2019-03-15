@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,10 +32,27 @@ namespace IST_Submission_Form.Pages
         public SelectList Status { get; set; }
         public async Task OnGetAsync(int id)
         {
-            StatusCodes = await _ISTProjectsContext.Status
-                            .Where(c => c.SortProposals > 0).ToListAsync();
-            Proposal = _ISTProjectsContext.Proposals
-                            .Where(s => s.Id == id).First();
+            if(User.FindFirst("username").Value == "pkoutoul")
+            {
+                StatusCodes = await _ISTProjectsContext.Status.Where(c => c.SortProposals > 0).ToListAsync();
+            }
+            else
+            {
+                var DevStatusCodes = new List<int>();
+                DevStatusCodes.Add(2);
+                DevStatusCodes.Add(3);
+                DevStatusCodes.Add(5);
+                DevStatusCodes.Add(7);
+                StatusCodes = await _ISTProjectsContext.Status.Where(c => 
+                        c.SortProposals > 0 &&
+                        c.Id == 1 ||
+                        c.Id == 2 ||
+                        c.Id == 13 ||
+                        c.Id == 15
+                    ).ToListAsync();
+            }
+            
+            Proposal = _ISTProjectsContext.Proposals.Where(s => s.Id == id).First();
             Users = await _ISTProjectsContext.Users.ToListAsync();
 
             Status = new SelectList(StatusCodes, "Id", "StatusDescription");
@@ -47,8 +65,14 @@ namespace IST_Submission_Form.Pages
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            Proposal = _ISTProjectsContext.Proposals
-                            .Where(s => s.Id == id).First();
+            Proposal = _ISTProjectsContext.Proposals.Where(s => s.Id == id).First();
+
+            if(string.IsNullOrEmpty(Assignee))
+            {
+                Proposal.StatusId = NewStatusCode;
+                await _ISTProjectsContext.SaveChangesAsync();
+                return RedirectToPage("ProjectDetails", new { id = id });
+            }
 
             Proposal.AssignedTo = Assignee;
             Proposal.StatusId = NewStatusCode;
