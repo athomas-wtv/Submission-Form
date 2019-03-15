@@ -70,7 +70,7 @@ namespace IST_Submission_Form.Pages
             // Query database to get the requester's information
             var Requester = _StaffDirectoryContext.Staff.Where(s => Proposals.SubmittedBy == User.FindFirst("username").Value).First();
 
-            // Set EmailAddress variable to the email of the person not making the comment
+            // Set RecipientEmailAddress variable to the email of the person not making the comment
             string RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Requester.Email : _config["email:TestTeamLeaderEmail"];
             string RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Requester.FName : _config["email:TeamLeaderName"];
 

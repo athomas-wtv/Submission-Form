@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 namespace IST_Submission_Form.Pages
 {
     // [Authorize(Roles = "ist_TeamLeader")]
-    public class Edit : PageModel
+    public class EditBackup : PageModel
     {
         [BindProperty]
         public string Assignee { get; set; }
@@ -30,7 +30,7 @@ namespace IST_Submission_Form.Pages
         public IConfiguration _config { get; }
 
 
-        public Edit(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext, IConfiguration config)
+        public EditBackup(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext, IConfiguration config)
         {
             _ISTProjectsContext = ISTProjectsContext;
             _StaffDirectoryContext = StaffDirectoryContext;
@@ -81,14 +81,26 @@ namespace IST_Submission_Form.Pages
             {
                 Proposal.StatusId = NewStatusCode;
                 await _ISTProjectsContext.SaveChangesAsync();
-                SendEmailNotification(email);
                 return RedirectToPage("Developer", new { id = id });
             }
             
-            // If the new and old status codes are the same then it wasn't updated. Therefore no notification needs to be sent.
             if(Proposal.StatusId != NewStatusCode)
             {
-                SendEmailNotification(email);
+                // HEADING: Logic to send email notification when the status changes.
+                // Query database to get the requester's information
+                var Requester = _StaffDirectoryContext.Staff.Where(s => Proposal.SubmittedBy == User.FindFirst("username").Value).First();
+
+                // SUB-HEADING: Set RequesterEmailAddress variable to the email of the person not making the comment
+                // Set requester information into simpler-looking variables
+                string RequesterEmailAddress = Requester.Email;
+                string RequesterName = Requester.FName;
+
+                // Send email notification to Requester notifying them that the status of their project has changed
+                await email
+                    .To(RequesterEmailAddress, RequesterName)
+                    .Subject("The Status of Your Project Has Changed! | " + Proposal.Title)
+                    .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/StatusChange.cshtml", new { Name = RequesterName })
+                    .SendAsync();
             }
 
             Proposal.AssignedTo = Assignee;
@@ -96,26 +108,8 @@ namespace IST_Submission_Form.Pages
             await _ISTProjectsContext.SaveChangesAsync();
 
             return RedirectToPage("ProjectDetails", new { id = id });
-        }
+            
 
-        public void SendEmailNotification([FromServices]IFluentEmail email)
-        {
-            Console.WriteLine("Email Method Reached!!!!!");
-            // HEADING: Logic to send email notification when the status changes.
-            // Query database to get the requester's information
-            var Requester = _StaffDirectoryContext.Staff.Where(s => Proposal.SubmittedBy == User.FindFirst("username").Value).First();
-
-            // SUB-HEADING: Set RequesterEmailAddress variable to the email of the person not making the comment
-            // Set requester information into simpler-looking variables
-            string RequesterEmailAddress = Requester.Email;
-            string RequesterName = Requester.FName;
-
-            // Send email notification to Requester notifying them that the status of their project has changed
-            email
-                .To(RequesterEmailAddress, RequesterName)
-                .Subject("The Status of Your Project Has Changed! | " + Proposal.Title)
-                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/StatusChange.cshtml", new { Name = RequesterName })
-                .SendAsync();
         }
 
         [Route("/IST/ProjectDetails/{id}")]
