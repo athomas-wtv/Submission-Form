@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages.Requester
 {
+    [Authorize]
     public class RequesterModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }

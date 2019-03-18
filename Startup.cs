@@ -26,7 +26,7 @@ namespace IST_Submission_Form
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o => 
                 {
-                    o.LoginPath = new PathString("/Index");
+                    o.LoginPath = new PathString("/Login");
                     // o.AccessDeniedPath = new PathString("/Login");
                 });
                 

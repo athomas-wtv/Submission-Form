@@ -8,7 +8,12 @@ namespace IST_Submission_Form.Pages
 
         public IActionResult OnGet()
         {
-            if(User.IsInRole("ist_TeamLeader"))
+
+            if(!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Login");
+            }
+            else if(User.IsInRole("ist_TeamLeader"))
             {
                 return Redirect("/IST/Teamlead");
             }

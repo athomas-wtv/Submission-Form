@@ -46,6 +46,8 @@ namespace IST_Submission_Form.Pages
             }
             else
             {
+                // Creating a short sub-list of the status codes specifically for developers
+                // Each number corresponds to a status code in hte database
                 var DevStatusCodes = new List<int>();
                 DevStatusCodes.Add(2);
                 DevStatusCodes.Add(3);
@@ -100,15 +102,11 @@ namespace IST_Submission_Form.Pages
 
         public void SendEmailNotification([FromServices]IFluentEmail email)
         {
-            Console.WriteLine("Email Method Reached!!!!!");
             // HEADING: Logic to send email notification when the status changes.
-            // Query database to get the requester's information
-            var Requester = _StaffDirectoryContext.Staff.Where(s => Proposal.SubmittedBy == User.FindFirst("username").Value).First();
-
             // SUB-HEADING: Set RequesterEmailAddress variable to the email of the person not making the comment
             // Set requester information into simpler-looking variables
-            string RequesterEmailAddress = Requester.Email;
-            string RequesterName = Requester.FName;
+            string RequesterEmailAddress = Proposal.SubmitterEmail;
+            string RequesterName = Proposal.SubmitterName;
 
             // Send email notification to Requester notifying them that the status of their project has changed
             email
