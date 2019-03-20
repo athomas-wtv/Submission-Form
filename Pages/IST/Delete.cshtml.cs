@@ -39,28 +39,15 @@ namespace IST_Submission_Form.Pages
 
         public async Task<IActionResult> OnPostAsync(Proposals Proposal)
         {
+            if(!ModelState.IsValid)
+                return NotFound();
             
+            // Removing proposal from the db and saving the changes
             _context.Proposals.Remove(Proposal);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Teamlead");
         }
-        // public async Task<IActionResult> OnPostAsync(int? id)
-        // {
-        //     if (id == null)
-        //     {
-        //         return NotFound();
-        //     }
-            
-        //     Proposal = await _context.Proposals.FindAsync(id);
-
-        //     if (Proposal != null)
-        //     {
-        //         _context.Proposals.Remove(Proposal);
-        //         await _context.SaveChangesAsync();
-        //     }
-
-        //     return RedirectToPage("./Teamlead");
-        // }
+       
     }
 }
