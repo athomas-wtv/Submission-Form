@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles = "ist_TeamLeader")]
+    // [Authorize(Roles = "Ist_TeamLeader")]
     public class Edit : PageModel
     {
         // The properties that have the [BindProperty] annotation are showing up on the View
@@ -121,7 +121,8 @@ namespace IST_Submission_Form.Pages
             email
                 .To(RequesterEmailAddress, RequesterName)
                 .Subject("The Status of Your Project Has Changed! | " + Proposal.Title)
-                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/StatusChange.cshtml", new { Name = RequesterName })
+                .Body("Email Sent")
+                // .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/StatusChange.cshtml", new { Name = RequesterName })
                 .SendAsync();
         }
 

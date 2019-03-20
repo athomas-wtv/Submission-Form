@@ -30,15 +30,15 @@
             Information Solutions Team Request Form
         </a>
         <div class="d-flex justify-content-end">
-            @if(User.Identity.IsAuthenticated && User.IsInRole("ist_TeamLeader"))
+            @if(User.Identity.IsAuthenticated && User.IsInRole("Ist_TeamLeader"))
             {
                 <a class="nav-link text-secondary" href="/Teamlead">Dashboard</a>
             }
-            @if(User.Identity.IsAuthenticated && User.IsInRole("Information Solutions Team"))
+            @if(User.Identity.IsAuthenticated && User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
             {
                 <a class="nav-link text-secondary" href="/IST/Developer">Dashboard</a>
             }
-            @if(User.Identity.IsAuthenticated && !User.IsInRole("Information Solutions Team") && !User.IsInRole("ist_TeamLeader"))
+            @if(User.Identity.IsAuthenticated && !User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
             {
                 <a class="nav-link text-secondary" href="/Developer">Dashboard</a>
             }

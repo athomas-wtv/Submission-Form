@@ -108,7 +108,7 @@ namespace IST_Submission_Form.Pages
 
             // Set RecipientEmailAddress variable to the email of the person not making the comment
             // The first expressoion checks to see if the logged in person is Pete.
-            var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? SendTo : _config["email:TestTeamLeaderEmail"];
+            var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? SendTo : _config["email:TeamLeaderEmail"];
             var RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Name : _config["email:TeamLeaderName"];
 
             // Send email to expected recipent

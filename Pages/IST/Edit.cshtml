@@ -7,7 +7,7 @@
 <hr>
 <form method="post">
     <div class="row">
-        @if(User.FindFirst("username").Value == "pkoutoul")
+        @if(User.IsInRole("Ist_TeamLeader"))
         {
             <div class="col-md-6">
                 <dl class="dl-horizontal">

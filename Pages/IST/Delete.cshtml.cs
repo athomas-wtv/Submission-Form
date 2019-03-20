@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles = "ist_TeamLeader")]
+    // [Authorize(Roles = "Ist_TeamLeader")]
     public class DeleteModel : PageModel
     {
         private readonly ISTProjectsContext _context;

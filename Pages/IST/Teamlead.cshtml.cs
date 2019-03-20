@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles ="ist_TeamLeader")]
+    // [Authorize(Roles ="Ist_TeamLeader")]
     public class TeamleadModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }
@@ -21,7 +21,7 @@ namespace IST_Submission_Form.Pages
         
         public async Task<IActionResult> OnGetAsync()
         {
-            // if(!User.IsInRole("ist_TeamLeader"))
+            // if(!User.IsInRole("Ist_TeamLeader"))
             // {
             //     return Unauthorized();
             // }
