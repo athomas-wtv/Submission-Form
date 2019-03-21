@@ -54,7 +54,8 @@
                 <div class="col-3">
                     <h4>Assigned To</h4>
                     <hr>
-                    @Html.DisplayFor(model => model.Proposals.AssignedTo)
+                    <!-- @Html.DisplayFor(model => model.Proposals.AssignedTo) -->
+                    @Html.DisplayFor(model => model.Proposals.DeveloperName.Name)
                     <a asp-page="./Edit" class="text-info" asp-route-id="@Model.Proposals.Id">Update</a>
                 </div>
             }

@@ -30,17 +30,20 @@
             Information Solutions Team Request Form
         </a>
         <div class="d-flex justify-content-end">
+            <!-- If the person logged in is Pete -->
             @if(User.Identity.IsAuthenticated && User.IsInRole("Ist_TeamLeader"))
             {
-                <a class="nav-link text-secondary" href="/Teamlead">Dashboard</a>
+                <a class="nav-link text-secondary" href="/IST/Teamlead">Dashboard</a>
             }
+            <!-- If the person logged in is a member of IST but not Pete -->
             @if(User.Identity.IsAuthenticated && User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
             {
                 <a class="nav-link text-secondary" href="/IST/Developer">Dashboard</a>
             }
+            <!-- If the person logged in is not a member of IST (i.e. the requester) -->
             @if(User.Identity.IsAuthenticated && !User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
             {
-                <a class="nav-link text-secondary" href="/Developer">Dashboard</a>
+                <a class="nav-link text-secondary" href="/Requester/Requester">Dashboard</a>
             }
             <a class="nav-link text-secondary" href="/Logout">Logout</a>
         </div>

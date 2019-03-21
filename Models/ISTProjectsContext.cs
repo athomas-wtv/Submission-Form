@@ -100,6 +100,7 @@ namespace IST_Submission_Form.Models
                     .IsUnicode(false);
 
                 entity.HasOne(p => p.Status).WithMany(s => s.Proposals);
+                entity.HasOne(p => p.DeveloperName).WithMany(d => d.Proposals).HasForeignKey(p => p.AssignedTo).HasPrincipalKey(u => u.NetworkId);
             });
 
             modelBuilder.Entity<Status>(entity =>

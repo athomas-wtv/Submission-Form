@@ -38,7 +38,7 @@ namespace IST_Submission_Form.Pages
                 return NotFound();
 
             // Retrieves the selected proposal by matching the IDs
-            Proposals = await _ISTProjectsContext.Proposals.FirstAsync(m => m.Id == id);
+            Proposals = await _ISTProjectsContext.Proposals.Include(p => p.DeveloperName).Where(p => p.Id == id).FirstAsync();
 
             // Retrieves the comments in the "Requester Comment" box. This also includes the Teamleader's comments to the requester
             RequesterComments = await _ISTProjectsContext.Comments.Where(c => c.ProposalId == Proposals.Id && c.CommentType == "Requester").ToListAsync();
@@ -58,7 +58,7 @@ namespace IST_Submission_Form.Pages
                 return Page();
             
             // Adding values to the comment just created above. These fields are not on the form for users to see and update.
-            AssignCommentProperties(Body, "Requester", email); // Hardcoded "Requester" because only the requester will be able to access this post path
+            AssignCommentProperties(Body, "Requester", email); // Hardcoded "Requester" because OnPost method will log comments into the Requesters comment box
             await _ISTProjectsContext.SaveChangesAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
@@ -73,7 +73,7 @@ namespace IST_Submission_Form.Pages
             var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(staff => staff.LoginID == User.FindFirst("username").Value).First();
 
             // Call function to add values to fields automatically. These fields are not on the form for users to see and update.
-            AssignCommentProperties(Body, "Developer", email); // Hardcoded "Developer" because only the developer will be able to access this post path
+            AssignCommentProperties(Body, "Developer", email); // Hardcoded "Developer" because OnPost method will log comments into the Developers comment box
             await _ISTProjectsContext.SaveChangesAsync();
 
             return RedirectToPage("ProjectDetails", new { ID = ID });
@@ -108,7 +108,7 @@ namespace IST_Submission_Form.Pages
 
             // Set RecipientEmailAddress variable to the email of the person not making the comment
             // The first expressoion checks to see if the logged in person is Pete.
-            var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? SendTo : _config["email:TeamLeaderEmail"];
+            var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? SendTo : _config["email:TestTeamLeaderEmail"];
             var RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Name : _config["email:TeamLeaderName"];
 
             // Send email to expected recipent
@@ -122,11 +122,11 @@ namespace IST_Submission_Form.Pages
         {
             // Retrieving the current user's information
             var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(staff => staff.LoginID == User.FindFirst("username").Value).First();
-
+            
             // Creating an instance of a comment to add to the db
             Comments Comment = new Comments();
             Comment.ProposalId = Proposals.Id;
-            Comment.Commenter = LoggedInUser.LoginID;
+            Comment.Commenter = LoggedInUser.FName;
             Comment.CommentType = CommentType;
             Comment.Comment = Body;
             Comment.DateTime = DateTime.Now;

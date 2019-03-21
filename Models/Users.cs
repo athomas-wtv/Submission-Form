@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IST_Submission_Form.Models
 {
@@ -13,5 +14,7 @@ namespace IST_Submission_Form.Models
         public string Email { get; set; }
         public string Telephone { get; set; }
         public bool? Istmember { get; set; }
+        [NotMapped]
+        public IList<Proposals> Proposals{ get; set; }
     }
 }

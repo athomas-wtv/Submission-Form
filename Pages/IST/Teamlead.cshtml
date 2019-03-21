@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">
-                    @Html.DisplayFor(modelItem => Proposal.Title)
+                        @Html.DisplayFor(modelItem => Proposal.Title)
                     </h5>
                     <p class="card-text" style="overflow: scroll; height:100px">
                         @Html.DisplayFor(modelItem => Proposal.Description)
@@ -23,7 +23,7 @@
                     <a asp-page="./ProjectDetails" asp-route-id="@Proposal.Id" class="btn btn-success mt-2">Details</a>
                 </div>
                 <div class="card-footer text-muted">
-                    <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.AssignedTo)<br>
+                    <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.DeveloperName.Name)<br>
                     <b>Status: </b><a asp-page="./Edit" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.StatusId)</a> | <a class="text-danger" asp-page="./Delete" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>
                 </div>
             </div>

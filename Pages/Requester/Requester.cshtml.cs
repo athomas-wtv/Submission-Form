@@ -11,37 +11,21 @@ namespace IST_Submission_Form.Pages.Requester
     [Authorize]
     public class RequesterModel : PageModel
     {
-        public IList<Proposals> Proposals { get; set; }
-        public IList<Status> Status { get; set; }
-        public object CodeDescription { get; set; }
+        public IList<Proposals> Proposals;
         private readonly ISTProjectsContext _ISTProjectsContext;
-        private readonly StaffDirectoryContext _StaffDirectoryContext;
 
         public RequesterModel(ISTProjectsContext ISTProjectsContext, StaffDirectoryContext StaffDirectoryContext)
         {
             _ISTProjectsContext = ISTProjectsContext;
-            _StaffDirectoryContext = StaffDirectoryContext;
         }
         
         public async Task OnGetAsync()
         {
-            var name = _StaffDirectoryContext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
-
+            // Pulls all the proposals requested by the user logged in and orders them by the most recent requested to the oldest request
             Proposals = await _ISTProjectsContext.Proposals.Include(p => p.Status)
-                                                    .Where(p => p.SubmittedBy == name.LoginID)
+                                                    .Where(p => p.SubmittedBy == User.FindFirst("username").Value)
                                                     .OrderByDescending(d => d.SubmitDate)
                                                     .ToListAsync();
-
-
-            // }
-            // catch(SqlException)
-            // {
-            //     Console.WriteLine("Cannot connect to the server!");
-            // }
-            // catch
-            // {
-
-            // }
         }
 
     }
