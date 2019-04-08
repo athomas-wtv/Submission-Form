@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentEmail.Core;
 using IST_Submission_Form.Models;
@@ -13,7 +10,7 @@ namespace IST_Submission_Form.Pages.Requester
 {
     public class CancelRequestModel : PageModel
     {
-        public Proposals Proposal { get; set; }
+        public Proposals Proposal;
         private readonly ISTProjectsContext _context;
         public IConfiguration _config;
 

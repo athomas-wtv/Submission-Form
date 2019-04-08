@@ -8,7 +8,7 @@ namespace IST_Submission_Form.Pages
 
         public IActionResult OnGet()
         {
-
+            // Checks the user roles and routes the logged in user to the correct page
             if(!User.Identity.IsAuthenticated)
             {
                 return Redirect("/Login");

@@ -56,30 +56,31 @@ namespace IST_Submission_Form.Pages
             Proposal.SubmitDate = DateTime.Now;
             Proposal.StatusId = 14;
             Proposal.SubmittedBy = name.LoginID;
-            Proposal.AssignedTo = "PKOUTOUL";
+            Proposal.AssignedTo = "pkoutoul";
             _istprojectscontext.Proposals.Add(Proposal);
 
             // Business logic to store uploaded file
-            // This first step checks to see if any files have been attached to the form to be uploaded.
-            // if (Files == null || Files.Length == 0)
-            //     return Content("file not selected");
-
-            var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "uploadedFiles",
-                        Files.FileName);
-            
-            // Store file path of uploaded document into database column.
-            Proposal.Files = path;
-
-            using (var stream = new FileStream(path, FileMode.Create))
+            // This checks to see if any files have been attached to the form to be uploaded. If so then the app will execute code to save the file path to the db
+            if (Files != null)
             {
-                await Files.CopyToAsync(stream);
+                // Creates a file directory path to show the app where to store uploaded files.
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "uploadedFiles", Files.FileName);
+                
+                // Store file path of uploaded document into the database record.
+                Proposal.Files = path;
+
+                // The variable "stream" holds the command (if you will) to go to the file path and to create that file just uploaded by the requester
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    // This line takes the file that was uploaded (i.e. the one that was passed into the containing method) and copies the contents
+                    // of that file to the file path. This is the actual creating of the file and placing it in the folder.
+                    await Files.CopyToAsync(stream);
+                }
             }
 
             await _istprojectscontext.SaveChangesAsync();
 
-            return RedirectToPage("/Requester/Requester");
+            return RedirectToPage("/Requester/Requester");          
         }
-
     }
 }

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Novell.Directory.Ldap;
 
@@ -24,7 +22,6 @@ namespace IST_Submission_Form.Models
 
         public bool Login(string email, string password)
         {
-            
             try
             {
                 connection.Bind(email, password);
@@ -78,6 +75,7 @@ namespace IST_Submission_Form.Models
             return user;
         }
 
+        // Finds out what role(s) (or user group(s)) the person logging in is in
         public List<string> Groups(string email)
         {
             List<LdapEntry> users = this.Search(email);
@@ -94,13 +92,13 @@ namespace IST_Submission_Form.Models
             LdapEntry user = users.FirstOrDefault();
 
             return user.getAttribute("memberOf").StringValueArray
-                .ToList()
-                .ConvertAll(g =>
-                {
-                    var matches = Regex.Match(g, @"^(?:(?<cn>CN=(?<name>[^,]*)),)?(?:(?<path>(?:(?:CN|OU)=[^,]+,?)+),)?(?<domain>(?:DC=[^,]+,?)+)$");
-                    var match = matches.Groups.Where(mg => mg.Name == "name").FirstOrDefault();
-                    return match.Value;
-                });
+                        .ToList()
+                        .ConvertAll(g =>
+                        {
+                            var matches = Regex.Match(g, @"^(?:(?<cn>CN=(?<name>[^,]*)),)?(?:(?<path>(?:(?:CN|OU)=[^,]+,?)+),)?(?<domain>(?:DC=[^,]+,?)+)$");
+                            var match = matches.Groups.Where(mg => mg.Name == "name").FirstOrDefault();
+                            return match.Value;
+                        });
         }
 
         public bool IsMemberOf(string email, string group)
