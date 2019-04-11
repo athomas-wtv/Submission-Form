@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentEmail.Core;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles = "Ist_TeamLeader")]
+    [Authorize(Roles = "Ist_TeamLeader")]
     public class Edit : PageModel
     {
         // The properties that have the [BindProperty] annotation are showing up on the View
@@ -41,7 +43,7 @@ namespace IST_Submission_Form.Pages
         public async Task OnGetAsync(int id)
         {
             // Checking to see if current user is Pete to allow him to see all the status codes
-            if(User.FindFirst("username").Value == "pkoutoul")
+            if(User.IsInRole("Ist_TeamLeader"))
             {
                 StatusCodes = await _ISTProjectsContext.Status.Where(c => c.SortProposals > 0).ToListAsync();
             }
@@ -85,7 +87,7 @@ namespace IST_Submission_Form.Pages
             Proposal = _ISTProjectsContext.Proposals.Where(s => s.Id == id).First();
 
             // Added to make sure that when developers update the status of the proposal, the AssignedTo variable doesn't 
-            // get updated to NULL thus unassigning it from the developer. If true, this if statement returns to the 
+            // get updated to NULL thus unassigning it from the developer. If true, this if code block returns to the 
             // developer's view bypassing the line that updates the Assignee so that it remains the same.
             if(string.IsNullOrEmpty(Assignee))
             {
@@ -98,7 +100,16 @@ namespace IST_Submission_Form.Pages
                 return RedirectToPage("Developer", new { id = id });
             }
             
-            // If the new and old status codes are the same then it wasn't updated. Therefore no notification needs to be sent.
+            // Checking to see if a new developer was assigned to this proposal/request to determine whether or not to send an email notification to the developer
+            if(Proposal.AssignedTo != Assignee)
+            {
+                // Finds the user who the proposal/request was assigned to
+                Users user = _ISTProjectsContext.Users.Where(u => u.NetworkId == Assignee).First();
+                // Calls function to send email to developer
+                NotifyDeveloper(email, user.Email);
+            }
+
+            // If the new and old status codes are the same then the status code wasn't updated. Therefore no notification needs to be sent.
             if(Proposal.StatusId != NewStatusCode)
                 SendEmailNotification(email);
 
@@ -122,7 +133,16 @@ namespace IST_Submission_Form.Pages
                 .To(RequesterEmailAddress, RequesterName)
                 .Subject("The Status of Your Project Has Changed! | " + Proposal.Title)
                 .Body("Email Sent")
-                // .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/StatusChange.cshtml", new { Name = RequesterName })
+                .SendAsync();
+        }
+
+        public void NotifyDeveloper([FromServices]IFluentEmail email, string emailAddress)
+        {
+            // Send email notification to developer notifying them that they were assigned to this proposal/request
+            email
+                .To(emailAddress)
+                .Subject("Project Assigned to You! | " + Proposal.Title)
+                .Body("Pete has assigned a project to you. Visit the portal for details.")
                 .SendAsync();
         }
 

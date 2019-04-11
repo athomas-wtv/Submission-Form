@@ -5,6 +5,7 @@ using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace IST_Submission_Form.Pages
 {
@@ -22,7 +23,7 @@ namespace IST_Submission_Form.Pages
         {
             // Getting logged in user's username so that the below query can match/pull all proposals assigned to them
             string Username = User.FindFirst("username").Value;
-            
+            Console.WriteLine("Here is what's being logged: " + Username);
             // Query to pull all proposals assigned to the logged in user/developer
             Proposals = await _ISTProjectsContext.Proposals.Where(p => p.AssignedTo == Username).Include(p => p.Status).ToListAsync();
         }

@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Novell.Directory.Ldap;
-using System.Linq;
+using FCPS.Interfaces;
+using System;
 
 namespace IST_Submission_Form.Pages
 {
@@ -28,14 +27,17 @@ namespace IST_Submission_Form.Pages
         {
             // Checks to see if the email and password that are entered match up to any email/password combination in the DB using the Login() method
             // and assigning "true" of "false" to a variable
-            bool access = _authService.Login(email, password);
-            
+            bool access = _authService.Authenticate(email, password);
+
             // Returns a list of users that have the given email address assigned to them and assigns the list to the users variable.
-            IList<LdapEntry> users = _authService.Search(email);
+            Dictionary<string, string> user = _authService.Find(email);
 
             // Returns the list of group(s) that the person logging in is a member of
-            IList<string> groups = _authService.Groups(email);
-            
+            IList<string> groups = _authService.UserGroups(email);
+            foreach(KeyValuePair<string, string> KeyValue in user)
+            {
+                Console.WriteLine($"Here's a Key/Value Pairs - ({KeyValue.Key}: {KeyValue.Value})");
+            }
             
             if(access)
             {
@@ -45,7 +47,7 @@ namespace IST_Submission_Form.Pages
                     // This claim creates a placeholder for the email to be added to the cookie
                     new Claim(ClaimTypes.NameIdentifier, email),
                     // This claim creates a placeholder for the name of the user to be added to the cookie
-                    new Claim("username", users.First().getAttribute("sAMAccountName").StringValue),
+                    new Claim("username", user["sAMAccountName"])
                 };
                 
                 // Cycling through the list of groups the logged in user is a part of

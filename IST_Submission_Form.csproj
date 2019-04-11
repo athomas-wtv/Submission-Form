@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FCPS" Version="0.0.6" />
     <PackageReference Include="FluentEmail.Core" Version="2.5.1" />
     <PackageReference Include="FluentEmail.Razor" Version="2.5.2" />
     <PackageReference Include="FluentEmail.Smtp" Version="2.5.2" />

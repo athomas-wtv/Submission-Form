@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace IST_Submission_Form.Pages.Requester
         
         public async Task OnGetAsync()
         {
-            // Pulls all the proposals requested by the user logged in and orders them by the most recent requested to the oldest request
+            // Pulls all the proposals requested by the user currently logged in and orders them by the most recent requested to the oldest request
             Proposals = await _ISTProjectsContext.Proposals.Include(p => p.Status)
                                                     .Where(p => p.SubmittedBy == User.FindFirst("username").Value)
                                                     .OrderByDescending(d => d.SubmitDate)

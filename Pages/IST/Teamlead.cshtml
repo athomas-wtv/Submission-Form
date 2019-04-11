@@ -7,7 +7,7 @@
 <div class="row">
     @foreach (var Proposal in Model.Proposals)
     {
-        <div class="col-sm-3 px-1">
+        <div class="col-sm-4 px-1">
             <div class="card text-center my-3 shadow">
                 <div class="card-header">
                     <b>Submit Date</b>:
@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     <b>Assigned to: </b>@Html.DisplayFor(modelItem => Proposal.DeveloperName.Name)<br>
-                    <b>Status: </b><a asp-page="./Edit" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.StatusId)</a> | <a class="text-danger" asp-page="./Delete" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>
+                    <b>Status: </b><a asp-page="./Edit" asp-route-id="@Proposal.Id">@Html.DisplayFor(modelItem => Proposal.Status.StatusDescription)</a> | <a class="text-danger" asp-page="./Delete" asp-route-id="@Proposal.Id"><i class="fas fa-trash-alt"></i></a>
                 </div>
             </div>
         </div>

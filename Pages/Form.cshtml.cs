@@ -41,6 +41,7 @@ namespace IST_Submission_Form.Pages
             LoginID = staff.LoginID;
 
         }
+        
         [BindProperty]
         public Proposals Proposal { get; set; }
         
@@ -80,7 +81,8 @@ namespace IST_Submission_Form.Pages
 
             await _istprojectscontext.SaveChangesAsync();
 
-            return RedirectToPage("/Requester/Requester");          
+            return RedirectToPage();
+            // return RedirectToPage("/Requester/Requester");          
         }
     }
 }

@@ -4,20 +4,22 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using IST_Submission_Form.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace IST_Submission_Form.Pages
 {
-    // [Authorize(Roles ="Ist_TeamLeader")]
+    [Authorize(Roles ="Ist_TeamLeader")]
     public class TeamleadModel : PageModel
     {
         public IList<Proposals> Proposals { get; set; }
-        private readonly ISTProjectsContext _context;
-        public TeamleadModel(ISTProjectsContext context)
+        private readonly ISTProjectsContext _ISTProjectsContext;
+
+        public TeamleadModel(ISTProjectsContext ISTProjectsContext)
         {
-            _context = context;
+            _ISTProjectsContext = ISTProjectsContext;
         }
         
         public async Task<IActionResult> OnGetAsync()
@@ -25,7 +27,8 @@ namespace IST_Submission_Form.Pages
             try
             {
                 // Getting all the proposals in the database and ordering them by most recent requested
-                Proposals = await _context.Proposals.Include(p => p.DeveloperName).OrderByDescending(d => d.SubmitDate).ToListAsync();
+                Proposals = await _ISTProjectsContext.Proposals.Include(p => p.DeveloperName).Include(p => p.Status).OrderByDescending(d => d.SubmitDate).ToListAsync();
+
             }
             catch(SqlException)
             {

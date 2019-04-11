@@ -17,15 +17,14 @@ namespace IST_Submission_Form.Pages
             {
                 return Redirect("/IST/Teamlead");
             }
-            else if(User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
+            else if(User.IsInRole("Information Solutions Team"))
             {
                 return Redirect("/IST/Developer");
             }
-            else if(!User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
+            else
             {
                 return Redirect("/Requester/Requester");
             }
-            return Redirect("/Errors/404");
 
         }
     }

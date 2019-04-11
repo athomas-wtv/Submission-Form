@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "6b7147f9275faf9f5cc7cbbd6efbdf0b6e3bb58b"
+    "signature": "9c808c4bb01f59c3280dcfae2ec495f94c0b4099"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.1": {
       "IST_Submission_Form/1.0.0": {
         "dependencies": {
+          "FCPS": "0.0.6",
           "FluentEmail.Core": "2.5.1",
           "FluentEmail.Razor": "2.5.2",
           "FluentEmail.Smtp": "2.5.2",
@@ -40,6 +41,25 @@
         },
         "compile": {
           "IST_Submission_Form.dll": {}
+        }
+      },
+      "FCPS/0.0.6": {
+        "dependencies": {
+          "Novell.Directory.Ldap.NETStandard2_0": "3.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FCPS.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          },
+          "lib/netstandard2.0/System.ComponentModel.Composition.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.26419.2"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/FCPS.dll": {},
+          "lib/netstandard2.0/System.ComponentModel.Composition.dll": {}
         }
       },
       "FluentEmail.Core/2.5.1": {
@@ -3546,6 +3566,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FCPS/0.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ydMvUD9GyoUnngcmAGGeutYAe5q0NRquRlMQqX/tno8KbI21f58GWFlnIHIipwOuGIfsQNGpgWzGokhYjVk1Tw==",
+      "path": "fcps/0.0.6",
+      "hashPath": "fcps.0.0.6.nupkg.sha512"
     },
     "FluentEmail.Core/2.5.1": {
       "type": "package",

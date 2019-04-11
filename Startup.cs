@@ -1,3 +1,6 @@
+using FCPS;
+using FCPS.Interfaces;
+using FCPS.Services;
 using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -13,12 +16,13 @@ namespace IST_Submission_Form
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        LdapConfiguration config = new LdapConfiguration();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,7 +45,10 @@ namespace IST_Submission_Form
             services.AddDbContext<ISTProjectsContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:ISTProjectsContext"]).EnableSensitiveDataLogging(); });
             services.AddDbContext<StaffDirectoryContext>(options => { options.UseSqlServer(Configuration["ConnectionStrings:StaffDirectoryContext"]).EnableSensitiveDataLogging(); });
 
-            services.AddSingleton<ILdapService, LdapService>();
+            Configuration.Bind("AD", config);
+            services.AddSingleton(config);
+            services.AddSingleton<ILdapService>(new LdapService(config));
+
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

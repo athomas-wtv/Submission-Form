@@ -6,7 +6,7 @@
 
 <h2 class="mb-5">@ViewData["Title"]</h2>
 
-<div class="container mb-2">
+<div class="container mb-5">
     <div class="row">
         <div class="col-3">
             <h4>Date & Time</h4><hr>
@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<div class="container mb-2">
+<div class="container mb-5">
     <div class="row">
         <div class="col">
             <h4>@Html.DisplayNameFor(model => model.Proposals.Description)</h4><hr>
@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container mb-5">
     <div class="row">
         <div class="col-6">
             <h4>Desired Completion Date</h4><hr>
@@ -66,7 +66,7 @@
     <div class="row">
         @if(User.IsInRole("Ist_TeamLeader") || !User.IsInRole("Information Solutions Team"))
         {
-            <div class="col-6">
+            <div class="col">
                 <h4>Requester Comments</h4><hr>
                 <div class="scroll-comments w3-border-bottom mb-3 py-2">
                     @foreach(var Comment in Model.RequesterComments)
@@ -94,7 +94,7 @@
         }
         @if(User.IsInRole("Information Solutions Team"))
         {
-            <div class="col-6">
+            <div class="col">
                 <h4>Developer Comments</h4><hr>
                 <div class="scroll-comments w3-border-bottom mb-3 py-2 rounded">
                     @foreach(var Comment in Model.DeveloperComments)
@@ -134,6 +134,6 @@
     }
     @if(!User.IsInRole("Information Solutions Team") && !User.IsInRole("Ist_TeamLeader"))
     {
-        <a asp-page="./Requester">Back to My Requests</a>
+        <a asp-page="../Requester/Requester">Back to My Requests</a>
     }
 </div>

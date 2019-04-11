@@ -28,14 +28,14 @@
     </div>
     <div class="form-group col-md-6">
         <label for="location">My Location</label>
-        <input type="text" class="form-control" name="SubmitterLocation" id="location" placeholder="Location">
+        <input type="text" class="form-control" name="SubmitterLocation" id="location" placeholder="Location" required>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="projectDescription">Project Description</label>
       <h6 class="card-subtitle mb-2 text-muted"><i>Describe what you want your application to do?</i></h6>
-      <textarea type="text" class="form-control" name="Description" id="description"></textarea>
+      <textarea type="text" class="form-control" name="Description" id="description" required></textarea>
     </div>
   </div>
   <div class="form-row">
@@ -54,6 +54,28 @@
           </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-info btn-lg btn-block">Submit</button>
+    <button type="submit" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#submitNotification">
+      Submit
+    </button>
   </div>
 </form>
+  <!-- Notification Modal -->
+  <div class="modal fade" id="submitNotification" tabindex="-1" role="dialog" aria-labelledby="submitNotificationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="submitNotificationLabel">Request Sent!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Thank you for your request! I want to ensure you that we have received your request. We will review it and connect with you with the next 48hrs to let you know the next steps.
+        </div>
+        <div class="modal-footer">
+          <a asp-page="./Form" class="btn btn-secondary">Submit Another Request</a>
+          <a asp-page="Requester/Requester" class="btn btn-info">Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
