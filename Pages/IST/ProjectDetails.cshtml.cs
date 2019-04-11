@@ -85,9 +85,6 @@ namespace IST_Submission_Form.Pages
             var SendTo = "";
             var Name = "";
 
-            // Retrieving the current user's information
-            var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(staff => staff.LoginID == User.FindFirst("username").Value).First();
-
             if(CommentType == "Developer")
             {
                 // Query database to get the assigned developer's email address
@@ -98,13 +95,15 @@ namespace IST_Submission_Form.Pages
                 SendTo = AssignedToStaff.Email;
                 Name = AssignedToStaff.FName;
             }
-
-            if(CommentType == "Requester")
+            else
             {
                 // Assigning variables with requester/submitter contact info so that email goes to them
                 SendTo = Proposals.SubmitterEmail;
                 Name = Proposals.SubmitterName;
             }
+
+            // Retrieving the current user's information
+            var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(staff => staff.LoginID == User.FindFirst("username").Value).First();
 
             // Set RecipientEmailAddress variable to the email of the person not making the comment
             // The first expressoion checks to see if the logged in person is Pete.
@@ -133,7 +132,7 @@ namespace IST_Submission_Form.Pages
             _ISTProjectsContext.Comments.Add(Comment);
 
             // Calls function to send email notification
-            SendEmailNotification(Comment.CommentType, email);
+            SendEmailNotification(CommentType, email);
         }
     }
 }
