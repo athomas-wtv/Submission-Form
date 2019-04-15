@@ -29,8 +29,6 @@ namespace IST_Submission_Form.Pages
         [BindProperty]
         public string Email { get; set; }
         public string LoginID { get; set; }
-        [BindProperty]
-        public string Files { get; set; }
 
         public void OnGet()
         {
@@ -67,6 +65,7 @@ namespace IST_Submission_Form.Pages
             if (Files != null)
                 SaveFileAsync(Files);
 
+            // Sends email to requester notifying them that their request was received
             RequestRecievedEmailNotification(email);
             await _istprojectscontext.SaveChangesAsync();
 
@@ -76,6 +75,7 @@ namespace IST_Submission_Form.Pages
     
         public async void RequestRecievedEmailNotification([FromServices]IFluentEmail email)
         {
+            // Building email to send to requester to let them know that their request has been received.
             await email
                     .To(Proposal.SubmitterEmail, Proposal.SubmitterName)
                     .Subject("Request Recieved!")
