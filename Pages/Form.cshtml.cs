@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FluentEmail.Core;
 using IST_Submission_Form.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,17 +42,18 @@ namespace IST_Submission_Form.Pages
             LoginID = staff.LoginID;
 
         }
-        
+
         [BindProperty]
         public Proposals Proposal { get; set; }
-        
-        public async Task<IActionResult> OnPostAsync(IFormFile Files)
+
+        public async Task<IActionResult> OnPostAsync(IFormFile Files, [FromServices]IFluentEmail email)
         {
             if (!ModelState.IsValid)
                 return Page();
+
             var name = _staffcontext.Staff.AsNoTracking().Where(s => s.LoginID == User.FindFirst("username").Value).First();
-            var email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var staff = _staffcontext.Staff.Where((s) => s.Email == email).First();
+            var currentUserEmail = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var staff = _staffcontext.Staff.Where((s) => s.Email == currentUserEmail).First();
 
             // Adding values to fields automatically. These fields are not on the form for users to see and update.
             Proposal.SubmitDate = DateTime.Now;
@@ -65,10 +67,20 @@ namespace IST_Submission_Form.Pages
             if (Files != null)
                 SaveFileAsync(Files);
 
+            RequestRecievedEmailNotification(email);
             await _istprojectscontext.SaveChangesAsync();
 
             return RedirectToPage();
             // return RedirectToPage("/Requester/Requester");          
+        }
+    
+        public async void RequestRecievedEmailNotification([FromServices]IFluentEmail email)
+        {
+            await email
+                    .To(Proposal.SubmitterEmail, Proposal.SubmitterName)
+                    .Subject("Request Recieved!")
+                    .Body("The Information Solutions Team has received your request. We will be in touch to discuss details within the next 48hrs.")
+                    .SendAsync();
         }
 
         public async void SaveFileAsync(IFormFile Files)
