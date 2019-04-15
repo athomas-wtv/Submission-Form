@@ -84,5 +84,10 @@ namespace IST_Submission_Form.Pages
             return RedirectToPage();
             // return RedirectToPage("/Requester/Requester");          
         }
+
+        public void SaveFile(IFormFile Files)
+        {
+            
+        }
     }
 }

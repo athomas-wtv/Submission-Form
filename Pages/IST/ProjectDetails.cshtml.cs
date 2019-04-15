@@ -109,10 +109,11 @@ namespace IST_Submission_Form.Pages
             // The first expressoion checks to see if the logged in person is Pete.
             var RecipientEmailAddress = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? SendTo : _config["email:TestTeamLeaderEmail"];
             var RecipientName = _config["email:TeamLeaderEmail"] == LoggedInUser.Email ? Name : _config["email:TeamLeaderName"];
+            Console.WriteLine("RecipientEmailAddress variable with string for Name");
 
             // Send email to expected recipent
             email
-                .To(RecipientEmailAddress, RecipientName)
+                .To(RecipientEmailAddress, "John Test")
                 .Subject("A comment has been posted to the '" + Proposals.Title + "' Proposal! | IST Form")
                 .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Pages/IST/EmailTemplates/FromDeveloper.cshtml", new { Name = RecipientName })
                 .SendAsync();
@@ -123,12 +124,14 @@ namespace IST_Submission_Form.Pages
             var LoggedInUser = _StaffDirectoryContext.Staff.AsNoTracking().Where(staff => staff.LoginID == User.FindFirst("username").Value).First();
             
             // Creating an instance of a comment to add to the db
-            Comments Comment = new Comments();
-            Comment.ProposalId = Proposals.Id;
-            Comment.Commenter = LoggedInUser.FName;
-            Comment.CommentType = CommentType;
-            Comment.Comment = Body;
-            Comment.DateTime = DateTime.Now;
+            Comments Comment = new Comments(){
+                ProposalId = Proposals.Id,
+                Commenter = LoggedInUser.FName,
+                CommentType = CommentType,
+                Comment = Body,
+                DateTime = DateTime.Now
+            };
+            
             _ISTProjectsContext.Comments.Add(Comment);
 
             // Calls function to send email notification
