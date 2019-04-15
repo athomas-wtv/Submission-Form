@@ -63,21 +63,7 @@ namespace IST_Submission_Form.Pages
             // Business logic to store uploaded file
             // This checks to see if any files have been attached to the form to be uploaded. If so then the app will execute code to save the file path to the db
             if (Files != null)
-            {
-                // Creates a file directory path to show the app where to store uploaded files.
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "uploadedFiles", Files.FileName);
-                
-                // Store file path of uploaded document into the database record.
-                Proposal.Files = path;
-
-                // The variable "stream" holds the command (if you will) to go to the file path and to create that file just uploaded by the requester
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    // This line takes the file that was uploaded (i.e. the one that was passed into the containing method) and copies the contents
-                    // of that file to the file path. This is the actual creating of the file and placing it in the folder.
-                    await Files.CopyToAsync(stream);
-                }
-            }
+                SaveFileAsync(Files);
 
             await _istprojectscontext.SaveChangesAsync();
 
@@ -85,9 +71,21 @@ namespace IST_Submission_Form.Pages
             // return RedirectToPage("/Requester/Requester");          
         }
 
-        public void SaveFile(IFormFile Files)
+        public async void SaveFileAsync(IFormFile Files)
         {
-            
+            // Creates a file directory path to show the app where to store uploaded files.
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "uploadedFiles", Files.FileName);
+
+            // Store file path of uploaded document into the database record.
+            Proposal.Files = path;
+
+            // The variable "stream" holds the command (if you will) to go to the file path and to create that file just uploaded by the requester
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                // This line takes the file that was uploaded (i.e. the one that was passed into the containing method) and copies the contents
+                // of that file to the file path. This is the actual creating of the file and placing it in the folder.
+                await Files.CopyToAsync(stream);
+            }
         }
     }
 }
