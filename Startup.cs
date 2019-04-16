@@ -53,9 +53,9 @@ namespace IST_Submission_Form
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services
-                .AddFluentEmail("ist@fayette.kyschools.us")
+                .AddFluentEmail("test@email.com")
                 .AddRazorRenderer()
-                .AddSmtpSender("ketsmail.us", 25);
+                .AddSmtpSender("email.us", 25);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
